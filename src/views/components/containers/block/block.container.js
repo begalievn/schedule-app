@@ -2,7 +2,7 @@ import classes from './style.module.scss';
 
 export const BlockContainer = (props) => {
     return (
-        <div className={classes.container}>
+        <div style={props.style} className={classes.container}>
             {props.children}
         </div>
     )

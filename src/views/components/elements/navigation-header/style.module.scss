@@ -7,6 +7,8 @@
   align-content: center;
 }
 
+
+
 .unordered_list {
   width: 100%;
   display: flex;
@@ -23,4 +25,8 @@
       text-decoration: none;
     }
   }
+}
+
+.list_vertical {
+  flex-direction: column;
 }
