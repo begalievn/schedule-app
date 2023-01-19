@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 
 export const NavigationHeader = (props) => {
     const handleClick = () => {
-        props.setState(!props.value);
+        props.setState(false);
     }
     
     return (

@@ -7,11 +7,8 @@ export const Main = (props) => {
         <main>
             <Header />
             <BlockContainer>
-                <ContentContainer>
-                    {props.children}
-                </ContentContainer>
+                {props.children}
             </BlockContainer>
-            
         </main>
     )
 }

@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import {SpreadSheetElement} from "../../components/elements/spread-sheet";
 import axios from 'axios';
 
 export const StartPage = () => {
@@ -23,7 +22,6 @@ export const StartPage = () => {
             <h2>
                 Start Page
             </h2>
-            {/*<SpreadSheetElement />*/}
         </div>
        
     )

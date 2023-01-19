@@ -4,6 +4,7 @@ import {NotFound} from "../pages/not-found";
 import {StartPage} from "../pages/start-page";
 import {SchedulePage} from "../pages/schedule-page";
 import {BrowserRoute} from "./browser.routes";
+import {News} from "../pages/news";
 
 export const appRoutesDefinition = [{
     path: '/',
@@ -21,5 +22,8 @@ export const appRoutesDefinition = [{
     }, {
         path: BrowserRoute.schedulePage,
         element: <SchedulePage />
+    }, {
+        path: BrowserRoute.newsPage,
+        element: <News />
     }]
 }];
