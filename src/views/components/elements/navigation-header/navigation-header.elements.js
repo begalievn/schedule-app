@@ -1,5 +1,5 @@
-import classes from './style.module.scss';
 import {NavLink} from "react-router-dom";
+import classes from './style.module.scss';
 
 export const NavigationHeader = (props) => {
     const handleClick = () => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
     DesktopOutlined,
     FileOutlined,
@@ -25,25 +25,23 @@ const items = [
     getItem('Files', '9', <FileOutlined />),
 ];
 
-export const SchedulePage = () => {
+export const AdminPage = () => {
     const [collapsed, setCollapsed] = useState(false);
+    
+    const onClick = (e) => {
+        console.log('click', e);
+    }
     
     return (
         <Layout
             style={{
-                minHeight: 'calc(100vh - 60px)',
+                minHeight: 'calc(100vh)',
             }}
         >
             <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+                <Menu onClick={onClick} theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
             </Sider>
             <Layout className="site-layout">
-                {/*<Header*/}
-                {/*    className="site-layout-background"*/}
-                {/*    style={{*/}
-                {/*        padding: 0,*/}
-                {/*    }}*/}
-                {/*/>*/}
                 <Content
                     style={{
                         margin: '0 16px',
