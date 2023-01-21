@@ -3,6 +3,7 @@
   height: 50px;
   background: yellowgreen;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-content: center;
 }
@@ -15,6 +16,7 @@
   align-items: center;
   justify-content: space-around;
   list-style-type: none;
+  margin: 0;
 
   .list_item {
     color: black;

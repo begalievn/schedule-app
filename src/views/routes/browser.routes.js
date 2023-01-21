@@ -1,5 +1,7 @@
 export const BrowserRoute = {
     notFound: '*',
     startPage: '/',
-    schedulePage: '/schedule'
+    schedulePage: '/schedule',
+    newsPage: '/news',
+    adminPage: '/admin'
 }
