@@ -1,10 +1,9 @@
 // modules
-import { useRoutes } from 'react-router-dom';
+import { useRoutes } from "react-router-dom";
 import { appRoutesDefinition } from "../views/routes";
-import 'antd/dist/reset.css';
+// import 'antd/dist/reset.css';
 
 export const App = () => {
-    const AppRoutes = useRoutes(appRoutesDefinition);
-    return AppRoutes;
-}
-
+  const AppRoutes = useRoutes(appRoutesDefinition);
+  return AppRoutes;
+};
