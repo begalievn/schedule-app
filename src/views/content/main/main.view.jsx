@@ -1,10 +1,14 @@
+import { Sidebar } from "../../components/sidebar";
 import { Header } from "../header";
 
 export const Main = (props) => {
   return (
     <main>
       <Header />
-      {props.children}
+      <div style={{ display: "flex" }}>
+        <Sidebar />
+        {props.children}
+      </div>
     </main>
   );
 };

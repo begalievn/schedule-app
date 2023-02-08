@@ -23,21 +23,26 @@ import {
   TeacherIcon,
 } from "../../../assets/icons";
 
-function getItem(label, key, icon, children) {
+import { NavLink } from "react-router-dom";
+
+import { BrowserRoute } from "../../routes/browser.routes";
+
+function getItem(label, key, icon, path, children) {
   return {
     key,
     icon,
     label,
+    path,
     children,
   };
 }
 
 const items = [
-  getItem("Option 1", "1", <ScheduleIcon />),
-  getItem("Option 2", "2", <TeacherIcon />),
-  getItem("User", "sub1", <SubjectIcon />),
-  getItem("Team", "sub2", <ClassRoomIcon />),
-  getItem("Files", "9", <GroupIcon />),
+  getItem("Schedulle", "1", <ScheduleIcon />, BrowserRoute.SCHEDULE_PAGE),
+  getItem("Teacher", "2", <TeacherIcon />, BrowserRoute.TEACHER),
+  getItem("Subject", "sub1", <SubjectIcon />, BrowserRoute.SUBJECT),
+  getItem("Classroom", "sub2", <ClassRoomIcon />, BrowserRoute.CLASSROOM),
+  getItem("Group", "9", <GroupIcon />, BrowserRoute.GROUP),
 ];
 
 export const Sidebar = () => {
@@ -74,14 +79,16 @@ export const Sidebar = () => {
             key={item.key}
             disablePadding
           >
-            <StyledListButton>
-              <StyledListIcon>{open ? null : item.icon}</StyledListIcon>
+            <NavLink to={item.path}>
+              <StyledListButton>
+                <StyledListIcon>{item.icon}</StyledListIcon>
 
-              <ListItemText
-                primary={item.label}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </StyledListButton>
+                <ListItemText
+                  primary={item.label}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </StyledListButton>
+            </NavLink>
           </ListItem>
         ))}
       </List>
@@ -140,7 +147,7 @@ const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
     backgroundColor: "rgba(252, 192, 126, 1)",
     color: "rgba(65, 90, 128, 1)",
     position: "static",
-    height: "90vh",
+    height: "100vh",
   },
 }));
 
