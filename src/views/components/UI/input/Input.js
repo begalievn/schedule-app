@@ -1,47 +1,52 @@
 import React, { useCallback } from "react";
 import { InputAdornment, TextField, styled } from "@mui/material";
+import { forwardRef } from "react";
 
-export const Input = ({
-  value,
-  onChange,
-  label,
-  iconVariant,
-  type,
-  InputProps,
-  error,
-  placeholder,
-  name,
-  ...props
-}) => {
-  const iconChangeHandlerVariant = useCallback(() => {
-    const positionAdornment =
-      iconVariant === "end" ? "endAdornment" : "startAdornment";
+export const Input = forwardRef(
+  ({
+    value,
+    onChange,
+    label,
+    iconVariant,
+    type,
+    InputProps,
+    error,
+    placeholder,
+    name,
+    ref,
+    ...props
+  }) => {
+    const iconChangeHandlerVariant = useCallback(() => {
+      const positionAdornment =
+        iconVariant === "end" ? "endAdornment" : "startAdornment";
 
-    return {
-      [positionAdornment]: <InputAdornment position={iconVariant} />,
-    };
-  }, [iconVariant]);
+      return {
+        [positionAdornment]: <InputAdornment position={iconVariant} />,
+      };
+    }, [iconVariant]);
 
-  return (
-    <StyledInput
-      label={label}
-      placeholder={placeholder}
-      size='small'
-      fullWidth
-      value={value}
-      onChange={onChange}
-      type={type}
-      name={name}
-      error={error}
-      InputProps={{
-        ...InputProps,
-        ...iconChangeHandlerVariant(),
-        classes: { root: "input" },
-      }}
-      {...props}
-    />
-  );
-};
+    return (
+      <StyledInput
+        label={label}
+        ref={ref}
+        placeholder={placeholder}
+        size='small'
+        fullWidth
+        value={value}
+        onChange={onChange}
+        type={type}
+        name={name}
+        error={error}
+        InputProps={{
+          ...InputProps,
+          ...iconChangeHandlerVariant(),
+          classes: { root: "input" },
+        }}
+        {...props}
+      />
+    );
+  },
+);
 
 const StyledInput = styled(TextField)(() => ({
   "& .input": {

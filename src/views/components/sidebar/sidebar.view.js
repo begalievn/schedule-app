@@ -13,15 +13,15 @@ import {
   Drawer as MuiDrawer,
 } from "@mui/material";
 
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+
 import {
-  ChevronLeft,
-  ChevronRight,
-  FileCopyOutlined,
-  PieChartOutlined,
-  DesktopMacOutlined,
-  VerifiedUserOutlined,
-  TheaterComedyOutlined,
-} from "@mui/icons-material";
+  ClassRoomIcon,
+  GroupIcon,
+  ScheduleIcon,
+  SubjectIcon,
+  TeacherIcon,
+} from "../../../assets/icons";
 
 function getItem(label, key, icon, children) {
   return {
@@ -33,11 +33,11 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
-  getItem("Option 1", "1", <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopMacOutlined />),
-  getItem("User", "sub1", <VerifiedUserOutlined />),
-  getItem("Team", "sub2", <TheaterComedyOutlined />),
-  getItem("Files", "9", <FileCopyOutlined />),
+  getItem("Option 1", "1", <ScheduleIcon />),
+  getItem("Option 2", "2", <TeacherIcon />),
+  getItem("User", "sub1", <SubjectIcon />),
+  getItem("Team", "sub2", <ClassRoomIcon />),
+  getItem("Files", "9", <GroupIcon />),
 ];
 
 export const Sidebar = () => {
@@ -75,7 +75,8 @@ export const Sidebar = () => {
             disablePadding
           >
             <StyledListButton>
-              <StyledListIcon>{item.icon}</StyledListIcon>
+              <StyledListIcon>{open ? null : item.icon}</StyledListIcon>
+
               <ListItemText
                 primary={item.label}
                 sx={{ opacity: open ? 1 : 0 }}
@@ -88,7 +89,7 @@ export const Sidebar = () => {
   );
 };
 
-const drawerWidth = 220;
+const drawerWidth = 200;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -125,7 +126,8 @@ const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
-  backgroundColor: "green",
+  color: "rgba(65, 90, 128, 1)",
+  height: "auto",
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
@@ -135,9 +137,10 @@ const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
   "& .MuiPaper-root": {
-    // backgroundColor: "green",
-    height: "90vh",
+    backgroundColor: "rgba(252, 192, 126, 1)",
+    color: "rgba(65, 90, 128, 1)",
     position: "static",
+    height: "90vh",
   },
 }));
 
@@ -148,5 +151,9 @@ const StyledListButton = styled(ListItemButton)(() => ({
 }));
 
 const StyledListIcon = styled(ListItemIcon)(() => ({
-  minWidth: "40px",
+  color: "rgba(140, 131, 131, 1)",
+  "& svg": {
+    maxWidht: "15px",
+    maxHeight: "18px",
+  },
 }));
