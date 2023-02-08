@@ -33,11 +33,11 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
-  getItem("Option 1", "1", <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopMacOutlined />),
-  getItem("User", "sub1", <VerifiedUserOutlined />),
-  getItem("Team", "sub2", <TheaterComedyOutlined />),
-  getItem("Files", "9", <FileCopyOutlined />),
+  getItem("Schedulle", "1", <PieChartOutlined />),
+  getItem("Teacher", "2", <DesktopMacOutlined />),
+  getItem("Subject", "sub1", <VerifiedUserOutlined />),
+  getItem("Classroom", "sub2", <TheaterComedyOutlined />),
+  getItem("Group", "9", <FileCopyOutlined />),
 ];
 
 export const Sidebar = () => {
