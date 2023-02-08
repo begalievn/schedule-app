@@ -1,5 +1,4 @@
-import alaTooLogo from './alaTooLogo.png';
+import alaTooLogo from "./alaTooLogo.png";
+export { ReactComponent as GoogleIcon } from "./google.svg";
 
-export {
-    alaTooLogo
-}
+export { alaTooLogo };
