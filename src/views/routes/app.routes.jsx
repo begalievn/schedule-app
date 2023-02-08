@@ -12,7 +12,7 @@ import { useState } from "react";
 import { PrivateAuthRoute } from "./PrivateAuthRoute";
 
 export const AppRoutesDefinition = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   return [
     {
       path: "/",
