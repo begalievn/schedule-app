@@ -1,7 +1,9 @@
 import { styled } from "@mui/material";
 import React from "react";
+
 import { NavLink } from "react-router-dom";
 import { ApplicationLoginForm } from "../../components/application-login-form/application.login.form";
+
 import { Button } from "../../components/UI/button/Button";
 import { Input } from "../../components/UI/input/Input";
 
@@ -9,6 +11,7 @@ export const SignIn = () => {
   const submitHandler = (e) => {
     e.preventDefault();
   };
+
   return (
     <ApplicationLoginForm>
       <StyledForm onSubmit={submitHandler}>
@@ -20,20 +23,12 @@ export const SignIn = () => {
           type='password'
           label='Password'
         />
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
+        <ButtonBox>
           <StyledButton>Sign In</StyledButton>
           <StyledNavlink to='/signUp'>
             <SignUpButton>or Sign Up </SignUpButton>
           </StyledNavlink>
-        </div>
+        </ButtonBox>
       </StyledForm>
     </ApplicationLoginForm>
   );
@@ -77,4 +72,12 @@ const StyledNavlink = styled(NavLink)(() => ({
   width: "100%",
   justifyContent: "flex-end",
   textDecoration: "none",
+}));
+
+const ButtonBox = styled("div")(() => ({
+  display: "flex",
+  alignItems: "center",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  width: "100%",
 }));
