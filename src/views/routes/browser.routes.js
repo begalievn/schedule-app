@@ -1,9 +1,11 @@
 export const BrowserRoute = {
   notFound: "*",
   startPage: "/",
-  schedulePage: "/schedule",
-  newsPage: "/news",
-  adminPage: "/admin",
-  signIn: "/signIn",
-  signUp: "/signUp",
+  SCHEDULE_PAGE: "/schedule",
+  TEACHER: "/teacher",
+  SUBJECT: "/subject",
+  CLASSROOM: "/classroom",
+  GROUP: "/group",
+  SIGN_IN: "/sign-in",
+  SIGN_UP: "/sign-up",
 };

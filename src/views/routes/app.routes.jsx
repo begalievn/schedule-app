@@ -1,14 +1,19 @@
+import { useState } from "react";
+
 import { Main } from "../content/main";
 import { Outlet } from "react-router-dom";
-import { NotFound } from "../pages/not-found";
-import { StartPage } from "../pages/start-page";
-import { SchedulePage } from "../pages/schedule-page";
-import { BrowserRoute } from "./browser.routes";
-import { News } from "../pages/news";
-import { AdminPage } from "../pages/admin/admin.view";
+
 import { SignIn } from "../pages/sign-in";
 import { SignUp } from "../pages/sign-up";
-import { useState } from "react";
+import { NotFound } from "../pages/not-found";
+import { StartPage } from "../pages/start-page";
+import { Teacher } from "../pages/teacher-page";
+import { SubjectPage } from "../pages/subject-page";
+import { SchedulePage } from "../pages/schedule-page";
+import { GroupPage } from "../pages/group-page/group-page.view";
+import { ClassroomPage } from "../pages/classroom-page/classroom-page.view";
+
+import { BrowserRoute } from "./browser.routes";
 import { PrivateAuthRoute } from "./PrivateAuthRoute";
 
 export const AppRoutesDefinition = () => {
@@ -31,13 +36,13 @@ export const AppRoutesDefinition = () => {
           element: (
             <PrivateAuthRoute
               Component={<StartPage />}
-              fallbackPath={BrowserRoute.signIn}
+              fallbackPath={BrowserRoute.SIGN_IN}
               isAllowed={isLoggedIn}
             />
           ),
         },
         {
-          path: BrowserRoute.schedulePage,
+          path: BrowserRoute.SCHEDULE_PAGE,
           element: (
             <PrivateAuthRoute
               Component={<SchedulePage />}
@@ -47,20 +52,40 @@ export const AppRoutesDefinition = () => {
           ),
         },
         {
-          path: BrowserRoute.newsPage,
+          path: BrowserRoute.TEACHER,
           element: (
             <PrivateAuthRoute
-              Component={<News />}
+              Component={<Teacher />}
               fallbackPath={BrowserRoute.startPage}
               isAllowed={isLoggedIn}
             />
           ),
         },
         {
-          path: BrowserRoute.adminPage,
+          path: BrowserRoute.SUBJECT,
           element: (
             <PrivateAuthRoute
-              Component={<AdminPage />}
+              Component={<SubjectPage />}
+              fallbackPath={BrowserRoute.startPage}
+              isAllowed={isLoggedIn}
+            />
+          ),
+        },
+        {
+          path: BrowserRoute.CLASSROOM,
+          element: (
+            <PrivateAuthRoute
+              Component={<ClassroomPage />}
+              fallbackPath={BrowserRoute.startPage}
+              isAllowed={isLoggedIn}
+            />
+          ),
+        },
+        {
+          path: BrowserRoute.GROUP,
+          element: (
+            <PrivateAuthRoute
+              Component={<GroupPage />}
               fallbackPath={BrowserRoute.startPage}
               isAllowed={isLoggedIn}
             />
@@ -69,17 +94,17 @@ export const AppRoutesDefinition = () => {
       ],
     },
     {
-      path: BrowserRoute.signIn,
+      path: BrowserRoute.SIGN_IN,
       element: (
         <PrivateAuthRoute
           Component={<SignIn />}
-          fallbackPath={BrowserRoute.signIn}
+          fallbackPath={BrowserRoute.SIGN_IN}
           isAllowed={!isLoggedIn}
         />
       ),
     },
     {
-      path: BrowserRoute.signUp,
+      path: BrowserRoute.SIGN_UP,
       element: <SignUp />,
     },
   ];

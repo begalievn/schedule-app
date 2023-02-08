@@ -22,7 +22,10 @@ import {
   SubjectIcon,
   TeacherIcon,
 } from "../../../assets/icons";
+
 import { NavLink } from "react-router-dom";
+
+import { BrowserRoute } from "../../routes/browser.routes";
 
 function getItem(label, key, icon, path, children) {
   return {
@@ -35,11 +38,11 @@ function getItem(label, key, icon, path, children) {
 }
 
 const items = [
-  getItem("Schedulle", "1", <ScheduleIcon />, "/schedulle"),
-  getItem("Teacher", "2", <TeacherIcon />, ""),
-  getItem("Subject", "sub1", <SubjectIcon />),
-  getItem("Classroom", "sub2", <ClassRoomIcon />),
-  getItem("Group", "9", <GroupIcon />),
+  getItem("Schedulle", "1", <ScheduleIcon />, BrowserRoute.SCHEDULE_PAGE),
+  getItem("Teacher", "2", <TeacherIcon />, BrowserRoute.TEACHER),
+  getItem("Subject", "sub1", <SubjectIcon />, BrowserRoute.SUBJECT),
+  getItem("Classroom", "sub2", <ClassRoomIcon />, BrowserRoute.CLASSROOM),
+  getItem("Group", "9", <GroupIcon />, BrowserRoute.GROUP),
 ];
 
 export const Sidebar = () => {
@@ -78,7 +81,7 @@ export const Sidebar = () => {
           >
             <NavLink to={item.path}>
               <StyledListButton>
-                <StyledListIcon>{open ? null : item.icon}</StyledListIcon>
+                <StyledListIcon>{item.icon}</StyledListIcon>
 
                 <ListItemText
                   primary={item.label}
@@ -144,7 +147,7 @@ const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
     backgroundColor: "rgba(252, 192, 126, 1)",
     color: "rgba(65, 90, 128, 1)",
     position: "static",
-    height: "90vh",
+    height: "100vh",
   },
 }));
 
