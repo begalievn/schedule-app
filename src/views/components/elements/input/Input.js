@@ -11,7 +11,6 @@ export const Input = ({
   error,
   placeholder,
   name,
-  ref,
   ...props
 }) => {
   return (

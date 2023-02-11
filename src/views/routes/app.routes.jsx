@@ -98,7 +98,7 @@ export const AppRoutesDefinition = () => {
       element: (
         <PrivateAuthRoute
           Component={<SignIn />}
-          fallbackPath={BrowserRoute.SIGN_IN}
+          fallbackPath={BrowserRoute.startPage}
           isAllowed={!isLoggedIn}
         />
       ),

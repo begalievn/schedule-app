@@ -1,4 +1,4 @@
-import { Sidebar } from "../../components/sidebar";
+import { Sidebar } from "../../components/containers/sidebar";
 import { Header } from "../header";
 
 export const Main = (props) => {

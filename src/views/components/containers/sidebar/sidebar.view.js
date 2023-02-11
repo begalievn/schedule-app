@@ -21,11 +21,11 @@ import {
   ScheduleIcon,
   SubjectIcon,
   TeacherIcon,
-} from "../../../assets/icons";
+} from "../../../../assets/icons/index";
 
 import { NavLink } from "react-router-dom";
 
-import { BrowserRoute } from "../../routes/browser.routes";
+import { BrowserRoute } from "../../../routes/browser.routes";
 
 function getItem(label, key, icon, path, children) {
   return {

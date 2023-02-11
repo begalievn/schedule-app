@@ -1,11 +1,20 @@
 import { styled } from "@mui/material";
 import React from "react";
-import { TeacherForm } from "../../components/teacher";
+import { useState } from "react";
+import { TeacherForm } from "./components/teacher";
 
 export const Teacher = () => {
+  const [teachers, setTeachers] = useState([]);
+  const addTeacherHandler = (data) => {
+    console.log(data);
+    const newTeacher = [...teachers, data];
+
+    setTeachers(newTeacher);
+  };
+  console.log(teachers);
   return (
     <MainContainer>
-      <TeacherForm />
+      <TeacherForm addTeacher={addTeacherHandler} />
       <Container></Container>
     </MainContainer>
   );

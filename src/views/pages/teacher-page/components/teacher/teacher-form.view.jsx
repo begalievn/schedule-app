@@ -3,8 +3,10 @@ import React from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { styled } from "@mui/material";
-import { Input } from "../UI/input/Input";
-import { Button } from "../UI/button/Button";
+import { Input } from "../../../../components/elements/input/Input";
+import { Button } from "../../../../components/elements/button/buttont-v1";
+import { workingTime } from "./constants/working-time.constant";
+import { InputRadio } from "../../../../components/elements/input-v1_type_radio";
 
 const validateScema = Yup.object({
   firstName: Yup.string()
@@ -18,7 +20,7 @@ const validateScema = Yup.object({
     .required("must be"),
 });
 
-export const TeacherForm = () => {
+export const TeacherForm = ({ addTeacher }) => {
   const {
     values,
     errors,
@@ -28,13 +30,25 @@ export const TeacherForm = () => {
     handleChange,
     handleSubmit,
   } = useFormik({
-    initialValues: { firstName: "", lastName: "", workHours: "" },
+    initialValues: {
+      time: "",
+      lastName: "",
+      firstName: "",
+      workHours: "",
+    },
     onSubmit: submitHandler,
     validationSchema: validateScema,
   });
 
   function submitHandler(values) {
-    console.log(values);
+    const newTeacher = {
+      time: values.time,
+      lastName: values.lastName,
+      firstName: values.firstName,
+      workHours: values.workHours,
+    };
+
+    addTeacher(newTeacher);
     resetForm();
   }
 
@@ -56,6 +70,7 @@ export const TeacherForm = () => {
             <div>{errors.firstName}</div>
           ) : null}
         </StyledLabel>
+
         <StyledLabel htmlFor='lastName'>
           Last Name
           <StyledInput
@@ -71,6 +86,7 @@ export const TeacherForm = () => {
             <div>{errors.lastName}</div>
           ) : null}
         </StyledLabel>
+
         <StyledLabel htmlFor='workHours'>
           Work hour
           <StyledInput
@@ -87,26 +103,30 @@ export const TeacherForm = () => {
           ) : null}
         </StyledLabel>
       </StyledDiv>
+
       <StyledContainer>
         <RadioContainer>
-          <label htmlFor='after'>
-            after lunch
-            <input
-              type='radio'
-              name='time'
-              id='after'
-              value={"dastan"}
-            />
-          </label>
-          <label htmlFor='before'>
-            before lunch
-            <input
-              type='radio'
-              id='before'
-              value={"argen"}
-              name='time'
-            />
-          </label>
+          <InputRadio
+            name='time'
+            values={values.time}
+            timeTitle='After Lunch'
+            handleChange={handleChange}
+            workingTime={workingTime.AFTER}
+          />
+          <InputRadio
+            name='time'
+            values={values.time}
+            timeTitle='Before Lunch'
+            handleChange={handleChange}
+            workingTime={workingTime.BEFORE}
+          />
+          <InputRadio
+            name='time'
+            values={values.time}
+            timeTitle='Full'
+            handleChange={handleChange}
+            workingTime={workingTime.FULL}
+          />
         </RadioContainer>
         <Button type='submit'>Create Teacher</Button>
       </StyledContainer>
@@ -125,9 +145,9 @@ const StyledForm = styled("form")(() => ({
 
 const StyledInput = styled(Input)(() => ({
   maxWidth: "450px",
-  "-webkit-box-shadow": "5px 5px 5px -5px rgba(34, 60, 80, 0.57)",
-  "-moz-box-shadow": "5px 5px 5px -5px rgba(34, 60, 80, 0.57)",
-  " box-shadow": "5px 5px 5px -5px rgba(34, 60, 80, 0.57)",
+  WebkitBoxShadow: "5px 5px 5px -5px rgba(34, 60, 80, 0.57)",
+  MozBoxShadow: "5px 5px 5px -5px rgba(34, 60, 80, 0.57)",
+  boxShadow: "5px 5px 5px -5px rgba(34, 60, 80, 0.57)",
   borderRadius: "4px",
   "& .input": {
     borderRadius: "4px",
