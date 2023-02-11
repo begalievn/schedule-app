@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 
 import { styled } from "@mui/material/styles";
 
@@ -38,15 +38,16 @@ function getItem(label, key, icon, path, children) {
 }
 
 const items = [
-  getItem("Schedulle", "1", <ScheduleIcon />, BrowserRoute.SCHEDULE_PAGE),
-  getItem("Teacher", "2", <TeacherIcon />, BrowserRoute.TEACHER),
-  getItem("Subject", "sub1", <SubjectIcon />, BrowserRoute.SUBJECT),
-  getItem("Classroom", "sub2", <ClassRoomIcon />, BrowserRoute.CLASSROOM),
-  getItem("Group", "9", <GroupIcon />, BrowserRoute.GROUP),
+  getItem("Schedulle", "1", <ScheduleIcon />, BrowserRoute.ADMIN_SCHEDULE),
+  getItem("Teacher", "2", <TeacherIcon />, BrowserRoute.ADMIN_TEACHER),
+  getItem("Subject", "sub1", <SubjectIcon />, BrowserRoute.ADMIN_SUBJECT),
+  getItem("Classroom", "sub2", <ClassRoomIcon />, BrowserRoute.ADMIN_CLASSROOM),
+  getItem("Group", "9", <GroupIcon />, BrowserRoute.ADMIN_GROUP),
 ];
 
 export const Sidebar = () => {
   const [open, setOpen] = useState(false);
+  const [positionFixed, setPositionFixed] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -55,11 +56,17 @@ export const Sidebar = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  
+  useEffect(() => {
+    const positionChange = () => setPositionFixed(window.scrollY >= 66);
+    window.addEventListener("scroll", positionChange);
+    return () => window.removeEventListener("scroll", positionChange);
+  }, []);
   return (
     <Drawer
       variant='permanent'
       open={open}
+      positionFixed={positionFixed}
     >
       <DrawerHeader>
         {open ? (
@@ -128,7 +135,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
+const Drawer = styled(MuiDrawer)(({ theme, open, positionFixed }) => ({
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
@@ -146,7 +153,8 @@ const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
   "& .MuiPaper-root": {
     backgroundColor: "rgba(252, 192, 126, 1)",
     color: "rgba(65, 90, 128, 1)",
-    position: "static",
+    position: positionFixed ? "fixed" : "absolute",
+    top: positionFixed ? '0px' : '65px',
     height: "100vh",
   },
 }));

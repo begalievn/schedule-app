@@ -1,9 +1,9 @@
 import React from "react";
 
-export const GroupPage = () => {
+export const ClassroomPage = () => {
   return (
     <div>
-      <h2>Group page</h2>
+      <h1>Classroom</h1>
     </div>
   );
 };
