@@ -1,4 +1,3 @@
-import { Sidebar } from "../../components/containers/sidebar";
 import { Header } from "../header";
 
 export const Main = (props) => {
@@ -6,7 +5,6 @@ export const Main = (props) => {
     <main>
       <Header />
       <div style={{ display: "flex" }}>
-        <Sidebar />
         {props.children}
       </div>
     </main>

@@ -1,20 +1,20 @@
 import { useState } from "react";
+import { Outlet, Navigate } from "react-router-dom";
 
 import { Main } from "../content/main";
-import { Outlet } from "react-router-dom";
-
 import { SignIn } from "../pages/sign-in";
 import { SignUp } from "../pages/sign-up";
 import { NotFound } from "../pages/not-found";
 import { StartPage } from "../pages/start-page";
-import { Teacher } from "../pages/teacher-page";
-import { SubjectPage } from "../pages/subject-page";
-import { SchedulePage } from "../pages/schedule-page";
-import { GroupPage } from "../pages/group-page/group-page.view";
-import { ClassroomPage } from "../pages/classroom-page/classroom-page.view";
+import { Teacher } from "../pages/admin/sub-pages/teacher-page";
+import { SubjectPage } from "../pages/admin/sub-pages/subject-page";
+import { SchedulePage } from "../pages/admin/sub-pages/schedule-page";
+import { GroupPage } from "../pages/admin/sub-pages/group-page/group-page.view";
+import { ClassroomPage } from "../pages/admin/sub-pages/classroom-page";
 
 import { BrowserRoute } from "./browser.routes";
 import { PrivateAuthRoute } from "./PrivateAuthRoute";
+import {AdminPage} from "../pages/admin/admin.view";
 
 export const AppRoutesDefinition = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -42,54 +42,68 @@ export const AppRoutesDefinition = () => {
           ),
         },
         {
-          path: BrowserRoute.SCHEDULE_PAGE,
+          path: BrowserRoute.ADMIN,
           element: (
-            <PrivateAuthRoute
-              Component={<SchedulePage />}
-              fallbackPath={BrowserRoute.startPage}
-              isAllowed={isLoggedIn}
-            />
+              <AdminPage>
+                <Outlet />
+              </AdminPage>
           ),
-        },
-        {
-          path: BrowserRoute.TEACHER,
-          element: (
-            <PrivateAuthRoute
-              Component={<Teacher />}
-              fallbackPath={BrowserRoute.startPage}
-              isAllowed={isLoggedIn}
-            />
-          ),
-        },
-        {
-          path: BrowserRoute.SUBJECT,
-          element: (
-            <PrivateAuthRoute
-              Component={<SubjectPage />}
-              fallbackPath={BrowserRoute.startPage}
-              isAllowed={isLoggedIn}
-            />
-          ),
-        },
-        {
-          path: BrowserRoute.CLASSROOM,
-          element: (
-            <PrivateAuthRoute
-              Component={<ClassroomPage />}
-              fallbackPath={BrowserRoute.startPage}
-              isAllowed={isLoggedIn}
-            />
-          ),
-        },
-        {
-          path: BrowserRoute.GROUP,
-          element: (
-            <PrivateAuthRoute
-              Component={<GroupPage />}
-              fallbackPath={BrowserRoute.startPage}
-              isAllowed={isLoggedIn}
-            />
-          ),
+          children: [
+            {
+              path: '',
+              element: <Navigate to="schedule" />,
+            },
+            {
+              path: BrowserRoute.ADMIN_SCHEDULE,
+              element: (
+                <PrivateAuthRoute
+                  Component={<SchedulePage />}
+                  fallbackPath={BrowserRoute.startPage}
+                  isAllowed={isLoggedIn}
+                />
+              ),
+            },
+            {
+              path: BrowserRoute.ADMIN_TEACHER,
+              element: (
+                <PrivateAuthRoute
+                  Component={<Teacher />}
+                  fallbackPath={BrowserRoute.startPage}
+                  isAllowed={isLoggedIn}
+                />
+              ),
+            },
+            {
+              path: BrowserRoute.ADMIN_SUBJECT,
+              element: (
+                <PrivateAuthRoute
+                  Component={<SubjectPage />}
+                  fallbackPath={BrowserRoute.startPage}
+                  isAllowed={isLoggedIn}
+                />
+              ),
+            },
+            {
+              path: BrowserRoute.ADMIN_CLASSROOM,
+              element: (
+                <PrivateAuthRoute
+                  Component={<ClassroomPage />}
+                  fallbackPath={BrowserRoute.startPage}
+                  isAllowed={isLoggedIn}
+                />
+              ),
+            },
+            {
+              path: BrowserRoute.ADMIN_GROUP,
+              element: (
+                <PrivateAuthRoute
+                  Component={<GroupPage />}
+                  fallbackPath={BrowserRoute.startPage}
+                  isAllowed={isLoggedIn}
+                />
+              ),
+            },
+          ],
         },
       ],
     },

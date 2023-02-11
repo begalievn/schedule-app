@@ -1,5 +1,9 @@
 import React from "react";
 
 export const ClassroomPage = () => {
-  return <div>classroom-page.view</div>;
+  return (
+    <div>
+      <h1>Classroom</h1>
+    </div>
+  );
 };

@@ -1,5 +1,15 @@
-import { Sidebar } from "../../components/sidebar/index";
+import {Sidebar} from "../../components/sidebar/index";
 
-export const AdminPage = () => {
-  return <Sidebar />;
+// styles
+import classes from './style.module.scss';
+
+export const AdminPage = (props) => {
+  return (
+    <div className={classes.container}>
+      <Sidebar/>
+      <div className={classes.content}>
+        {props.children}
+      </div>
+    </div>
+  );
 };
