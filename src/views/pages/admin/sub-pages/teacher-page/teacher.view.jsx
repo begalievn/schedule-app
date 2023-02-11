@@ -1,7 +1,7 @@
 import { styled } from "@mui/material";
 import React from "react";
 import { useState } from "react";
-import { TeacherForm } from "./components/teacher";
+import { TeacherForm } from "../../../teacher-page/components/teacher/index";
 
 export const Teacher = () => {
   const [teachers, setTeachers] = useState([]);

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import { styled } from "@mui/material/styles";
 
@@ -56,7 +56,7 @@ export const Sidebar = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
+
   useEffect(() => {
     const positionChange = () => setPositionFixed(window.scrollY >= 66);
     window.addEventListener("scroll", positionChange);
@@ -154,7 +154,7 @@ const Drawer = styled(MuiDrawer)(({ theme, open, positionFixed }) => ({
     backgroundColor: "rgba(252, 192, 126, 1)",
     color: "rgba(65, 90, 128, 1)",
     position: positionFixed ? "fixed" : "absolute",
-    top: positionFixed ? '0px' : '65px',
+    top: positionFixed ? "0px" : "65px",
     height: "100vh",
   },
 }));
