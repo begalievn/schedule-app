@@ -8,6 +8,7 @@ export const Button = ({
   active,
   disabled,
   bgcolor,
+  style,
   ...props
 }) => {
   return (
@@ -18,6 +19,7 @@ export const Button = ({
       hover={hover}
       active={active}
       width={width}
+      style={style}
       {...props}
     >
       {children}
@@ -25,7 +27,7 @@ export const Button = ({
   );
 };
 
-const StyledButton = styled(MuiButton)((props) => ({
+const StyledButton = styled(MuiButton)(() => ({
   borderRadius: "10px",
   color: "#FFFFFF",
   background: "#0079BF",
