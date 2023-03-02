@@ -1,9 +1,19 @@
 import React from "react";
+import {NavLink} from "react-router-dom";
 
-export const Teacher = () => {
+// styles
+import classes from './style.module.scss';
+
+export const Teacher = (props) => {
   return (
-    <div>
+    <div className={classes.container}>
       <h1>Teacher</h1>
+      <button>
+        <NavLink to={'create'}>
+          Create
+        </NavLink>
+      </button>
+      {props.children}
     </div>
   );
 };
