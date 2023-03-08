@@ -1,10 +1,10 @@
 import React from "react";
+import {BlockContainer} from "../../../../components/containers/block";
 
-export const SchedulePage = () => {
+export const SchedulePage = (props) => {
   return (
-    <div >
-      <h1>
-        Schedule
-      </h1>
-    </div>);
+      <BlockContainer>
+        { props.children }
+      </BlockContainer>
+    );
 };
