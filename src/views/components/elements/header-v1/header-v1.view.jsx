@@ -3,10 +3,10 @@ import React from 'react';
 // styles
 import classes from './style.module.scss';
 
-export const HeaderV1 = ({ text }) => {
+export const HeaderV1 = ({ style, children }) => {
     return (
-        <h1 className={classes.header}>
-            {text}
+        <h1 style={style} className={classes.header}>
+            { children }
         </h1>
     );
 };

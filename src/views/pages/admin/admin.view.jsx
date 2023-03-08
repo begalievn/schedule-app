@@ -12,6 +12,5 @@ export const AdminPage = (props) => {
         {props.children}
       </Container>
     </BlockContainer>
-    
   );
 };

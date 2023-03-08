@@ -19,7 +19,7 @@ import {TeacherList} from "../pages/admin/sub-pages/teacher-page/sub-pages/teach
 import {TeacherCreate} from "../pages/admin/sub-pages/teacher-page/sub-pages/teacher-create";
 import {
   ScheduleListPage
-} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedules-list/schedule-list-page.view";
+} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedules-list";
 import {
   ScheduleCreatePage
 } from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-create/schedule-create-page.view";
