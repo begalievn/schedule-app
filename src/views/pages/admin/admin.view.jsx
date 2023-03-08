@@ -1,13 +1,17 @@
 import { Sidebar } from "../../components/containers/sidebar/index";
 
 // styles
-import classes from "./style.module.scss";
+import {BlockContainer} from "../../components/containers/block";
+import {Container} from "@mui/material";
 
 export const AdminPage = (props) => {
   return (
-    <div className={classes.container}>
-      <Sidebar />
-      <div className={classes.content}>{props.children}</div>
-    </div>
+    <BlockContainer style={{ paddingLeft: '80px', paddingRight: '10px' }}>
+      <Sidebar/>
+      <Container maxWidth='xl'>
+        {props.children}
+      </Container>
+    </BlockContainer>
+    
   );
 };

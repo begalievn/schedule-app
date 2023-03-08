@@ -151,7 +151,7 @@ const Drawer = styled(MuiDrawer)(({ theme, open, positionFixed }) => ({
     "& .MuiDrawer-paper": closedMixin(theme),
   }),
   "& .MuiPaper-root": {
-    backgroundColor: "rgba(252, 192, 126, 1)",
+    backgroundColor: "#9FB8F9",
     color: "rgba(65, 90, 128, 1)",
     position: positionFixed ? "fixed" : "absolute",
     top: positionFixed ? "0px" : "65px",

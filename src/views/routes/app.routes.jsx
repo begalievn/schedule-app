@@ -14,12 +14,24 @@ import { ClassroomPage } from "../pages/admin/sub-pages/classroom-page";
 
 import { BrowserRoute } from "./browser.routes";
 import { PrivateAuthRoute } from "./PrivateAuthRoute";
-import { AdminPage } from "../pages/admin/admin.view";
-import { TeacherList } from "../pages/admin/sub-pages/teacher-page/sub-pages/teacher-list";
-import { TeacherCreate } from "../pages/admin/sub-pages/teacher-page/sub-pages/teacher-create";
+import {AdminPage} from "../pages/admin/admin.view";
+import {TeacherList} from "../pages/admin/sub-pages/teacher-page/sub-pages/teacher-list";
+import {TeacherCreate} from "../pages/admin/sub-pages/teacher-page/sub-pages/teacher-create";
+import {
+  ScheduleListPage
+} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedules-list/schedule-list-page.view";
+import {
+  ScheduleCreatePage
+} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-create/schedule-create-page.view";
+import {
+  ScheduleSendPage
+} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-send/schedule-send-page.view";
+import {
+  ScheduleTablePage
+} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-table/schedule-table-page.view";
 
 export const AppRoutesDefinition = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn] = useState(true);
   return [
     {
       path: "/",
@@ -58,12 +70,36 @@ export const AppRoutesDefinition = () => {
             {
               path: BrowserRoute.ADMIN_SCHEDULE,
               element: (
-                <PrivateAuthRoute
-                  Component={<SchedulePage />}
-                  fallbackPath={BrowserRoute.startPage}
-                  isAllowed={isLoggedIn}
-                />
+                <SchedulePage>
+                  <Outlet />
+                </SchedulePage>
               ),
+              children: [
+                {
+                  index: true,
+                  element: (
+                    <ScheduleListPage />
+                  )
+                },
+                {
+                  path: BrowserRoute.ADMIN_SCHEDULE_PAGE_CREATE,
+                  element: (
+                    <ScheduleCreatePage />
+                  )
+                },
+                {
+                  path: BrowserRoute.ADMIN_SCHEDULE_PAGE_SEND,
+                  element: (
+                    <ScheduleSendPage />
+                  )
+                },
+                {
+                  path: BrowserRoute.ADMIN_SCHEDULE_PAGE_TABLE,
+                  element: (
+                    <ScheduleTablePage />
+                  )
+                }
+              ]
             },
             {
               path: BrowserRoute.ADMIN_TEACHER,
