@@ -58,14 +58,14 @@ export const AppRoutesDefinition = () => {
         {
           path: BrowserRoute.ADMIN,
           element: (
-              <AdminPage>
-                <Outlet />
-              </AdminPage>
+            <AdminPage>
+              <Outlet />
+            </AdminPage>
           ),
           children: [
             {
-              path: '',
-              element: <Navigate to="schedule" />,
+              path: "",
+              element: <Navigate to='schedule' />,
             },
             {
               path: BrowserRoute.ADMIN_SCHEDULE,
@@ -111,17 +111,13 @@ export const AppRoutesDefinition = () => {
               children: [
                 {
                   index: true,
-                  element: (
-                    <TeacherList />
-                  )
+                  element: <TeacherList />,
                 },
                 {
                   path: BrowserRoute.ADMIN_TEACHER_CREATE,
-                  element: (
-                    <TeacherCreate />
-                  )
-                }
-              ]
+                  element: <TeacherCreate />,
+                },
+              ],
             },
             {
               path: BrowserRoute.ADMIN_SUBJECT,

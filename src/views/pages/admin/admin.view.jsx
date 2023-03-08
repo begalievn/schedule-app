@@ -1,4 +1,4 @@
-import {Sidebar} from "../../components/sidebar/index";
+import { Sidebar } from "../../components/containers/sidebar/index";
 
 // styles
 import {BlockContainer} from "../../components/containers/block";

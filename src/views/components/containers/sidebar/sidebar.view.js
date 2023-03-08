@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import { styled } from "@mui/material/styles";
 
@@ -21,11 +21,11 @@ import {
   ScheduleIcon,
   SubjectIcon,
   TeacherIcon,
-} from "../../../assets/icons";
+} from "../../../../assets/icons/index";
 
 import { NavLink } from "react-router-dom";
 
-import { BrowserRoute } from "../../routes/browser.routes";
+import { BrowserRoute } from "../../../routes/browser.routes";
 
 function getItem(label, key, icon, path, children) {
   return {
@@ -56,7 +56,7 @@ export const Sidebar = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
+
   useEffect(() => {
     const positionChange = () => setPositionFixed(window.scrollY >= 66);
     window.addEventListener("scroll", positionChange);
@@ -154,7 +154,7 @@ const Drawer = styled(MuiDrawer)(({ theme, open, positionFixed }) => ({
     backgroundColor: "#9FB8F9",
     color: "rgba(65, 90, 128, 1)",
     position: positionFixed ? "fixed" : "absolute",
-    top: positionFixed ? '0px' : '65px',
+    top: positionFixed ? "0px" : "64px",
     height: "100vh",
   },
 }));

@@ -4,8 +4,8 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { ApplicationLoginForm } from "../../components/application-login-form/application.login.form";
 
-import { Button } from "../../components/UI/button/Button";
-import { Input } from "../../components/UI/input/Input";
+import { Button } from "../../components/elements/button/buttont-v1";
+import { Input } from "../../components/elements/input/Input";
 
 export const SignIn = () => {
   const submitHandler = (e) => {
