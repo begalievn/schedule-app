@@ -1,13 +1,10 @@
 import React from 'react';
-import {AdminBackButton} from "../../../../../../components/elements/admin-back-button/admin-back-button.element";
+import {ContentContainer} from "../../../../../../components/containers/content";
 
 export const ScheduleListPage = () => {
   return (
-    <div>
-      <AdminBackButton />
-      <h2>
-        Schedule List Page
-      </h2>
-    </div>
+    <ContentContainer>
+      <h2>Schedule List Page</h2>
+    </ContentContainer>
   );
 };
