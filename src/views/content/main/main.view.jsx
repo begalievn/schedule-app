@@ -1,12 +1,13 @@
 import { Header } from "../header";
+import {BlockContainer} from "../../components/containers/block";
 
 export const Main = (props) => {
   return (
     <main>
       <Header />
-      <div style={{ display: "flex" }}>
-        {props.children}
-      </div>
+      <BlockContainer>
+          {props.children}
+      </BlockContainer>
     </main>
   );
 };
