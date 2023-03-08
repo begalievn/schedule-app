@@ -1,11 +1,13 @@
+import { MenuItem } from "@mui/material";
 import React from "react";
+import { Select } from "../../../../../../components/elements/select-v1";
 
 import styles from "./teacher_create.module.scss";
 
 const Input = ({ name, labelvalue, type }) => {
   return (
     <label htmlFor={name}>
-      {labelvalue}
+      <span> {labelvalue}</span>
       <input
         type={type}
         name={name}
@@ -17,7 +19,7 @@ const Input = ({ name, labelvalue, type }) => {
 export const TeacherCreate = () => {
   return (
     <div>
-      <h2>Teacher's personla information</h2>
+      <h2 className={styles.title}>Teacher's personla information</h2>
 
       <form className={styles.form}>
         <div className={styles.form_photo}>Photo</div>
@@ -44,6 +46,7 @@ export const TeacherCreate = () => {
           />
 
           <label htmlFor='gender'>
+            Gender
             <div className={styles.form_first_container_radio_btn}>
               <span>
                 <input
@@ -84,8 +87,95 @@ export const TeacherCreate = () => {
             type='text'
           />
         </div>
-        <div className={styles.form_second_container}></div>
+        <div className={styles.form_second_container}>
+          <Select selecTitle='Degree'>
+            {degrees.map((degree) => (
+              <MenuItem
+                value={degree.title}
+                key={degree.id}
+              >
+                {degree.title}
+              </MenuItem>
+            ))}
+          </Select>
+          <label htmlFor='workinghours'>
+            Working hours
+            <span>
+              <input
+                name='workinghours'
+                type='radio'
+                value='8to13'
+              />
+              from 8 to 13
+            </span>
+            <span>
+              <input
+                name='workinghours'
+                type='radio'
+                value='13to18'
+              />
+              from 13 to 18
+            </span>
+            <span>
+              <input
+                name='workinghours'
+                type='radio'
+                value='full'
+              />
+              full
+            </span>
+          </label>
+
+          <label>
+            Working days
+            <div className={styles.form_second_container_checkbox_container}>
+              <span>
+                Mn
+                <input type='checkbox' />
+              </span>
+              <span>
+                Tu
+                <input type='checkbox' />
+              </span>
+              <span>
+                We
+                <input type='checkbox' />
+              </span>
+              <span>
+                Th
+                <input type='checkbox' />
+              </span>
+              <span>
+                Fr
+                <input type='checkbox' />
+              </span>
+              <span>
+                Sa
+                <input type='checkbox' />
+              </span>
+            </div>
+          </label>
+        </div>
       </form>
     </div>
   );
 };
+
+const degrees = [
+  {
+    id: "1",
+    title: "associate degree",
+  },
+  {
+    id: "2",
+    title: "bachelor degree",
+  },
+  {
+    id: "3",
+    title: "graduate degree",
+  },
+  {
+    id: "4",
+    title: "doctorate degree",
+  },
+];
