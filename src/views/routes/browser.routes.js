@@ -5,6 +5,8 @@ export const BrowserRoute = {
   ADMIN: "/admin",
   ADMIN_SCHEDULE: "schedule",
   ADMIN_TEACHER: "teacher",
+  ADMIN_TEACHER_LIST: "list",
+  ADMIN_TEACHER_CREATE: "create",
   ADMIN_SUBJECT: "subject",
   ADMIN_CLASSROOM: "classroom",
   ADMIN_GROUP: "group",

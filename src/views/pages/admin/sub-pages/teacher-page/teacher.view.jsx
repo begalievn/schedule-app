@@ -1,30 +1,18 @@
 import { styled } from "@mui/material";
 import React from "react";
-import { useState } from "react";
-import { TeacherForm } from "../../../teacher-page/components/teacher/index";
+import { NavLink } from "react-router-dom";
 
-export const Teacher = () => {
-  const [teachers, setTeachers] = useState([]);
-  const addTeacherHandler = (data) => {
-    console.log(data);
-    const newTeacher = [...teachers, data];
+// styles
+import classes from "./style.module.scss";
 
-    setTeachers(newTeacher);
-  };
-  console.log(teachers);
+export const Teacher = (props) => {
   return (
-    <MainContainer>
-      <TeacherForm addTeacher={addTeacherHandler} />
-      <Container></Container>
-    </MainContainer>
+    <div className={classes.container}>
+      <h1>Teacher</h1>
+      <button>
+        <NavLink to={"create"}>Create</NavLink>
+      </button>
+      {props.children}
+    </div>
   );
 };
-const MainContainer = styled("div")(() => ({
-  width: "100%",
-  backgroundColor: "rgba(238, 233, 207, 1)",
-  margin: "28px 20px",
-  padding: "33px",
-  borderRadius: "5px",
-}));
-
-const Container = styled("div")(() => ({}));

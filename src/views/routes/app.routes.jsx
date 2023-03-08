@@ -14,7 +14,9 @@ import { ClassroomPage } from "../pages/admin/sub-pages/classroom-page";
 
 import { BrowserRoute } from "./browser.routes";
 import { PrivateAuthRoute } from "./PrivateAuthRoute";
-import {AdminPage} from "../pages/admin/admin.view";
+import { AdminPage } from "../pages/admin/admin.view";
+import { TeacherList } from "../pages/admin/sub-pages/teacher-page/sub-pages/teacher-list";
+import { TeacherCreate } from "../pages/admin/sub-pages/teacher-page/sub-pages/teacher-create";
 
 export const AppRoutesDefinition = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -44,14 +46,14 @@ export const AppRoutesDefinition = () => {
         {
           path: BrowserRoute.ADMIN,
           element: (
-              <AdminPage>
-                <Outlet />
-              </AdminPage>
+            <AdminPage>
+              <Outlet />
+            </AdminPage>
           ),
           children: [
             {
-              path: '',
-              element: <Navigate to="schedule" />,
+              path: "",
+              element: <Navigate to='schedule' />,
             },
             {
               path: BrowserRoute.ADMIN_SCHEDULE,
@@ -66,12 +68,20 @@ export const AppRoutesDefinition = () => {
             {
               path: BrowserRoute.ADMIN_TEACHER,
               element: (
-                <PrivateAuthRoute
-                  Component={<Teacher />}
-                  fallbackPath={BrowserRoute.startPage}
-                  isAllowed={isLoggedIn}
-                />
+                <Teacher>
+                  <Outlet />
+                </Teacher>
               ),
+              children: [
+                {
+                  index: true,
+                  element: <TeacherList />,
+                },
+                {
+                  path: BrowserRoute.ADMIN_TEACHER_CREATE,
+                  element: <TeacherCreate />,
+                },
+              ],
             },
             {
               path: BrowserRoute.ADMIN_SUBJECT,
