@@ -15,7 +15,7 @@ import { NavLink } from "react-router-dom";
 export const Header = () => {
   return (
     <>
-      <AppBar position='static'>
+      <StyledAppBar position='static'>
         <Container maxWidth='xl'>
           <StyledToolbar disableGutters>
             <LogoElement />
@@ -33,7 +33,7 @@ export const Header = () => {
             </Box>
           </StyledToolbar>
         </Container>
-      </AppBar>
+      </StyledAppBar>
     </>
   );
 };
@@ -41,4 +41,9 @@ export const Header = () => {
 const StyledToolbar = styled(Toolbar)(() => ({
   display: "flex",
   justifyContent: "space-between",
+}));
+
+const StyledAppBar = styled(AppBar)(() => ({
+  background: "rgba(114, 123, 212, 1)",
+  boxShadow: "none",
 }));
