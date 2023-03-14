@@ -155,7 +155,7 @@ const Drawer = styled(MuiDrawer)(({ theme, open, positionFixed }) => ({
     color: "rgba(65, 90, 128, 1)",
     position: positionFixed ? "fixed" : "absolute",
     top: positionFixed ? "0px" : "64px",
-    height: "100vh",
+    // height: "90vh",
   },
 }));
 
