@@ -37,7 +37,7 @@ export const Input = ({
 const StyledInput = styled(TextField)(() => ({
   "& .input": {
     border: "1px solid #AFAFAF",
-    borderRadius: "8px",
+    borderRadius: "4px",
     background: "#FFFFFF",
     color: "black",
   },

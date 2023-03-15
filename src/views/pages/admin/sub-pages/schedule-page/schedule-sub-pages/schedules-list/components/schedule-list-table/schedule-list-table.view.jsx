@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import {addPadBefore} from "../../../../../../../../../utils/addPadBefore";
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -30,8 +31,8 @@ const StyledTableRow = styled(TableRow)(({theme}) => ({
   },
   '&:hover': {
     backgroundColor: theme.palette.action.hover,
+    cursor: 'pointer',
   },
-  // hide last border
   '&:last-child td, &:last-child th': {
     border: 0,
   },
@@ -53,8 +54,7 @@ const rows = [
   createData(5, 'Frozen yoghurt', '2022/2023'),
   createData(5, 'Frozen yoghurt', '2022/2023'),
   createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
+  createData(4, 'Frozen yoghurt', '2022/2023'),
   createData(5, 'Frozen yoghurt', '2022/2023'),
   createData(5, 'Frozen yoghurt', '2022/2023'),
   createData(5, 'Frozen yoghurt', '2022/2023'),
@@ -63,7 +63,7 @@ const rows = [
 export const ScheduleListTable = () => {
   return (
     <Paper sx={{width: '100%', overflow: 'hidden'}}>
-      <TableContainer sx={{maxHeight: 440}}>
+      <TableContainer sx={{height: 440}}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -73,10 +73,10 @@ export const ScheduleListTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {rows.map((row, index) => (
               <StyledTableRow key={row.name}>
                 <StyledTableCell component="th" scope="row">
-                  {row.id}
+                  { addPadBefore(index+1, 0, 2) }
                 </StyledTableCell>
                 <StyledTableCell align="left">{row.name}</StyledTableCell>
                 <StyledTableCell align="center">{row.year}</StyledTableCell>
