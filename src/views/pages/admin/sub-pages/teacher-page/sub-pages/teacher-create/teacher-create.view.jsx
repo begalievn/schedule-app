@@ -1,6 +1,6 @@
 import { MenuItem } from "@mui/material";
 import React from "react";
-import { Select } from "../../../../../../components/elements/select-v1";
+import { SelectV1 } from "../../../../../../components/elements/select-v1";
 
 import styles from "./teacher_create.module.scss";
 
@@ -88,7 +88,7 @@ export const TeacherCreate = () => {
           />
         </div>
         <div className={styles.form_second_container}>
-          <Select selecTitle='Degree'>
+          <SelectV1 selecTitle='Degree'>
             {degrees.map((degree) => (
               <MenuItem
                 value={degree.title}
@@ -97,7 +97,7 @@ export const TeacherCreate = () => {
                 {degree.title}
               </MenuItem>
             ))}
-          </Select>
+          </SelectV1>
           <label htmlFor='workinghours'>
             Working hours
             <span>

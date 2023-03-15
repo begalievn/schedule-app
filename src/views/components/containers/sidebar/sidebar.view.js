@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { styled } from "@mui/material/styles";
 
@@ -38,7 +38,7 @@ function getItem(label, key, icon, path, children) {
 }
 
 const items = [
-  getItem("Schedulle", "1", <ScheduleIcon />, BrowserRoute.ADMIN_SCHEDULE),
+  getItem("Schedule", "1", <ScheduleIcon />, BrowserRoute.ADMIN_SCHEDULE),
   getItem("Teacher", "2", <TeacherIcon />, BrowserRoute.ADMIN_TEACHER),
   getItem("Subject", "sub1", <SubjectIcon />, BrowserRoute.ADMIN_SUBJECT),
   getItem("Classroom", "sub2", <ClassRoomIcon />, BrowserRoute.ADMIN_CLASSROOM),
@@ -47,7 +47,6 @@ const items = [
 
 export const Sidebar = () => {
   const [open, setOpen] = useState(false);
-  const [positionFixed, setPositionFixed] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -56,17 +55,11 @@ export const Sidebar = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
-  useEffect(() => {
-    const positionChange = () => setPositionFixed(window.scrollY >= 66);
-    window.addEventListener("scroll", positionChange);
-    return () => window.removeEventListener("scroll", positionChange);
-  }, []);
+  
   return (
     <Drawer
       variant='permanent'
       open={open}
-      positionFixed={positionFixed}
     >
       <DrawerHeader>
         {open ? (
@@ -153,9 +146,9 @@ const Drawer = styled(MuiDrawer)(({ theme, open, positionFixed }) => ({
   "& .MuiPaper-root": {
     backgroundColor: "#9FB8F9",
     color: "rgba(65, 90, 128, 1)",
-    position: positionFixed ? "fixed" : "absolute",
-    top: positionFixed ? "0px" : "64px",
-    // height: "90vh",
+    position: "fixed",
+    top: "64px",
+    height: "calc(100vh - 64px)",
   },
 }));
 
@@ -166,8 +159,10 @@ const StyledListButton = styled(ListItemButton)(() => ({
 }));
 
 const StyledListIcon = styled(ListItemIcon)(() => ({
-  color: "rgba(140, 131, 131, 1)",
+  // backgroundColor:'white',
+  color: "white" ,
   "& svg": {
+    color:'white',
     maxWidht: "15px",
     maxHeight: "18px",
   },
