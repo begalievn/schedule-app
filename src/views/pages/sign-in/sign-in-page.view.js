@@ -4,8 +4,8 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { ApplicationLoginForm } from "../../components/application-login-form/application.login.form";
 
-import { Button } from "../../components/elements/button/buttont-v1";
-import { Input } from "../../components/elements/input/Input";
+// import { Button } from "../../components/elements/button/buttont-v1";
+// import { Input } from "../../components/elements/input/Input";
 
 export const SignIn = () => {
   const submitHandler = (e) => {
@@ -15,18 +15,18 @@ export const SignIn = () => {
   return (
     <ApplicationLoginForm>
       <StyledForm onSubmit={submitHandler}>
-        <StyledInput
+        {/* <StyledInput
           type='email'
           label='Login'
         />
         <StyledInput
           type='password'
           label='Password'
-        />
+        /> */}
         <ButtonBox>
-          <StyledButton>Sign In</StyledButton>
+          {/* <StyledButton>Sign In</StyledButton> */}
           <StyledNavlink to='/signUp'>
-            <SignUpButton>or Sign Up </SignUpButton>
+            {/* <SignUpButton>or Sign Up </SignUpButton> */}
           </StyledNavlink>
         </ButtonBox>
       </StyledForm>
@@ -42,30 +42,30 @@ const StyledForm = styled("form")(() => ({
   gap: "50px",
 }));
 
-const StyledInput = styled(Input)(() => ({
-  "& .MuiFormLabel-root": {
-    fontSize: "20px",
-    fontWeight: 500,
-    top: -10,
-    left: -12,
-  },
-  "& .MuiInputLabel-root.Mui-focused": {
-    left: "6px",
-    top: 0,
-    fontSize: "14px",
-    color: "#AFAFAF",
-  },
-}));
+// const StyledInput = styled(Input)(() => ({
+//   "& .MuiFormLabel-root": {
+//     fontSize: "20px",
+//     fontWeight: 500,
+//     top: -10,
+//     left: -12,
+//   },
+//   "& .MuiInputLabel-root.Mui-focused": {
+//     left: "6px",
+//     top: 0,
+//     fontSize: "14px",
+//     color: "#AFAFAF",
+//   },
+// }));
 
-const StyledButton = styled(Button)(() => ({
-  width: "35%",
-  alignSelf: "end ",
-}));
+// const StyledButton = styled(Button)(() => ({
+//   width: "35%",
+//   alignSelf: "end ",
+// }));
 
-const SignUpButton = styled(StyledButton)(() => ({
-  background: "red",
-  width: "39%",
-}));
+// const SignUpButton = styled(StyledButton)(() => ({
+//   background: "red",
+//   width: "39%",
+// }));
 
 const StyledNavlink = styled(NavLink)(() => ({
   display: "flex",
