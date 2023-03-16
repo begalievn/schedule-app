@@ -1,23 +1,37 @@
 import { useState } from "react";
+import { Outlet, Navigate } from "react-router-dom";
 
 import { Main } from "../content/main";
-import { Outlet } from "react-router-dom";
-
 import { SignIn } from "../pages/sign-in";
 import { SignUp } from "../pages/sign-up";
 import { NotFound } from "../pages/not-found";
 import { StartPage } from "../pages/start-page";
-import { Teacher } from "../pages/teacher-page";
-import { SubjectPage } from "../pages/subject-page";
-import { SchedulePage } from "../pages/schedule-page";
-import { GroupPage } from "../pages/group-page/group-page.view";
-import { ClassroomPage } from "../pages/classroom-page/classroom-page.view";
+import { Teacher } from "../pages/admin/sub-pages/teacher-page";
+import { SubjectPage } from "../pages/admin/sub-pages/subject-page";
+import { SchedulePage } from "../pages/admin/sub-pages/schedule-page";
+import { GroupPage } from "../pages/admin/sub-pages/group-page/group-page.view";
+import { ClassroomPage } from "../pages/admin/sub-pages/classroom-page";
 
 import { BrowserRoute } from "./browser.routes";
 import { PrivateAuthRoute } from "./PrivateAuthRoute";
+import {AdminPage} from "../pages/admin/admin.view";
+import {TeacherList} from "../pages/admin/sub-pages/teacher-page/sub-pages/teacher-list";
+import {TeacherCreate} from "../pages/admin/sub-pages/teacher-page/sub-pages/teacher-create";
+import {
+  ScheduleListPage
+} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedules-list";
+import {
+  ScheduleCreatePage
+} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-create/schedule-create-page.view";
+import {
+  ScheduleSendPage
+} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-send/schedule-send-page.view";
+import {
+  ScheduleTablePage
+} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-table/schedule-table-page.view";
 
 export const AppRoutesDefinition = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn] = useState(true);
   return [
     {
       path: "/",
@@ -42,54 +56,100 @@ export const AppRoutesDefinition = () => {
           ),
         },
         {
-          path: BrowserRoute.SCHEDULE_PAGE,
+          path: BrowserRoute.ADMIN,
           element: (
-            <PrivateAuthRoute
-              Component={<SchedulePage />}
-              fallbackPath={BrowserRoute.startPage}
-              isAllowed={isLoggedIn}
-            />
+            <AdminPage>
+              <Outlet />
+            </AdminPage>
           ),
-        },
-        {
-          path: BrowserRoute.TEACHER,
-          element: (
-            <PrivateAuthRoute
-              Component={<Teacher />}
-              fallbackPath={BrowserRoute.startPage}
-              isAllowed={isLoggedIn}
-            />
-          ),
-        },
-        {
-          path: BrowserRoute.SUBJECT,
-          element: (
-            <PrivateAuthRoute
-              Component={<SubjectPage />}
-              fallbackPath={BrowserRoute.startPage}
-              isAllowed={isLoggedIn}
-            />
-          ),
-        },
-        {
-          path: BrowserRoute.CLASSROOM,
-          element: (
-            <PrivateAuthRoute
-              Component={<ClassroomPage />}
-              fallbackPath={BrowserRoute.startPage}
-              isAllowed={isLoggedIn}
-            />
-          ),
-        },
-        {
-          path: BrowserRoute.GROUP,
-          element: (
-            <PrivateAuthRoute
-              Component={<GroupPage />}
-              fallbackPath={BrowserRoute.startPage}
-              isAllowed={isLoggedIn}
-            />
-          ),
+          children: [
+            {
+              path: "",
+              element: <Navigate to='schedule' />,
+            },
+            {
+              path: BrowserRoute.ADMIN_SCHEDULE,
+              element: (
+                <SchedulePage>
+                  <Outlet />
+                </SchedulePage>
+              ),
+              children: [
+                {
+                  index: true,
+                  element: (
+                    <ScheduleListPage />
+                  )
+                },
+                {
+                  path: BrowserRoute.ADMIN_SCHEDULE_PAGE_CREATE,
+                  element: (
+                    <ScheduleCreatePage />
+                  )
+                },
+                {
+                  path: BrowserRoute.ADMIN_SCHEDULE_PAGE_SEND,
+                  element: (
+                    <ScheduleSendPage />
+                  )
+                },
+                {
+                  path: BrowserRoute.ADMIN_SCHEDULE_PAGE_TABLE,
+                  element: (
+                    <ScheduleTablePage />
+                  )
+                }
+              ]
+            },
+            {
+              path: BrowserRoute.ADMIN_TEACHER,
+              element: (
+                <Teacher>
+                  <Outlet />
+                </Teacher>
+              ),
+              children: [
+                {
+                  index: true,
+                  element: <TeacherList />,
+                },
+                {
+                  path: BrowserRoute.ADMIN_TEACHER_CREATE,
+                  element: <TeacherCreate />,
+                },
+              ],
+            },
+            {
+              path: BrowserRoute.ADMIN_SUBJECT,
+              element: (
+                <PrivateAuthRoute
+                  Component={<SubjectPage />}
+                  fallbackPath={BrowserRoute.startPage}
+                  isAllowed={isLoggedIn}
+                />
+              ),
+            },
+            {
+              path: BrowserRoute.ADMIN_CLASSROOM,
+              element: (
+                <PrivateAuthRoute
+                  Component={<ClassroomPage />}
+                  fallbackPath={BrowserRoute.startPage}
+                  isAllowed={isLoggedIn}
+                />
+              ),
+            },
+            {
+              path: BrowserRoute.ADMIN_GROUP,
+              element: (
+                <PrivateAuthRoute
+                  Component={<GroupPage />}
+                  fallbackPath={BrowserRoute.startPage}
+                  isAllowed={isLoggedIn}
+                />
+              ),
+            },
+          ],
         },
       ],
     },
@@ -98,7 +158,7 @@ export const AppRoutesDefinition = () => {
       element: (
         <PrivateAuthRoute
           Component={<SignIn />}
-          fallbackPath={BrowserRoute.SIGN_IN}
+          fallbackPath={BrowserRoute.startPage}
           isAllowed={!isLoggedIn}
         />
       ),
