@@ -10,7 +10,7 @@ import {SelectSubjectsTable} from "./components/select-subjects-table/select-sub
 import classes from './style.module.scss';
 import {useNavigate} from "react-router-dom";
 import {SelectV1} from "../../../../../../components/elements/select-v1";
-import {Input} from "../../../../../../components/elements/input/Input";
+import { Input } from "../../../../../../components/elements/input/Input";
 
 const courseList = [
   {
@@ -50,8 +50,8 @@ export const ScheduleCreatePage = () => {
         Create a new Schedule
       </HeaderV1>
       <div className={classes.semester_container}>
+        <Input style={{ width: '300px' }} placeholder={'Name of a schedule'} />
         <div><SelectV1 /></div>
-        <Input placeholder={'Name of a schedule'} />
       </div>
       <div className={classes.courses_container}>
         {
