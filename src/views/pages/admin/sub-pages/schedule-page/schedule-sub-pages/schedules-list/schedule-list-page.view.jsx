@@ -7,6 +7,8 @@ import {ScheduleListTable} from "./components/schedule-list-table";
 // styles
 import classes from './style.module.scss';
 import {useNavigate} from "react-router-dom";
+import { SelectV1 } from "../../../../../../components/elements/select-v1";
+import { ButtonV2 } from "../../../../../../components/elements/button-v2";
 
 export const ScheduleListPage = () => {
   const navigate = useNavigate();
@@ -22,8 +24,8 @@ export const ScheduleListPage = () => {
           Schedule list
         </HeaderV1>
         <div className={classes.buttons_container}>
-          <div>Select</div>
-          <button onClick={handleCreateNewSchedule}>Create a schedule</button>
+          <SelectV1 />
+          <ButtonV2 onClick={ handleCreateNewSchedule }>Create a new schedule</ButtonV2>
         </div>
       </ElementsToOneLine>
       

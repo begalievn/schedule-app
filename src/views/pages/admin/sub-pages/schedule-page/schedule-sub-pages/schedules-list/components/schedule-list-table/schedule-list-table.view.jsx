@@ -6,19 +6,19 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {addPadBefore} from "../../../../../../../../../utils/addPadBefore";
+import { addPadBefore } from "../../../../../../../../../utils/addPadBefore";
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#4E8BE6',
     color: theme.palette.common.white,
     fontWeight: 600,
-    fontSize: '15px',
+    fontSize: '16px',
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: '16px',
     fontWeight: 500,
-    
+    fontFamily: 'Inter',
   }
 }));
 

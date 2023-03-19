@@ -18,6 +18,7 @@ export const SelectV1 = ({ children, selecTitle }) => {
     >
       <InputLabel>{selecTitle}</InputLabel>
       <MuiSelect
+        sx={{ borderColor: '#9FB8F9' }}
         value={selectValue}
         label={selecTitle}
         onChange={handleChange}
