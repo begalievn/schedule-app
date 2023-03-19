@@ -15,11 +15,12 @@ const StyledTableCell = styled(TableCell)(({theme}) => ({
     backgroundColor: '#4E8BE6',
     color: theme.palette.common.white,
     fontWeight: 600,
-    fontSize: '15px',
+    fontSize: '16px',
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: '16px',
     fontWeight: 500,
+    fontFamily: 'Inter',
   }
 }));
 
@@ -77,10 +78,10 @@ export const SelectSubjectsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
+            {rows.map((row, index) => (
+              <StyledTableRow key={row.index}>
                 <StyledTableCell component="th" scope="row">
-                  {addPadBefore(row.id, 0, 2)}
+                  {addPadBefore(index + 1, 0, 2)}
                 </StyledTableCell>
                 <StyledTableCell align="left" sx={{fontWeight:700}}>{row.name}</StyledTableCell>
                 <StyledTableCell align="left">{row.year}</StyledTableCell>

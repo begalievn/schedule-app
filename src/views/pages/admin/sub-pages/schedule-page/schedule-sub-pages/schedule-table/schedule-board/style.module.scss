@@ -1,0 +1,83 @@
+.board {
+  width: 100%;
+}
+
+.header {
+  width: 100%;
+  height: 90px;
+  background: #557CDE;
+  padding: 10px 0;
+
+
+  .header_h2 {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+  }
+}
+
+.days {
+  .day {
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    background: #8DB8F9;
+    position: relative;
+    padding-left: 40px;
+    border: solid 1px rgba(0, 0, 0, 0.76);
+    border-bottom: none;
+
+    .day_title {
+      width: 200px;
+      height: 40px;
+      background: #E88327;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: rotate(-90deg) translateY(-120px) translateX(-80px);
+    }
+
+    .courses {
+      width: 100%;
+
+      .course {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        border: solid 1px black;
+        border-bottom: none;
+
+        .course_title {
+          width: 100px;
+          height: 100%;
+          background: green;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+
+    .subjects {
+      width: calc(100% - 100px);
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      background: yellow;
+
+      .subject_cell {
+        width: 100%;
+        height: 100%;
+        border: .5px solid black;
+        border-bottom: none;
+        border-right: none;
+        background: coral;
+      }
+    }
+  }
+}

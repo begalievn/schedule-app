@@ -8,7 +8,7 @@ export const AdminPage = (props) => {
   return (
     <BlockContainer style={{ paddingLeft: '80px', paddingRight: '10px', background: '#F8FBFF' }}>
       <Sidebar/>
-      <Container maxWidth='xl'>
+      <Container maxWidth='xl' style={{ height: '100%'}}>
         {props.children}
       </Container>
     </BlockContainer>
