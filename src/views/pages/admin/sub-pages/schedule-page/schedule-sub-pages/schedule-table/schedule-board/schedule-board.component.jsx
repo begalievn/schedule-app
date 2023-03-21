@@ -49,6 +49,60 @@ const scheduleDays = [
         subjects: new Array(11).fill(null)
       }
     ]
+  },
+  {
+    day: 'Wednesday',
+    courses: [
+      {
+        course: 1,
+        subjects: new Array(11).fill(null)
+      }, {
+        course: 2,
+        subjects: new Array(11).fill(null)
+      }, {
+        course: 3,
+        subjects: new Array(11).fill(null)
+      }, {
+        course: 4,
+        subjects: new Array(11).fill(null)
+      }
+    ]
+  },
+  {
+    day: 'Thursday',
+    courses: [
+      {
+        course: 1,
+        subjects: new Array(11).fill(null)
+      }, {
+        course: 2,
+        subjects: new Array(11).fill(null)
+      }, {
+        course: 3,
+        subjects: new Array(11).fill(null)
+      }, {
+        course: 4,
+        subjects: new Array(11).fill(null)
+      }
+    ]
+  },
+  {
+    day: 'Friday',
+    courses: [
+      {
+        course: 1,
+        subjects: new Array(11).fill(null)
+      }, {
+        course: 2,
+        subjects: new Array(11).fill(null)
+      }, {
+        course: 3,
+        subjects: new Array(11).fill(null)
+      }, {
+        course: 4,
+        subjects: new Array(11).fill(null)
+      }
+    ]
   }
 ];
 
@@ -64,6 +118,7 @@ export const ScheduleBoard = () => {
         {
           scheduleDays.map((day) => (
             <div className={ classes.day }>
+              
               <div className={ classes.day_title }>{ day.day }</div>
               <div className={ classes.courses }>
                 {

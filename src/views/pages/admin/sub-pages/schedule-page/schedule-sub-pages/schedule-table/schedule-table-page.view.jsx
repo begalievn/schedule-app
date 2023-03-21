@@ -69,7 +69,7 @@ const hours = [
 
 export const ScheduleTablePage = () => {
   return (
-    <Container maxWidth='xl' >
+    <Container maxWidth='xl' sx={{ paddingBottom: '30px' }} >
       <HeaderV1>
         Schedule table
       </HeaderV1>
