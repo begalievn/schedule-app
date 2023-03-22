@@ -67,7 +67,6 @@ const rows = [
   createData(10, 'A Block', '202', 'Lecture'),
   createData(11, 'A Block', '202', 'Lecture'),
 ];
-console.log(rows);
 
 export const ClassroomListTable = () => {
   return (
