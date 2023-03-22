@@ -7,9 +7,16 @@ import { ContentContainer } from '../../../../components/containers/content';
 
 import { ClassroomListTable } from './components/classroom-page-table';
 import { Add as AddIcon, Search as SearchIcon } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { BrowserRoute } from '../../../../routes/browser.routes';
 
 //component
 export const ClassroomPage = () => {
+  const navigate = useNavigate();
+
+  const navlink = () => {
+    // navigate(BrowserRoute.ADMIN_CLASSROOM);
+  };
   return (
     <ContentContainer>
       <HeaderV1>Classroom </HeaderV1>
@@ -21,14 +28,17 @@ export const ClassroomPage = () => {
         }}
       >
         <Input
+          type='text'
           style={{ width: '35%' }}
           placeholder='Search'
           icon={<SearchIcon />}
         />
         <Input
+          type='submit'
           style={{ width: '35%' }}
-          placeholder='Add classroom'
+          value='Add classroom'
           icon={<AddIcon />}
+          onClick={navlink}
         />
       </div>
       <ClassroomListTable />
