@@ -12,8 +12,6 @@ import {
   TableContainer,
 } from '@mui/material';
 
-import { addPadBefore } from '../../../../../../../../../utils/addPadBefore';
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#4E8BE6',
@@ -44,27 +42,36 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(id, name, year) {
-  return { id, name, year };
+const StyledPaper = styled(Paper)(() => ({
+  width: '100%',
+  overflow: 'hidden',
+  '*::-webkit-scrollbar': {
+    width: '0px',
+  },
+}));
+
+function createData(id, block, name, type) {
+  return { id, block, name, type };
 }
 
 const rows = [
-  createData(1, 'Frozen yoghurt', '2022/2023'),
-  createData(2, 'Frozen yoghurt', '2022/2023'),
-  createData(3, 'Frozen yoghurt', '2022/2023'),
-  createData(4, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(4, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
+  createData(1, 'A Block', '202', 'Lecture'),
+  createData(2, 'A Block', '202', 'Lecture'),
+  createData(3, 'A Block', '202', 'Lecture'),
+  createData(4, 'A Block', '202', 'Lecture'),
+  createData(5, 'A Block', '202', 'Lecture'),
+  createData(6, 'A Block', '202', 'Lecture'),
+  createData(7, 'A Block', '202', 'Lecture'),
+  createData(8, 'A Block', '202', 'Lecture'),
+  createData(9, 'A Block', '202', 'Lecture'),
+  createData(10, 'A Block', '202', 'Lecture'),
+  createData(11, 'A Block', '202', 'Lecture'),
 ];
+console.log(rows);
 
-export const ScheduleListTable = () => {
+export const ClassroomListTable = () => {
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <StyledPaper>
       <TableContainer sx={{ height: 440 }}>
         <Table
           stickyHeader
@@ -72,27 +79,22 @@ export const ScheduleListTable = () => {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell sx={{ width: '100px' }}>№</StyledTableCell>
-              <StyledTableCell align='left'>Name</StyledTableCell>
-              <StyledTableCell align='center'>Year</StyledTableCell>
+              <StyledTableCell align='center'>Block</StyledTableCell>
+              <StyledTableCell align='center'>Name</StyledTableCell>
+              <StyledTableCell align='center'>Type</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row, index) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell
-                  component='th'
-                  scope='row'
-                >
-                  {addPadBefore(index + 1, 0, 2)}
-                </StyledTableCell>
-                <StyledTableCell align='left'>{row.name}</StyledTableCell>
-                <StyledTableCell align='center'>{row.year}</StyledTableCell>
+              <StyledTableRow key={row.id}>
+                <StyledTableCell align='center'>{row.block}</StyledTableCell>
+                <StyledTableCell align='center'>{row.name}</StyledTableCell>
+                <StyledTableCell align='center'>{row.type}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </Paper>
+    </StyledPaper>
   );
 };
