@@ -1,16 +1,14 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+//module
+import React from 'react';
+import { HeaderV1 } from '../../../../components/elements/header-v1';
 
 // styles
-import classes from "./style.module.scss";
+import classes from './style.module.scss';
 
 export const Teacher = (props) => {
   return (
     <div className={classes.container}>
-      <h1>Teacher</h1>
-      <button>
-        <NavLink to={"create"}>Create</NavLink>
-      </button>
+      <HeaderV1>Teacher's</HeaderV1>
       {props.children}
     </div>
   );
