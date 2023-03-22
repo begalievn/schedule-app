@@ -54,12 +54,12 @@ const rows = [
   createData(3, 'Frozen yoghurt', '2022/2023'),
   createData(4, 'Frozen yoghurt', '2022/2023'),
   createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(4, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
+  createData(6, 'Frozen yoghurt', '2022/2023'),
+  createData(7, 'Frozen yoghurt', '2022/2023'),
+  createData(8, 'Frozen yoghurt', '2022/2023'),
+  createData(9, 'Frozen yoghurt', '2022/2023'),
+  createData(10, 'Frozen yoghurt', '2022/2023'),
+  createData(11, 'Frozen yoghurt', '2022/2023'),
 ];
 
 export const ScheduleListTable = () => {
@@ -79,7 +79,7 @@ export const ScheduleListTable = () => {
           </TableHead>
           <TableBody>
             {rows.map((row, index) => (
-              <StyledTableRow key={row.name}>
+              <StyledTableRow key={row.id}>
                 <StyledTableCell
                   component='th'
                   scope='row'
