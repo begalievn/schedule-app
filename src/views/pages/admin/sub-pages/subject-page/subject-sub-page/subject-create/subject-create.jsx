@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container } from '@mui/material';
+import { Container, MenuItem } from '@mui/material';
 
 import { RadioV1 } from '../../../../../../components/elements/radio-v1';
 import { Input } from '../../../../../../components/elements/input/Input';
@@ -40,7 +40,10 @@ export const SubjectCreate = () => {
         <form className={styles.subject_form}>
           <div className={styles.first_container}>
             <SelectV1 selecTitle='Name' />
-            <SelectV1 selecTitle='Semester' />
+            <SelectV1 selecTitle='Semester'>
+              <MenuItem value='firstSemester'>First Semester</MenuItem>
+              <MenuItem value='seconSemester'>Second Semester</MenuItem>
+            </SelectV1>
             <h4>Classroom</h4>
             <div style={{ display: 'flex', gap: '40px' }}>
               {radios.map((radio) => (
