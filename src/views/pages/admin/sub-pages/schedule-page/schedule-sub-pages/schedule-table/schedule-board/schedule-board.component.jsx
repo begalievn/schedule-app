@@ -3,16 +3,6 @@ import React from 'react';
 // styles
 import classes from './style.module.scss';
 
-const Teacher = {
-
-}
-
-const Subject = {
-  title: 'Information Security',
-  teachers: [Teacher],
-  code: 'CS110',
-}
-
 const scheduleDays = [
   {
     day: 'Monday',
@@ -165,6 +155,24 @@ const hours = [
   }
 ]
 
+const lunchHour = 5;
+
+const courseColors = [
+  '#D2E1F7',
+  '#ACCEE0',
+  '#A7E0A2',
+  '#8BCF9A',
+];
+
+const dayColors = [
+  '#E88327',
+  '#AAE827',
+  '#F1F621',
+  '#FF6969',
+  '#EFAD2C',
+  '#EFDC2C',
+];
+
 export const ScheduleBoard = () => {
   return (
     <div className={ classes.board }>
@@ -178,8 +186,8 @@ export const ScheduleBoard = () => {
         </div>
         <div className={ classes.hours }>
           {
-            hours.map((hour) => (
-              <div className={ classes.hour }>
+            hours.map((hour, index) => (
+              <div key={index} className={ `${classes.hour} ${ index === lunchHour ? classes.lunch_hour : ''}` }>
                 <div className={ classes.hour_order }>
                   { hour.hour + ` hour` }
                 </div>
@@ -194,21 +202,20 @@ export const ScheduleBoard = () => {
       </div>
       <div className={ classes.days }>
         {
-          scheduleDays.map((day) => (
-            <div className={ classes.day }>
-              
+          scheduleDays.map((day, index) => (
+            <div className={ classes.day } key={ index } style={{ background: `${dayColors[index]}` }}>
               <div className={ classes.day_title }>{ day.day }</div>
               <div className={ classes.courses }>
                 {
-                  day.courses.map((course) => (
-                    <div className={ classes.course }>
+                  day.courses.map((course, index) => (
+                    <div className={ classes.course } key={index} style={{ background: `${ courseColors[index] }`}}>
                       <div className={ classes.course_title }>
                         <h5>{ course.course }</h5>
                       </div>
                       <div className={ classes.subjects }>
                         {
-                          course.subjects.map((cell) => (
-                            <div className={ classes.subject_cell }></div>
+                          course.subjects.map((cell, index) => (
+                            <div className={ `${classes.subject_cell} ${ index === lunchHour ? classes.lunch_hour : '' }` }></div>
                           ))
                         }
                       </div>
