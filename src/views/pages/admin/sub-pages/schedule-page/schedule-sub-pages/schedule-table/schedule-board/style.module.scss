@@ -20,6 +20,10 @@
   }
 }
 
+.lunch_hour {
+  background: rgba(253, 255, 158, 0.47);
+}
+
 .hours_container {
   width: 100%;
   height: 70px;
@@ -98,12 +102,17 @@
     .day_title {
       width: 200px;
       height: 40px;
-      background: #E88327;
       position: absolute;
       display: flex;
       justify-content: center;
       align-items: center;
       transform: rotate(-90deg) translateY(-120px) translateX(-80px);
+      font-family: 'Poppins', sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 25px;
+      text-transform: uppercase;
     }
 
     .courses {
@@ -119,10 +128,10 @@
         .course_title {
           width: 100px;
           height: 100%;
-          background: green;
           display: flex;
           align-items: center;
           justify-content: center;
+          background: rgba(51, 73, 112, 0.26);
         }
       }
     }
@@ -132,7 +141,6 @@
       height: 100%;
       display: flex;
       justify-content: space-between;
-      background: yellow;
 
       .subject_cell {
         width: 100%;
@@ -140,7 +148,6 @@
         border: .5px solid black;
         border-bottom: none;
         border-right: none;
-        background: rgb(116, 169, 196);
       }
     }
   }
