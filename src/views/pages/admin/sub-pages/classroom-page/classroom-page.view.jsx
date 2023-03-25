@@ -7,12 +7,12 @@ import { ContentContainer } from '../../../../components/containers/content';
 
 import { ClassroomListTable } from './components/classroom-page-table';
 import { Add as AddIcon, Search as SearchIcon } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
-import { BrowserRoute } from '../../../../routes/browser.routes';
+// import { useNavigate } from 'react-router-dom';
+// import { BrowserRoute } from '../../../../routes/browser.routes';
 
 //component
 export const ClassroomPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const navlink = () => {
     // navigate(BrowserRoute.ADMIN_CLASSROOM);

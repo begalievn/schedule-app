@@ -11,6 +11,7 @@ import {
   persistReducer,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { authApi } from './api/auth-api';
 
 import { commonApi } from './api/common-api';
 import authSlice from './slice/auth-slice';
@@ -26,10 +27,10 @@ const persistConfig = {
 const rootReducer = combineReducers({
   [authSlice.name]: authSlice.reducer,
   [groupSlice.reducerPath]: groupSlice.reducer,
+  [authApi.reducerPath]: authApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-console.log(persistedReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
