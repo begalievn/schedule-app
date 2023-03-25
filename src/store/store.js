@@ -1,11 +1,45 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import { groupSlice } from "./slice/group-slice";
+import {
+  FLUSH,
+  PAUSE,
+  PURGE,
+  PERSIST,
+  REGISTER,
+  REHYDRATE,
+  persistStore,
+  persistReducer,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+import { commonApi } from './api/common-api';
+import authSlice from './slice/auth-slice';
+
+import { groupSlice } from './slice/group-slice';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['auth', 'workspaceSlice'],
+};
+
+const rootReducer = combineReducers({
+  [authSlice.name]: authSlice.reducer,
+  [groupSlice.reducerPath]: groupSlice.reducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+console.log(persistedReducer);
 
 export const store = configureStore({
-  reducer: {
-    [groupSlice.reducerPath]: groupSlice.reducer,
-  },
+  reducer: persistedReducer,
+
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(groupSlice.middleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(commonApi.middleware),
 });
+
+export const persistor = persistStore(store);

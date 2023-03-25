@@ -23,9 +23,12 @@ import { ScheduleSendPage } from '../pages/admin/sub-pages/schedule-page/schedul
 import { ScheduleTablePage } from '../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-table/schedule-table-page.view';
 import { SubjectCreate } from '../pages/admin/sub-pages/subject-page/subject-sub-page/subject-create';
 import { SubjectList } from '../pages/admin/sub-pages/subject-page/subject-sub-page/subject-list';
+import { useSelector } from 'react-redux';
 
 export const AppRoutesDefinition = () => {
-  const [isLoggedIn] = useState(true);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  console.log(isLoggedIn);
+  // const [isLoggedIn] = useState(true);
   return [
     {
       path: '/',
