@@ -12,10 +12,10 @@ export const authApi = commonApi.injectEndpoints({
       async onQueryStarted(_, { queryFulfilled, dispatch }) {
         try {
           const { data: credentials } = await queryFulfilled;
+          console.log(credentials);
 
           const loginData = {
-            token: credentials.jwt,
-            email: credentials.email,
+            token: credentials.access_token,
           };
 
           dispatch(authActions.loginAuthorization(loginData));
@@ -37,15 +37,17 @@ export const authApi = commonApi.injectEndpoints({
           const { data: credentials } = await queryFulfilled;
 
           const registerData = {
-            token: credentials.jwt,
+            token: credentials.access_token,
             // email: credentials.email,
           };
 
           dispatch(authActions.loginAuthorization(registerData));
         } catch (error) {
-        //   toast.error(error?.message);
+          //   toast.error(error?.message);
         }
       },
     }),
   }),
 });
+
+export const { useLoginUserMutation } = authApi;

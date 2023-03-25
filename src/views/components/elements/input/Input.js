@@ -11,6 +11,7 @@ export const Input = ({
   error,
   placeholder,
   name,
+  required,
   icon,
   ...props
 }) => {
@@ -25,6 +26,7 @@ export const Input = ({
       type={type}
       name={name}
       error={error}
+      required={required}
       InputProps={{
         endAdornment: <InputAdornment position='end'>{icon}</InputAdornment>,
         classes: { root: 'input' },

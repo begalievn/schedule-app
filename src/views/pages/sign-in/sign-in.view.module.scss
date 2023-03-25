@@ -1,0 +1,17 @@
+.sign_in_form {
+  display: flex;
+  gap: 40px;
+  flex-direction: column;
+  width: 73.5%;
+  &_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    outline: none;
+    border: none;
+    background-color: #557cde;
+    border-radius: 6px;
+    color: white;
+  }
+}

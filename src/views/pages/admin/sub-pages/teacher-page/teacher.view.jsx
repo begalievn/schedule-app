@@ -4,7 +4,7 @@ import { ContentContainer } from '../../../../components/containers/content';
 import { HeaderV1 } from '../../../../components/elements/header-v1';
 
 // styles
-import classes from './style.module.scss';
+// import classes from './style.module.scss';
 
 export const Teacher = (props) => {
   return (

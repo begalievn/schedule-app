@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 
 import { Main } from '../content/main';
@@ -27,8 +26,6 @@ import { useSelector } from 'react-redux';
 
 export const AppRoutesDefinition = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
-  console.log(isLoggedIn);
-  // const [isLoggedIn] = useState(true);
   return [
     {
       path: '/',

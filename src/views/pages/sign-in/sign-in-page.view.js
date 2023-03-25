@@ -1,83 +1,57 @@
-import { styled } from "@mui/material";
-import React from "react";
+import { useState } from 'react';
 
-import { NavLink } from "react-router-dom";
-import { ApplicationLoginForm } from "../../components/application-login-form/application.login.form";
+import { ApplicationLoginForm } from '../../components/application-login-form/application.login.form';
+import { useLoginUserMutation } from '../../../store/api/auth-api';
+import { Input } from '../../components/elements/input/Input';
 
-// import { Button } from "../../components/elements/button/buttont-v1";
-// import { Input } from "../../components/elements/input/Input";
+import clases from './sign-in.view.module.scss';
 
 export const SignIn = () => {
-  const submitHandler = (e) => {
+  const [signInValue, setSignInValue] = useState({
+    email: '',
+    password: '',
+  });
+
+  const [loginUser] = useLoginUserMutation();
+  const submitHandler = async (e) => {
     e.preventDefault();
+
+    await loginUser(signInValue);
+  };
+
+  const changeHandler = (e) => {
+    setSignInValue({ ...signInValue, [e.target.name]: e.target.value });
   };
 
   return (
     <ApplicationLoginForm>
-      <StyledForm onSubmit={submitHandler}>
-        {/* <StyledInput
+      <form
+        onSubmit={submitHandler}
+        className={clases.sign_in_form}
+      >
+        <Input
           type='email'
-          label='Login'
+          name='email'
+          required={true}
+          placeholder='Email'
+          value={signInValue.email}
+          onChange={changeHandler}
         />
-        <StyledInput
+        <Input
           type='password'
-          label='Password'
-        /> */}
-        <ButtonBox>
-          {/* <StyledButton>Sign In</StyledButton> */}
-          <StyledNavlink to='/signUp'>
-            {/* <SignUpButton>or Sign Up </SignUpButton> */}
-          </StyledNavlink>
-        </ButtonBox>
-      </StyledForm>
+          name='password'
+          required={true}
+          placeholder='Password'
+          value={signInValue.password}
+          onChange={changeHandler}
+        />
+        <button
+          type='submit'
+          className={clases.sign_in_form_btn}
+        >
+          Submit
+        </button>
+      </form>
     </ApplicationLoginForm>
   );
 };
-
-const StyledForm = styled("form")(() => ({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  width: "60%",
-  gap: "50px",
-}));
-
-// const StyledInput = styled(Input)(() => ({
-//   "& .MuiFormLabel-root": {
-//     fontSize: "20px",
-//     fontWeight: 500,
-//     top: -10,
-//     left: -12,
-//   },
-//   "& .MuiInputLabel-root.Mui-focused": {
-//     left: "6px",
-//     top: 0,
-//     fontSize: "14px",
-//     color: "#AFAFAF",
-//   },
-// }));
-
-// const StyledButton = styled(Button)(() => ({
-//   width: "35%",
-//   alignSelf: "end ",
-// }));
-
-// const SignUpButton = styled(StyledButton)(() => ({
-//   background: "red",
-//   width: "39%",
-// }));
-
-const StyledNavlink = styled(NavLink)(() => ({
-  display: "flex",
-  width: "100%",
-  justifyContent: "flex-end",
-  textDecoration: "none",
-}));
-
-const ButtonBox = styled("div")(() => ({
-  display: "flex",
-  alignItems: "center",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  width: "100%",
-}));
