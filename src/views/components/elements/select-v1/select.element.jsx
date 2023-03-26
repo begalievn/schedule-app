@@ -1,20 +1,22 @@
-import * as React from "react";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import { Select as MuiSelect } from "@mui/material";
+import * as React from 'react';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import { Select as MuiSelect } from '@mui/material';
 
-export const SelectV1 = ({ children, selecTitle }) => {
-  const [selectValue, setAge] = React.useState("");
+export const SelectV1 = ({ children, selecTitle, parentfunc, ...props }) => {
+  const [selectValue, setAge] = React.useState('');
 
   const handleChange = (event) => {
     setAge(event.target.value);
+    parentfunc(event.target.value);
   };
 
   return (
     <FormControl
-      sx={{ minWidth: "300px" }}
+      sx={{ minWidth: '300px' }}
       size='small'
+      {...props}
     >
       <InputLabel>{selecTitle}</InputLabel>
       <MuiSelect

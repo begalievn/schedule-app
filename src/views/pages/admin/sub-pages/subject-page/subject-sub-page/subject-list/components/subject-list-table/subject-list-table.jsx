@@ -11,7 +11,6 @@ import {
   TableCell,
   TableContainer,
 } from '@mui/material';
-
 import { addPadBefore } from '../../../../../../../../../utils/addPadBefore';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -44,27 +43,35 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(id, name, year) {
-  return { id, name, year };
+const StyledPaper = styled(Paper)(() => ({
+  width: '100%',
+  overflow: 'hidden',
+  '*::-webkit-scrollbar': {
+    width: '0px',
+  },
+}));
+
+function createData(id, name, code) {
+  return { id, name, code };
 }
 
 const rows = [
-  createData(1, 'Frozen yoghurt', '2022/2023'),
-  createData(2, 'Frozen yoghurt', '2022/2023'),
-  createData(3, 'Frozen yoghurt', '2022/2023'),
-  createData(4, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(6, 'Frozen yoghurt', '2022/2023'),
-  createData(7, 'Frozen yoghurt', '2022/2023'),
-  createData(8, 'Frozen yoghurt', '2022/2023'),
-  createData(9, 'Frozen yoghurt', '2022/2023'),
-  createData(10, 'Frozen yoghurt', '2022/2023'),
-  createData(11, 'Frozen yoghurt', '2022/2023'),
+  createData(1, 'Dastan Baiyzbekov', 'dastanbayizbekov@gmail.com'),
+  createData(2, 'Web programming', 'CS403'),
+  createData(3, 'Web programming', 'CS403'),
+  createData(4, 'Web programming', 'CS403'),
+  createData(5, 'Web programming', 'CS403'),
+  createData(6, 'Web programming', 'CS403'),
+  createData(7, 'Web programming', 'CS403'),
+  createData(8, 'Web programming', 'CS403'),
+  createData(9, 'Web programming', 'CS403'),
+  createData(10, 'Web programming', 'CS403'),
+  createData(11, 'Web programming', 'CS403'),
 ];
 
-export const ScheduleListTable = () => {
+export const SubjectListTable = () => {
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <StyledPaper>
       <TableContainer sx={{ height: 440 }}>
         <Table
           stickyHeader
@@ -72,27 +79,24 @@ export const ScheduleListTable = () => {
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell sx={{ width: '100px' }}>№</StyledTableCell>
-              <StyledTableCell align='left'>Name</StyledTableCell>
-              <StyledTableCell align='center'>Year</StyledTableCell>
+              <StyledTableCell align='center'>№</StyledTableCell>
+              <StyledTableCell align='center'>Name</StyledTableCell>
+              <StyledTableCell align='center'>Code</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
+            {rows.map((row) => (
               <StyledTableRow key={row.id}>
-                <StyledTableCell
-                  component='th'
-                  scope='row'
-                >
-                  {addPadBefore(index + 1, 0, 2)}
+                <StyledTableCell align='center'>
+                  {addPadBefore(row.id, 0, 2)}
                 </StyledTableCell>
-                <StyledTableCell align='left'>{row.name}</StyledTableCell>
-                <StyledTableCell align='center'>{row.year}</StyledTableCell>
+                <StyledTableCell align='center'>{row.name}</StyledTableCell>
+                <StyledTableCell align='center'>{row.code}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </Paper>
+    </StyledPaper>
   );
 };

@@ -1,40 +1,34 @@
-import { useState } from "react";
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet, Navigate } from 'react-router-dom';
 
-import { Main } from "../content/main";
-import { SignIn } from "../pages/sign-in";
-import { SignUp } from "../pages/sign-up";
-import { NotFound } from "../pages/not-found";
-import { StartPage } from "../pages/start-page";
-import { Teacher } from "../pages/admin/sub-pages/teacher-page";
-import { SubjectPage } from "../pages/admin/sub-pages/subject-page";
-import { SchedulePage } from "../pages/admin/sub-pages/schedule-page";
-import { GroupPage } from "../pages/admin/sub-pages/group-page/group-page.view";
-import { ClassroomPage } from "../pages/admin/sub-pages/classroom-page";
+import { Main } from '../content/main';
+import { SignIn } from '../pages/sign-in';
+import { SignUp } from '../pages/sign-up';
+import { NotFound } from '../pages/not-found';
+import { StartPage } from '../pages/start-page';
+import { Teacher } from '../pages/admin/sub-pages/teacher-page';
+import { SubjectPage } from '../pages/admin/sub-pages/subject-page';
+import { SchedulePage } from '../pages/admin/sub-pages/schedule-page';
+import { GroupPage } from '../pages/admin/sub-pages/group-page/group-page.view';
+import { ClassroomPage } from '../pages/admin/sub-pages/classroom-page';
 
-import { BrowserRoute } from "./browser.routes";
-import { PrivateAuthRoute } from "./PrivateAuthRoute";
-import {AdminPage} from "../pages/admin/admin.view";
-import {TeacherList} from "../pages/admin/sub-pages/teacher-page/sub-pages/teacher-list";
-import {TeacherCreate} from "../pages/admin/sub-pages/teacher-page/sub-pages/teacher-create";
-import {
-  ScheduleListPage
-} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedules-list";
-import {
-  ScheduleCreatePage
-} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-create/schedule-create-page.view";
-import {
-  ScheduleSendPage
-} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-send/schedule-send-page.view";
-import {
-  ScheduleTablePage
-} from "../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-table/schedule-table-page.view";
+import { BrowserRoute } from './browser.routes';
+import { PrivateAuthRoute } from './PrivateAuthRoute';
+import { AdminPage } from '../pages/admin/admin.view';
+import { TeacherList } from '../pages/admin/sub-pages/teacher-page/sub-pages/teacher-list';
+import { TeacherCreate } from '../pages/admin/sub-pages/teacher-page/sub-pages/teacher-create';
+import { ScheduleListPage } from '../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedules-list';
+import { ScheduleCreatePage } from '../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-create/schedule-create-page.view';
+import { ScheduleSendPage } from '../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-send/schedule-send-page.view';
+import { ScheduleTablePage } from '../pages/admin/sub-pages/schedule-page/schedule-sub-pages/schedule-table/schedule-table-page.view';
+import { SubjectCreate } from '../pages/admin/sub-pages/subject-page/subject-sub-page/subject-create';
+import { SubjectList } from '../pages/admin/sub-pages/subject-page/subject-sub-page/subject-list';
+import { useSelector } from 'react-redux';
 
 export const AppRoutesDefinition = () => {
-  const [isLoggedIn] = useState(true);
+  const { isLoggedIn } = useSelector((state) => state.auth);
   return [
     {
-      path: "/",
+      path: '/',
       element: (
         <Main>
           <Outlet />
@@ -64,7 +58,7 @@ export const AppRoutesDefinition = () => {
           ),
           children: [
             {
-              path: "",
+              path: '',
               element: <Navigate to='schedule' />,
             },
             {
@@ -77,29 +71,21 @@ export const AppRoutesDefinition = () => {
               children: [
                 {
                   index: true,
-                  element: (
-                    <ScheduleListPage />
-                  )
+                  element: <ScheduleListPage />,
                 },
                 {
                   path: BrowserRoute.ADMIN_SCHEDULE_PAGE_CREATE,
-                  element: (
-                    <ScheduleCreatePage />
-                  )
+                  element: <ScheduleCreatePage />,
                 },
                 {
                   path: BrowserRoute.ADMIN_SCHEDULE_PAGE_SEND,
-                  element: (
-                    <ScheduleSendPage />
-                  )
+                  element: <ScheduleSendPage />,
                 },
                 {
                   path: BrowserRoute.ADMIN_SCHEDULE_PAGE_TABLE,
-                  element: (
-                    <ScheduleTablePage />
-                  )
-                }
-              ]
+                  element: <ScheduleTablePage />,
+                },
+              ],
             },
             {
               path: BrowserRoute.ADMIN_TEACHER,
@@ -123,11 +109,25 @@ export const AppRoutesDefinition = () => {
               path: BrowserRoute.ADMIN_SUBJECT,
               element: (
                 <PrivateAuthRoute
-                  Component={<SubjectPage />}
+                  Component={
+                    <SubjectPage>
+                      <Outlet />
+                    </SubjectPage>
+                  }
                   fallbackPath={BrowserRoute.startPage}
                   isAllowed={isLoggedIn}
                 />
               ),
+              children: [
+                {
+                  index: true,
+                  element: <SubjectList />,
+                },
+                {
+                  path: BrowserRoute.ADMIN_SUBJECT_CREATE,
+                  element: <SubjectCreate />,
+                },
+              ],
             },
             {
               path: BrowserRoute.ADMIN_CLASSROOM,

@@ -12,6 +12,8 @@ export const BrowserRoute = {
     ADMIN_TEACHER_LIST: 'list',
     ADMIN_TEACHER_CREATE: 'create',
   ADMIN_SUBJECT: "subject",
+    ADMIN_SUBJECT_CREATE:'create',
+    ADMIN_SUBJECT_LIST:'list',
   ADMIN_CLASSROOM: "classroom",
   ADMIN_GROUP: "group",
   SIGN_IN: "/sign-in",
