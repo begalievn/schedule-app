@@ -10,6 +10,7 @@ import { ContentContainer } from '../../../../../../components/containers/conten
 import { AdminBackButton } from '../../../../../../components/elements/admin-back-button/admin-back-button.element';
 
 import styles from './subject_create.module.scss';
+import { useState } from 'react';
 
 const radios = [
   {
@@ -23,10 +24,25 @@ const radios = [
 ];
 
 export const SubjectCreate = () => {
-  const [value, setValue] = React.useState('Laboratory');
+  const [subjectValue, setSubjectValue] = useState({
+    name: '',
+    code: '',
+    semester: '',
+    classroom: '',
+    description: '',
+  });
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(subjectValue);
+  };
+
+  const semesterChange = (value) => {
+    setSubjectValue({ ...subjectValue, semester: value });
+  };
+
+  const changeHandler = (e) => {
+    setSubjectValue({ ...subjectValue, [e.target.name]: e.target.value });
   };
 
   return (
@@ -37,10 +53,21 @@ export const SubjectCreate = () => {
       <AdminBackButton />
       <ContentContainer style={{ paddingBottom: '60px' }}>
         <HeaderV1 style={{ marginTop: '10px' }}>Subject</HeaderV1>
-        <form className={styles.subject_form}>
+        <form
+          onSubmit={handleSubmit}
+          className={styles.subject_form}
+        >
           <div className={styles.first_container}>
-            <SelectV1 selecTitle='Name' />
-            <SelectV1 selecTitle='Semester'>
+            <Input
+              type='text'
+              name='name'
+              onChange={changeHandler}
+              value={subjectValue.name}
+            />
+            <SelectV1
+              selecTitle='Semester'
+              parentfunc={semesterChange}
+            >
               <MenuItem value='firstSemester'>First Semester</MenuItem>
               <MenuItem value='seconSemester'>Second Semester</MenuItem>
             </SelectV1>
@@ -49,17 +76,29 @@ export const SubjectCreate = () => {
               {radios.map((radio) => (
                 <RadioV1
                   radio={radio}
-                  handleChange={handleChange}
-                  value={value}
                   key={radio.id}
+                  name='classroom'
+                  handleChange={changeHandler}
+                  value={subjectValue.classroom}
                 />
               ))}
             </div>
-            <Input label='Code' />
+            <Input
+              name='code'
+              label='Code'
+              onChange={changeHandler}
+              value={subjectValue.code}
+            />
             <SelectV1 selecTitle='Duration' />
-            <Input label='Description' />
+            <Input
+              name='description'
+              label='Description'
+              onChange={changeHandler}
+              value={subjectValue.description}
+            />
           </div>
           <div className={styles.second_container}></div>
+          <button>add subject</button>
         </form>
       </ContentContainer>
     </Container>

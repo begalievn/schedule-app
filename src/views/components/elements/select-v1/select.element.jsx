@@ -4,11 +4,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { Select as MuiSelect } from '@mui/material';
 
-export const SelectV1 = ({ children, selecTitle, ...props }) => {
+export const SelectV1 = ({ children, selecTitle, parentfunc, ...props }) => {
   const [selectValue, setAge] = React.useState('');
 
   const handleChange = (event) => {
     setAge(event.target.value);
+    parentfunc(event.target.value);
   };
 
   return (
