@@ -51,9 +51,10 @@ export const SubjectList = () => {
         {courses.map((course) => (
           <CourseSelect
             id={course.id}
+            key={course.id}
             title={course.title}
-            selected={course.id === selectedCourse}
             onChange={handleCourseChange}
+            selected={course.id === selectedCourse}
           />
         ))}
       </div>
