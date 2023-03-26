@@ -30,11 +30,16 @@ export const SubjectCreate = () => {
     semester: '',
     classroom: '',
     description: '',
+    credits: 0,
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(subjectValue);
+    const newData = {
+      ...subjectValue,
+      credits: Number(subjectValue.credits),
+    };
+    console.table(newData);
   };
 
   const semesterChange = (value) => {
@@ -59,11 +64,33 @@ export const SubjectCreate = () => {
         >
           <div className={styles.first_container}>
             <Input
-              type='text'
               name='name'
+              type='text'
+              placeholder='Name'
               onChange={changeHandler}
               value={subjectValue.name}
             />
+            <Input
+              name='code'
+              type='text'
+              placeholder='Code'
+              onChange={changeHandler}
+              value={subjectValue.code}
+            />
+            <Input
+              type='number'
+              name='credits'
+              placeholder='Credits'
+              onChange={changeHandler}
+              value={subjectValue.credits}
+            />
+            <Input
+              name='description'
+              placeholder='Description'
+              onChange={changeHandler}
+              value={subjectValue.description}
+            />
+
             <SelectV1
               selecTitle='Semester'
               parentfunc={semesterChange}
@@ -71,34 +98,23 @@ export const SubjectCreate = () => {
               <MenuItem value='firstSemester'>First Semester</MenuItem>
               <MenuItem value='seconSemester'>Second Semester</MenuItem>
             </SelectV1>
-            <h4>Classroom</h4>
-            <div style={{ display: 'flex', gap: '40px' }}>
-              {radios.map((radio) => (
-                <RadioV1
-                  radio={radio}
-                  key={radio.id}
-                  name='classroom'
-                  handleChange={changeHandler}
-                  value={subjectValue.classroom}
-                />
-              ))}
+            <div className={styles.first_container_radio_group}>
+              <h4>Classroom</h4>
+              <div>
+                {radios.map((radio) => (
+                  <RadioV1
+                    radio={radio}
+                    key={radio.id}
+                    name='classroom'
+                    handleChange={changeHandler}
+                    value={subjectValue.classroom}
+                  />
+                ))}
+              </div>
             </div>
-            <Input
-              name='code'
-              label='Code'
-              onChange={changeHandler}
-              value={subjectValue.code}
-            />
-            <SelectV1 selecTitle='Duration' />
-            <Input
-              name='description'
-              label='Description'
-              onChange={changeHandler}
-              value={subjectValue.description}
-            />
           </div>
           <div className={styles.second_container}></div>
-          <button>add subject</button>
+          <button className={styles.subject_form_btn}>add subject</button>
         </form>
       </ContentContainer>
     </Container>
