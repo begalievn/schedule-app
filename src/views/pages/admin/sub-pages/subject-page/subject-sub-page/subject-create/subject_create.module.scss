@@ -26,11 +26,76 @@
       display: flex;
     }
   }
+
+  &_textarea {
+    resize: none;
+    border: 1px solid gray;
+    border-radius: 8px;
+    padding: 5px 10px;
+
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+      sans-serif;
+
+    &:active {
+      outline: none;
+    }
+    &:focus {
+      outline: none;
+      border: 1px solid blue;
+    }
+  }
 }
 .second_container {
   width: 45%;
   display: flex;
   flex-direction: column;
 
-  background: red;
+  background: #e5effe;
+}
+
+.checkbox_container {
+  display: flex;
+  gap: 40px;
+  label {
+    display: flex;
+    align-items: center;
+  }
+}
+
+input[type='checkbox'] {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  font: inherit;
+  color: red;
+  width: 1.15em;
+  height: 1.15em;
+  border: 2px solid blue;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+}
+
+input[type='checkbox']::before {
+  content: '';
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
+  background-color: red;
+  transform-origin: bottom left;
+
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+input[type='checkbox']:checked::before {
+  transform: scale(1);
+  background-color: blue;
+}
+
+input[type='checkbox']:focus {
+  border: 1px solid blueviolet;
 }

@@ -4,7 +4,7 @@ import { ApplicationLoginForm } from '../../components/application-login-form/ap
 import { useLoginUserMutation } from '../../../store/api/auth-api';
 import { Input } from '../../components/elements/input/Input';
 
-import clases from './sign-in.view.module.scss';
+import classes from './sign-in.view.module.scss';
 
 export const SignIn = () => {
   const [signInValue, setSignInValue] = useState({
@@ -27,7 +27,7 @@ export const SignIn = () => {
     <ApplicationLoginForm>
       <form
         onSubmit={submitHandler}
-        className={clases.sign_in_form}
+        className={classes.sign_in_form}
       >
         <Input
           type='email'
@@ -47,7 +47,7 @@ export const SignIn = () => {
         />
         <button
           type='submit'
-          className={clases.sign_in_form_btn}
+          className={classes.sign_in_form_btn}
         >
           Submit
         </button>

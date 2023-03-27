@@ -4,7 +4,7 @@ export const subjectApi = commonApi.injectEndpoints({
   endpoints: (builder) => ({
     createSubject: builder.mutation({
       query: (body) => ({
-        url: 'auth/login',
+        url: 'subject',
         method: 'POST',
         body,
       }),

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Container, MenuItem } from '@mui/material';
 
@@ -9,45 +9,67 @@ import { SelectV1 } from '../../../../../../components/elements/select-v1';
 import { ContentContainer } from '../../../../../../components/containers/content';
 import { AdminBackButton } from '../../../../../../components/elements/admin-back-button/admin-back-button.element';
 
-import styles from './subject_create.module.scss';
-import { useState } from 'react';
+import { MultiSelect } from '../../../../../../components/elements/multi-select';
 
-const radios = [
-  {
-    id: '1',
-    value: 'Laboratory',
-  },
-  {
-    id: '2',
-    value: 'Lecture',
-  },
-];
+import styles from './subject_create.module.scss';
+import { useGetAllTeacherQuery } from '../../../../../../../store/api/teacher-api';
+import { useCreateSubjectMutation } from '../../../../../../../store/api/subject-api';
 
 export const SubjectCreate = () => {
   const [subjectValue, setSubjectValue] = useState({
     name: '',
     code: '',
+    credits: '',
+    courses: null,
     semester: '',
+    teacher: null,
     classroom: '',
     description: '',
-    credits: 0,
   });
+
+  const [value, setValue] = React.useState([]);
+  const [checked, setChecked] = useState([...checkbox]);
+
+  const { data } = useGetAllTeacherQuery();
+  const [sendSubject] = useCreateSubjectMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const filteredCourse = [];
+    for (const item of checked) {
+      if (item.checked === true) {
+        filteredCourse.push(item.id);
+      }
+    }
+    const filteredTecher = [];
+    for (const item of value) {
+      filteredTecher.push(item._id);
+    }
+
     const newData = {
       ...subjectValue,
+      teacher: filteredTecher,
+      courses: filteredCourse,
       credits: Number(subjectValue.credits),
     };
-    console.table(newData);
+    console.log(newData);
+    await sendSubject(newData);
   };
 
   const semesterChange = (value) => {
-    setSubjectValue({ ...subjectValue, semester: value });
+    setSubjectValue({ ...subjectValue, semester: Number(value) });
   };
 
   const changeHandler = (e) => {
     setSubjectValue({ ...subjectValue, [e.target.name]: e.target.value });
+  };
+
+  const handleChange = (id) => {
+    const newItem = checked.map((item) =>
+      item.id === id ? { ...item, checked: !item.checked } : item,
+    );
+    setChecked(newItem);
   };
 
   return (
@@ -66,6 +88,7 @@ export const SubjectCreate = () => {
             <Input
               name='name'
               type='text'
+              required={true}
               placeholder='Name'
               onChange={changeHandler}
               value={subjectValue.name}
@@ -73,6 +96,7 @@ export const SubjectCreate = () => {
             <Input
               name='code'
               type='text'
+              required={true}
               placeholder='Code'
               onChange={changeHandler}
               value={subjectValue.code}
@@ -80,43 +104,104 @@ export const SubjectCreate = () => {
             <Input
               type='number'
               name='credits'
+              required={true}
               placeholder='Credits'
               onChange={changeHandler}
               value={subjectValue.credits}
             />
-            <Input
-              name='description'
-              placeholder='Description'
-              onChange={changeHandler}
-              value={subjectValue.description}
-            />
-
             <SelectV1
               selecTitle='Semester'
               parentfunc={semesterChange}
             >
-              <MenuItem value='firstSemester'>First Semester</MenuItem>
-              <MenuItem value='seconSemester'>Second Semester</MenuItem>
+              <MenuItem value='1'>First Semester</MenuItem>
+              <MenuItem value='2'>Second Semester</MenuItem>
             </SelectV1>
             <div className={styles.first_container_radio_group}>
               <h4>Classroom</h4>
               <div>
                 {radios.map((radio) => (
                   <RadioV1
-                    radio={radio}
+                    type='radio'
                     key={radio.id}
+                    value={radio.value}
+                    required={true}
                     name='classroom'
                     handleChange={changeHandler}
-                    value={subjectValue.classroom}
+                    checked={subjectValue.classroom === radio.value}
                   />
                 ))}
               </div>
             </div>
+            <div>
+              <h3>Courses</h3>
+              <div className={styles.checkbox_container}>
+                {checked.map((item) => (
+                  <RadioV1
+                    id={item.id}
+                    key={item.id}
+                    type='checkbox'
+                    value={item.value}
+                    checked={item.checked}
+                    handleChange={() => handleChange(item.id)}
+                  />
+                ))}
+              </div>
+            </div>
+            <textarea
+              cols={3}
+              rows={5}
+              maxLength={250}
+              name='description'
+              onChange={changeHandler}
+              placeholder='Description'
+              value={subjectValue.description}
+              className={styles.first_container_textarea}
+            />
           </div>
-          <div className={styles.second_container}></div>
+          <div className={styles.second_container}>
+            <MultiSelect
+              value={value}
+              options={data || []}
+              setValue={setValue}
+            />
+          </div>
           <button className={styles.subject_form_btn}>add subject</button>
         </form>
       </ContentContainer>
     </Container>
   );
 };
+
+const radios = [
+  {
+    id: '1',
+    value: 'Laboratory',
+  },
+  {
+    id: '2',
+    value: 'Lecture',
+  },
+];
+
+const checkbox = [
+  {
+    id: 1,
+    value: '1 course',
+    checked: false,
+  },
+  {
+    id: 2,
+    value: '2 course',
+    checked: false,
+  },
+  {
+    id: 3,
+    value: '3 course',
+    checked: false,
+  },
+  {
+    id: 4,
+    value: '4 course',
+    checked: false,
+  },
+];
