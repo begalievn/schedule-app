@@ -3,7 +3,7 @@ import React from 'react';
 import { Check } from '@mui/icons-material';
 import { Autocomplete, MenuItem, TextField } from '@mui/material';
 
-export const MultiSelect = ({ options, value, setValue }) => {
+export const MultiSelect = ({ options, value, setValue, label }) => {
   return (
     <Autocomplete
       sx={{ m: 1, width: 500 }}
@@ -19,7 +19,7 @@ export const MultiSelect = ({ options, value, setValue }) => {
         <TextField
           {...params}
           variant='outlined'
-          label='Multiple Autocomplete'
+          label={label}
         />
       )}
       renderOption={(props, option, { selected }) => (

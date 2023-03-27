@@ -159,6 +159,7 @@ export const SubjectCreate = () => {
           </div>
           <div className={styles.second_container}>
             <MultiSelect
+              label='Choose Teacher'
               value={value}
               options={data || []}
               setValue={setValue}
