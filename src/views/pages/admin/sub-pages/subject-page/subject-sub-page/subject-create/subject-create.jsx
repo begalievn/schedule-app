@@ -22,7 +22,7 @@ export const SubjectCreate = () => {
     credits: '',
     courses: null,
     semester: '',
-    teacher: null,
+    teachers: null,
     classroom: '',
     description: '',
   });
@@ -49,11 +49,10 @@ export const SubjectCreate = () => {
 
     const newData = {
       ...subjectValue,
-      teacher: filteredTecher,
+      teachers: filteredTecher,
       courses: filteredCourse,
       credits: Number(subjectValue.credits),
     };
-    console.log(newData);
     await sendSubject(newData);
   };
 
