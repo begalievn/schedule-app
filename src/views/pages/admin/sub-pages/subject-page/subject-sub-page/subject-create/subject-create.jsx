@@ -14,6 +14,7 @@ import { MultiSelect } from '../../../../../../components/elements/multi-select'
 import styles from './subject_create.module.scss';
 import { useGetAllTeacherQuery } from '../../../../../../../store/api/teacher-api';
 import { useCreateSubjectMutation } from '../../../../../../../store/api/subject-api';
+import { SelectedItem } from './components/selected-item';
 
 export const SubjectCreate = () => {
   const [subjectValue, setSubjectValue] = useState({
@@ -72,7 +73,6 @@ export const SubjectCreate = () => {
   };
 
   const resetHandler = (id) => {
-    console.log(id, 'id');
     const filteredValue = value.filter((item) => item._id !== id);
     setValue(filteredValue);
   };
@@ -171,21 +171,11 @@ export const SubjectCreate = () => {
             />
             <ul className={styles.selected_container}>
               {value.map((item) => (
-                <li
+                <SelectedItem
                   key={item._id}
-                  style={{ display: 'flex', justifyContent: 'space-between' }}
-                >
-                  <div
-                    className={styles.selected_item}
-                  >{`${item.firstName} ${item.lastName}`}</div>
-                  <button
-                    type='button'
-                    className={styles.selected_item_btn}
-                    onClick={() => resetHandler(item._id)}
-                  >
-                    -
-                  </button>
-                </li>
+                  resetHandler={resetHandler}
+                  {...item}
+                />
               ))}
             </ul>
           </div>

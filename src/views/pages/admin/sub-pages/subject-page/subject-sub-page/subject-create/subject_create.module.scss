@@ -107,16 +107,5 @@ input[type='checkbox']:focus {
   width: 100%;
   gap: 15px;
   padding: 10px 40px;
-  .selected_item {
-    background-color: white;
-    width: 90%;
-    list-style: none;
-    padding: 5px;
-    border: 1px solid black;
-    border-radius: 5px;
 
-    &_btn {
-      padding: 4px;
-    }
-  }
 }
