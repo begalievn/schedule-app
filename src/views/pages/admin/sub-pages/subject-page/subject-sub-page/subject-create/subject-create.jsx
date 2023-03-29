@@ -71,6 +71,11 @@ export const SubjectCreate = () => {
     setChecked(newItem);
   };
 
+  const resetHandler = (id) => {
+    console.log(id, 'id');
+    const filteredValue = value.filter((item) => item._id !== id);
+    setValue(filteredValue);
+  };
   return (
     <Container
       maxWidth={'xl'}
@@ -164,6 +169,25 @@ export const SubjectCreate = () => {
               options={data || []}
               setValue={setValue}
             />
+            <ul className={styles.selected_container}>
+              {value.map((item) => (
+                <li
+                  key={item._id}
+                  style={{ display: 'flex', justifyContent: 'space-between' }}
+                >
+                  <div
+                    className={styles.selected_item}
+                  >{`${item.firstName} ${item.lastName}`}</div>
+                  <button
+                    type='button'
+                    className={styles.selected_item_btn}
+                    onClick={() => resetHandler(item._id)}
+                  >
+                    -
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
           <button className={styles.subject_form_btn}>add subject</button>
         </form>
