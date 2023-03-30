@@ -26,6 +26,7 @@ export const SubjectCreate = () => {
     teachers: null,
     classroom: '',
     description: '',
+    numberOfHours: '',
   });
 
   const [value, setValue] = React.useState([]);
@@ -54,6 +55,7 @@ export const SubjectCreate = () => {
       courses: filteredCourse,
       credits: Number(subjectValue.credits),
     };
+    console.table(newData);
     await sendSubject(newData);
   };
 
@@ -112,6 +114,14 @@ export const SubjectCreate = () => {
               placeholder='Credits'
               onChange={changeHandler}
               value={subjectValue.credits}
+            />
+            <Input
+              type='number'
+              name='numberOfHours'
+              required={true}
+              placeholder='Number of hours'
+              onChange={changeHandler}
+              value={subjectValue.numberOfHours}
             />
             <SelectV1
               selecTitle='Semester'
