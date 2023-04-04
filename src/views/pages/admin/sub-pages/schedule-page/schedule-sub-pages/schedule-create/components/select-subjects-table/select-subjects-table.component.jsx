@@ -101,7 +101,7 @@ export const SelectSubjectsTable = () => {
                   align='center'
                   sx={{
                     background: 'rgba(177, 190, 237, 0.26)',
-                    width: '60px',
+                    width: '40px',
                     cursor: 'pointer',
                   }}
                 >

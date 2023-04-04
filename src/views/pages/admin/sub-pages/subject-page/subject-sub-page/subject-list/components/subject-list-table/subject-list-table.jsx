@@ -24,6 +24,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: '16px',
     fontWeight: 500,
     fontFamily: 'Inter',
+    height: '40px',
   },
 }));
 
@@ -39,7 +40,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     cursor: 'pointer',
   },
   '&:last-child td, &:last-child th': {
-    border: 0,
+    borderBottom: '1px solid rgba(128, 128, 128, 0.2)',
   },
 }));
 
@@ -51,46 +52,28 @@ const StyledPaper = styled(Paper)(() => ({
   },
 }));
 
-function createData(id, name, code) {
-  return { id, name, code };
-}
-
-const rows = [
-  createData(1, 'Dastan Baiyzbekov', 'dastanbayizbekov@gmail.com'),
-  createData(2, 'Web programming', 'CS403'),
-  createData(3, 'Web programming', 'CS403'),
-  createData(4, 'Web programming', 'CS403'),
-  createData(5, 'Web programming', 'CS403'),
-  createData(6, 'Web programming', 'CS403'),
-  createData(7, 'Web programming', 'CS403'),
-  createData(8, 'Web programming', 'CS403'),
-  createData(9, 'Web programming', 'CS403'),
-  createData(10, 'Web programming', 'CS403'),
-  createData(11, 'Web programming', 'CS403'),
-];
-
-export const SubjectListTable = () => {
+export const SubjectListTable = ({ subjects = [] }) => {
   return (
     <StyledPaper>
-      <TableContainer sx={{ height: 440 }}>
+      <TableContainer sx={{ height: 500 }}>
         <Table
           stickyHeader
           aria-label='sticky table'
         >
           <TableHead>
             <TableRow>
-              <StyledTableCell align='center'>№</StyledTableCell>
-              <StyledTableCell align='center'>Name</StyledTableCell>
+              <StyledTableCell>№</StyledTableCell>
+              <StyledTableCell>Name</StyledTableCell>
               <StyledTableCell align='center'>Code</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.id}>
-                <StyledTableCell align='center'>
-                  {addPadBefore(row.id, 0, 2)}
+            {subjects.map((row, index) => (
+              <StyledTableRow key={row._id} onClick={() => console.log('Table clicked')}>
+                <StyledTableCell>
+                  {addPadBefore(index + 1, 0, 2)}
                 </StyledTableCell>
-                <StyledTableCell align='center'>{row.name}</StyledTableCell>
+                <StyledTableCell>{row.name}</StyledTableCell>
                 <StyledTableCell align='center'>{row.code}</StyledTableCell>
               </StyledTableRow>
             ))}

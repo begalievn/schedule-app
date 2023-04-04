@@ -9,7 +9,12 @@ export const subjectApi = commonApi.injectEndpoints({
         body,
       }),
     }),
+    getSubjectsFiltered: builder.query({
+      query: ({ semester, course }) => ({
+        url: `subject/filtered?semester=${semester}&course=${course}`
+      })
+    }),
   }),
 });
 
-export const { useCreateSubjectMutation } = subjectApi;
+export const { useCreateSubjectMutation, useGetSubjectsFilteredQuery } = subjectApi;
