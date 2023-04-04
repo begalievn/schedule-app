@@ -13,6 +13,7 @@ import { MultiSelect } from '../../../../../../components/elements/multi-select'
 import styles from './subject_create.module.scss';
 import { useGetAllTeacherQuery } from '../../../../../../../store/api/teacher-api';
 import { useCreateSubjectMutation } from '../../../../../../../store/api/subject-api';
+import { SelectedItem } from './components/selected-item';
 
 export const SubjectCreate = () => {
   const [subjectValue, setSubjectValue] = useState({
@@ -24,6 +25,7 @@ export const SubjectCreate = () => {
     teachers: null,
     classroom: '',
     description: '',
+    numberOfHours: '',
   });
 
   const [value, setValue] = React.useState([]);
@@ -52,6 +54,7 @@ export const SubjectCreate = () => {
       courses: filteredCourse,
       credits: Number(subjectValue.credits),
     };
+    console.table(newData);
     await sendSubject(newData);
   };
 
@@ -70,6 +73,10 @@ export const SubjectCreate = () => {
     setChecked(newItem);
   };
 
+  const resetHandler = (id) => {
+    const filteredValue = value.filter((item) => item._id !== id);
+    setValue(filteredValue);
+  };
   return (
     <Container
       maxWidth={'xl'}
@@ -105,6 +112,14 @@ export const SubjectCreate = () => {
               placeholder='Credits'
               onChange={changeHandler}
               value={subjectValue.credits}
+            />
+            <Input
+              type='number'
+              name='numberOfHours'
+              required={true}
+              placeholder='Number of hours'
+              onChange={changeHandler}
+              value={subjectValue.numberOfHours}
             />
             <SelectV1
               selecTitle='Semester'
@@ -162,6 +177,15 @@ export const SubjectCreate = () => {
               options={data || []}
               setValue={setValue}
             />
+            <ul className={styles.selected_container}>
+              {value.map((item) => (
+                <SelectedItem
+                  key={item._id}
+                  resetHandler={resetHandler}
+                  {...item}
+                />
+              ))}
+            </ul>
           </div>
           <button className={styles.subject_form_btn}>add subject</button>
         </form>
