@@ -1,5 +1,6 @@
 .board {
   width: 100%;
+  border: 1px solid black;
 }
 
 .header {
@@ -29,6 +30,8 @@
   height: 70px;
   display: flex;
   border: 1px solid black;
+  border-left: none;
+  border-right: none;
 
   .hours_left {
     width: 141px;
@@ -84,6 +87,10 @@
           justify-content: center;
         }
       }
+    }
+
+    .hour:last-child {
+      border-right: none;
     }
   }
 }

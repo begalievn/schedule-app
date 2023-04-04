@@ -1,10 +1,7 @@
 .semester_container {
-  width: 50%;
+  width: 60%;
   display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-  align-items: stretch;
-  justify-content: flex-start;
+  justify-content: space-between;
   column-gap: 30px;
   margin: 20px 0;
 }
@@ -20,7 +17,7 @@
 
 .subjects_container {
   width: 100%;
-  height: 500px;
+  min-height: 500px;
   display: flex;
   justify-content: space-between;
   column-gap: 15px;
@@ -31,12 +28,13 @@
 
   .selected_subjects_container {
     width: 25%;
-    height: 100%;
     padding: 40px 35px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     background: #E5EFFE;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
 
 
     .selected_text {

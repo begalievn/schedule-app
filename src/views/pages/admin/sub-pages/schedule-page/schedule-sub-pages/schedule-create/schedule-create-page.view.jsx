@@ -1,7 +1,6 @@
 import React from 'react';
 import {ContentContainer} from "../../../../../../components/containers/content";
 import {HeaderV1} from "../../../../../../components/elements/header-v1";
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import {CourseSelect} from "./components/course-select/course-select.component";
 import {SelectSubjectsTable} from "./components/select-subjects-table/select-subjects-table.component";
@@ -10,7 +9,9 @@ import {SelectSubjectsTable} from "./components/select-subjects-table/select-sub
 import classes from './style.module.scss';
 import {useNavigate} from "react-router-dom";
 import {SelectV1} from "../../../../../../components/elements/select-v1";
-import { Input } from "../../../../../../components/elements/input/Input";
+import {Input} from "../../../../../../components/elements/input/Input";
+import {ContainerWithShadow} from '../../../../../../components/containers/container-with-shadow';
+import {ButtonV2} from '../../../../../../components/elements/button-v2';
 
 const courseList = [
   {
@@ -45,13 +46,13 @@ export const ScheduleCreatePage = () => {
   }
   
   return (
-    <ContentContainer style={{ paddingBottom: '50px' }}>
+    <ContentContainer style={{paddingBottom: '50px'}}>
       <HeaderV1>
         Create a new Schedule
       </HeaderV1>
       <div className={classes.semester_container}>
-        <Input style={{ width: '300px' }} placeholder={'Name of a schedule'} />
-        <div><SelectV1 /></div>
+        <div><SelectV1/></div>
+        <Input style={{width: '300px'}} placeholder={'Name of a schedule'}/>
       </div>
       <div className={classes.courses_container}>
         {
@@ -63,7 +64,9 @@ export const ScheduleCreatePage = () => {
       </div>
       <div className={classes.subjects_container}>
         <div className={classes.table_container}>
-          <SelectSubjectsTable/>
+          <ContainerWithShadow>
+            <SelectSubjectsTable/>
+          </ContainerWithShadow>
         </div>
         <div className={classes.selected_subjects_container}>
           <div className={classes.selected_text}>
@@ -71,7 +74,7 @@ export const ScheduleCreatePage = () => {
             <p>Amount: 8</p>
           </div>
           <div className={classes.ready_button_container}>
-            <button onClick={handleReadyClick} className={classes.ready_button}>Ready {<ArrowForwardIcon sx={{fontSize: '30px'}} /> }</button>
+            <ButtonV2 onClick={handleReadyClick}>Ready </ButtonV2>
           </div>
         </div>
       </div>

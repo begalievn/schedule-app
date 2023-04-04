@@ -7,7 +7,6 @@ import { Input } from '../../../../../../components/elements/input/Input';
 import { HeaderV1 } from '../../../../../../components/elements/header-v1';
 import { SelectV1 } from '../../../../../../components/elements/select-v1';
 import { ContentContainer } from '../../../../../../components/containers/content';
-import { AdminBackButton } from '../../../../../../components/elements/admin-back-button/admin-back-button.element';
 
 import { MultiSelect } from '../../../../../../components/elements/multi-select';
 
@@ -83,7 +82,6 @@ export const SubjectCreate = () => {
       maxWidth={'xl'}
       style={{ marginTop: '10px' }}
     >
-      <AdminBackButton />
       <ContentContainer style={{ paddingBottom: '60px' }}>
         <HeaderV1 style={{ marginTop: '10px' }}>Subject</HeaderV1>
         <form
