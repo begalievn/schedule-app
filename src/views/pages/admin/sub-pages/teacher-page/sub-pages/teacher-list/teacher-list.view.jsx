@@ -4,15 +4,28 @@ import { useNavigate } from 'react-router-dom';
 import { Input } from '../../../../../../components/elements/input/Input';
 import { BrowserRoute } from '../../../../../../routes/browser.routes';
 import { TeacherListTable } from './components/teache-list-table/teacher-list-table.view';
+import {ContentContainer} from '../../../../../../components/containers/content';
+import {ContainerWithShadow} from '../../../../../../components/containers/container-with-shadow';
+import {HeaderV1} from '../../../../../../components/elements/header-v1';
+import {ButtonV2} from '../../../../../../components/elements/button-v2';
+import {useGetAllTeacherQuery} from '../../../../../../../store/api/teacher-api';
+import {ContainerWithLoader} from '../../../../../../components/containers/container-with-loader';
 
 export const TeacherList = () => {
   const navigate = useNavigate();
+  
+  const { data: teacherData, isLoading: teacherLoading } = useGetAllTeacherQuery();
+  
+  
+  
+  console.log(teacherData);
 
   const navlink = () => {
     navigate(BrowserRoute.ADMIN_TEACHER_CREATE);
   };
   return (
-    <div>
+    <ContentContainer style={{ marginBottom: '50px' }}>
+      <HeaderV1>Teacher's</HeaderV1>
       <div
         style={{
           display: 'flex',
@@ -21,19 +34,22 @@ export const TeacherList = () => {
         }}
       >
         <Input
+          label={'Search teacher'}
           type='text'
           icon={<Search />}
           style={{ width: '35%' }}
         />
-        <Input
-          icon={<Add />}
-          style={{ width: '35%' }}
-          type='submit'
-          value='create teacher'
-          onClick={navlink}
-        />
+        <ButtonV2 onClick={navlink}>Add Teacher</ButtonV2>
       </div>
-      <TeacherListTable />
-    </div>
+      
+      <ContainerWithShadow>
+        {
+          teacherLoading ?
+            <ContainerWithLoader style={{ height: '440px' }} />
+            :
+            <TeacherListTable />
+        }
+      </ContainerWithShadow>
+    </ContentContainer>
   );
 };

@@ -9,6 +9,8 @@ import { styled } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { addPadBefore } from '../../../../../../../../../utils/addPadBefore';
 import { SubjectChooseCheckBox } from '../subject-choose-check-box';
+import {useDispatch, useSelector} from 'react-redux';
+import { addSubject, removeSubject } from '../../../../../../../../../store/slice/schedule-slice';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,35 +37,26 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover,
   },
   '&:last-child td, &:last-child th': {
-    border: 0,
+    borderBottom: '1px solid rgba(128, 128, 128, 0.2)',
   },
 }));
 
-function createData(id, name, year) {
-  return { id, name, year };
-}
-
-const rows = [
-  createData(1, 'Digital Electronics', 'CS403'),
-  createData(2, 'Digital Electronics', 'CS403'),
-  createData(3, 'Digital Electronics', 'CS403'),
-  createData(4, 'Digital Electronics', 'CS403'),
-  createData(5, 'Digital Electronics', 'CS403'),
-  createData(5, 'Digital Electronics', 'CS403'),
-  createData(5, 'Digital Electronics', 'CS403'),
-  createData(1, 'Digital Electronics', 'CS403'),
-  createData(2, 'Digital Electronics', 'CS403'),
-  createData(3, 'Digital Electronics', 'CS403'),
-  createData(4, 'Digital Electronics', 'CS403'),
-  createData(5, 'Digital Electronics', 'CS403'),
-  createData(5, 'Digital Electronics', 'CS403'),
-  createData(5, 'Digital Electronics', 'CS403'),
-];
-
-export const SelectSubjectsTable = () => {
+export const SelectSubjectsTable = ({ data = [], }) => {
+  const selectedSubjects = useSelector((state) => state.schedule.selectedSubjects);
+  const dispatch = useDispatch();
+  
+  const handleSelect = (subject) => {
+    const isSubjectSelected = selectedSubjects.find((sub) => sub._id === subject._id);
+    if (isSubjectSelected) {
+      dispatch(removeSubject(subject));
+    } else {
+      dispatch(addSubject(subject));
+    }
+  }
+  
   return (
     <Paper sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 500 }}>
+      <TableContainer sx={{ height: 500 }}>
         <Table
           stickyHeader
           aria-label='sticky table'
@@ -82,8 +75,8 @@ export const SelectSubjectsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
-              <StyledTableRow key={row.index}>
+            {data.map((subject, index) => (
+              <StyledTableRow key={subject._id}>
                 <StyledTableCell
                   component='th'
                   scope='row'
@@ -94,9 +87,9 @@ export const SelectSubjectsTable = () => {
                   align='left'
                   sx={{ fontWeight: 700 }}
                 >
-                  {row.name}
+                  {subject.name}
                 </StyledTableCell>
-                <StyledTableCell align='left'>{row.year}</StyledTableCell>
+                <StyledTableCell align='left'>{subject.code}</StyledTableCell>
                 <StyledTableCell
                   align='center'
                   sx={{
@@ -104,8 +97,9 @@ export const SelectSubjectsTable = () => {
                     width: '40px',
                     cursor: 'pointer',
                   }}
+                  onClick={() => handleSelect(subject)}
                 >
-                  {<SubjectChooseCheckBox selected={true} />}
+                  {<SubjectChooseCheckBox selected={selectedSubjects.find((sub) => sub._id === subject._id)} />}
                 </StyledTableCell>
               </StyledTableRow>
             ))}

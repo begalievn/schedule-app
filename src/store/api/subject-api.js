@@ -17,4 +17,4 @@ export const subjectApi = commonApi.injectEndpoints({
   }),
 });
 
-export const { useCreateSubjectMutation, useGetSubjectsFilteredQuery } = subjectApi;
+export const { useCreateSubjectMutation, useGetSubjectsFilteredQuery, useLazyGetSubjectsFilteredQuery } = subjectApi;

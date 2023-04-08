@@ -1,5 +1,8 @@
 import React from 'react';
 
+// styles
+import './style.scss';
+
 export const RadioV1 = ({
   id,
   name,

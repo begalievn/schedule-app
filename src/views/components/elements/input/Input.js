@@ -53,7 +53,7 @@ const StyledInput = styled(TextField)(() => ({
   },
 
   '&:focus': {
-    border: '1px solid #919191',
+    // border: '1px solid #919191',
     color: '#919191',
     '& .MuiInputLabel-root': {
       color: '#919191',
@@ -61,9 +61,9 @@ const StyledInput = styled(TextField)(() => ({
   },
 
   '& .MuiInputLabel-root': {
-    color: 'black',
+    color: '#9F9E9EFF',
     fontSize: '16px',
-    background: 'initial',
+    background: '#FFF',
     padding: '0px 4px 0px 8px',
   },
 
@@ -71,6 +71,7 @@ const StyledInput = styled(TextField)(() => ({
     left: '6px',
     fontSize: '14px',
     color: '#AFAFAF',
+    background: '#F5F5F5',
   },
 
   '& .MuiOutlinedInput-notchedOutline': {

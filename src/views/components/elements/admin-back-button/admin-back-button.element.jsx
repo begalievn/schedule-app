@@ -1,6 +1,6 @@
 import React from 'react';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
+import { AdminBackIcon } from '../../../../assets/icons';
 
 // styles
 import classes from './style.module.scss';
@@ -14,8 +14,7 @@ export const AdminBackButton = () => {
   
   return (
     <button onClick={goBack} className={classes.button}>
-      <ArrowBackIcon style={{ color: 'white', marginRight: '10px' }} />
-      back
+      <AdminBackIcon />
     </button>
   );
 };
