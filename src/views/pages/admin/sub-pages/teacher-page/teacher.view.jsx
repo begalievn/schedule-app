@@ -1,16 +1,22 @@
-//module
+//modules
 import React from 'react';
-import { ContentContainer } from '../../../../components/containers/content';
-import { HeaderV1 } from '../../../../components/elements/header-v1';
+import {BlockContainer} from '../../../../components/containers/block';
+import {AdminBackButton} from '../../../../components/elements/admin-back-button/admin-back-button.element';
+import {Container} from '@mui/material';
 
 // styles
-// import classes from './style.module.scss';
+// import classes from './style.scss';
 
-export const Teacher = (props) => {
+export const Teacher = ({ children }) => {
   return (
-    <ContentContainer>
-      <HeaderV1>Teacher's</HeaderV1>
-      {props.children}
-    </ContentContainer>
+    <BlockContainer>
+      <Container maxWidth={"xl"} style={{ marginTop: '10px' }}>
+        <AdminBackButton />
+      </Container>
+      <Container maxWidth={"xl"} style={{ marginTop: '10px' }}>
+        { children }
+      </Container>
+    </BlockContainer>
+    
   );
 };

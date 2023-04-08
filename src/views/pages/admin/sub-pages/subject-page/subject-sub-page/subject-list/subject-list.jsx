@@ -67,7 +67,7 @@ export const SubjectList = () => {
   };
 
   return (
-    <ContentContainer style={{ marginBottom: '20px' }}>
+    <ContentContainer style={{ marginBottom: '50px' }}>
       <HeaderV1>List of subject</HeaderV1>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <SelectV1 selectTitle='Semester' options={semesters} value={semester} onChange={handleSemesterChange} />
