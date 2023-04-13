@@ -1,4 +1,4 @@
-import { Add, Search } from '@mui/icons-material';
+import { Search } from '@mui/icons-material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Input } from '../../../../../../components/elements/input/Input';
@@ -16,16 +16,12 @@ export const TeacherList = () => {
   
   const { data: teacherData, isLoading: teacherLoading } = useGetAllTeacherQuery();
   
-  
-  
-  console.log(teacherData);
-
-  const navlink = () => {
+  const navigateTo = () => {
     navigate(BrowserRoute.ADMIN_TEACHER_CREATE);
   };
   return (
     <ContentContainer style={{ marginBottom: '50px' }}>
-      <HeaderV1>Teacher's</HeaderV1>
+      <HeaderV1>Teachers</HeaderV1>
       <div
         style={{
           display: 'flex',
@@ -39,7 +35,7 @@ export const TeacherList = () => {
           icon={<Search />}
           style={{ width: '35%' }}
         />
-        <ButtonV2 onClick={navlink}>Add Teacher</ButtonV2>
+        <ButtonV2 onClick={navigateTo}>Add Teacher</ButtonV2>
       </div>
       
       <ContainerWithShadow>
@@ -47,7 +43,7 @@ export const TeacherList = () => {
           teacherLoading ?
             <ContainerWithLoader style={{ height: '440px' }} />
             :
-            <TeacherListTable />
+            <TeacherListTable data={teacherData} />
         }
       </ContainerWithShadow>
     </ContentContainer>
