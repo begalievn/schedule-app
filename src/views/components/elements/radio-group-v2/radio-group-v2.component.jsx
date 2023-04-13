@@ -1,7 +1,7 @@
 import React from 'react';
 import {FormControl, FormControlLabel, Radio, RadioGroup} from '@mui/material';
 
-export const RadioGroupV2 = () => {
+export const RadioGroupV2 = ({ options = []}) => {
   const [value, setValue] = React.useState('female');
   
   const handleChange = (event) => {
@@ -17,7 +17,11 @@ export const RadioGroupV2 = () => {
         value={value}
         onChange={handleChange}
       >
-        <FormControlLabel value="female" control={<Radio />} label="Female" />
+        {
+          options.map((option) => (
+            <FormControlLabel value={option.value} control={<Radio />} label="Female" />
+          ))
+        }
         <FormControlLabel value="male" control={<Radio />} label="Male" />
       </RadioGroup>
     </FormControl>
