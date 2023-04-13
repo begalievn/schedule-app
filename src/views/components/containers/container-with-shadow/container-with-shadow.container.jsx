@@ -3,10 +3,10 @@ import React from 'react';
 // styles
 import classes from './style.module.scss';
 
-export const ContainerWithShadow = (props) => {
+export const ContainerWithShadow = ({ children, style }) => {
   return (
-    <div className={classes.container}>
-      {props.children}
+    <div style={style} className={classes.container}>
+      {children}
     </div>
   );
 };
