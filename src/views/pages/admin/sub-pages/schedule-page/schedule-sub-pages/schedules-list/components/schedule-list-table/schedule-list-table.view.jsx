@@ -40,29 +40,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     cursor: 'pointer',
   },
   '&:last-child td, &:last-child th': {
-    border: 0,
+    borderBottom: '1px solid rgba(128, 128, 128, 0.2)',
   },
 }));
 
-function createData(id, name, year) {
-  return { id, name, year };
-}
-
-const rows = [
-  createData(1, 'Frozen yoghurt', '2022/2023'),
-  createData(2, 'Frozen yoghurt', '2022/2023'),
-  createData(3, 'Frozen yoghurt', '2022/2023'),
-  createData(4, 'Frozen yoghurt', '2022/2023'),
-  createData(5, 'Frozen yoghurt', '2022/2023'),
-  createData(6, 'Frozen yoghurt', '2022/2023'),
-  createData(7, 'Frozen yoghurt', '2022/2023'),
-  createData(8, 'Frozen yoghurt', '2022/2023'),
-  createData(9, 'Frozen yoghurt', '2022/2023'),
-  createData(10, 'Frozen yoghurt', '2022/2023'),
-  createData(11, 'Frozen yoghurt', '2022/2023'),
-];
-
-export const ScheduleListTable = () => {
+export const ScheduleListTable = ({ data = [] }) => {
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ height: 440 }}>
@@ -78,16 +60,16 @@ export const ScheduleListTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
-              <StyledTableRow key={row.id}>
+            {data?.map((schedule, index) => (
+              <StyledTableRow key={schedule._id}>
                 <StyledTableCell
                   component='th'
                   scope='row'
                 >
                   {addPadBefore(index + 1, 0, 2)}
                 </StyledTableCell>
-                <StyledTableCell align='left'>{row.name}</StyledTableCell>
-                <StyledTableCell align='center'>{row.year}</StyledTableCell>
+                <StyledTableCell align='left'>{schedule.name}</StyledTableCell>
+                <StyledTableCell align='center'>{schedule.year ? schedule.year.split('-')[0] : ''}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

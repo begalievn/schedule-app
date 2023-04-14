@@ -1,122 +1,122 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Container, MenuItem } from '@mui/material';
-
-import { RadioV1 } from '../../../../../../components/elements/radio-v1';
-import { Input } from '../../../../../../components/elements/input/Input';
-import { HeaderV1 } from '../../../../../../components/elements/header-v1';
-import { SelectV1 } from '../../../../../../components/elements/select-v1';
+import { useGetAllTeacherQuery } from '../../../../../../../store/api/teacher-api';
+import { ContainerWithShadow } from '../../../../../../components/containers/container-with-shadow';
 import { ContentContainer } from '../../../../../../components/containers/content';
-import { AdminBackButton } from '../../../../../../components/elements/admin-back-button/admin-back-button.element';
+import { HeaderV1 } from '../../../../../../components/elements/header-v1';
+import { Input } from '../../../../../../components/elements/input/Input';
+import { SelectV1 } from '../../../../../../components/elements/select-v1';
 
 import styles from './subject_create.module.scss';
-import { useState } from 'react';
 
-const radios = [
-  {
-    id: '1',
-    value: 'Laboratory',
-  },
-  {
-    id: '2',
-    value: 'Lecture',
-  },
-];
+import {
+	courses,
+	semesters,
+	classroom,
+	inputFields,
+	initialState,
+} from './constants';
+import { CourseSelect } from '../../../schedule-page/schedule-sub-pages/schedule-create/components/course-select/course-select.component';
+import { RadioGroupV2 } from '../../../../../../components/elements/radio-group-v2/radio-group-v2.component';
+import { MultiSelect } from '../../../../../../components/elements/multi-select/multi-select';
+import { SelectedItem } from './components/selected-item/selected-item';
 
 export const SubjectCreate = () => {
-  const [subjectValue, setSubjectValue] = useState({
-    name: '',
-    code: '',
-    semester: '',
-    classroom: '',
-    description: '',
-    credits: 0,
-  });
+	const [subjectValue, setSubjectValue] = useState(initialState);
+	const [selectedCourse, setSelectedCourse] = React.useState('1');
+	const { data } = useGetAllTeacherQuery();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newData = {
-      ...subjectValue,
-      credits: Number(subjectValue.credits),
-    };
-    console.table(newData);
-  };
+	const [value, setValue] = useState([]);
+	console.log(value);
 
-  const semesterChange = (value) => {
-    setSubjectValue({ ...subjectValue, semester: value });
-  };
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+	};
 
-  const changeHandler = (e) => {
-    setSubjectValue({ ...subjectValue, [e.target.name]: e.target.value });
-  };
+	const changeHandler = (e) => {
+		setSubjectValue({ ...subjectValue, [e.target.name]: e.target.value });
+	};
 
-  return (
-    <Container
-      maxWidth={'xl'}
-      style={{ marginTop: '10px' }}
-    >
-      <AdminBackButton />
-      <ContentContainer style={{ paddingBottom: '60px' }}>
-        <HeaderV1 style={{ marginTop: '10px' }}>Subject</HeaderV1>
-        <form
-          onSubmit={handleSubmit}
-          className={styles.subject_form}
-        >
-          <div className={styles.first_container}>
-            <Input
-              name='name'
-              type='text'
-              placeholder='Name'
-              onChange={changeHandler}
-              value={subjectValue.name}
-            />
-            <Input
-              name='code'
-              type='text'
-              placeholder='Code'
-              onChange={changeHandler}
-              value={subjectValue.code}
-            />
-            <Input
-              type='number'
-              name='credits'
-              placeholder='Credits'
-              onChange={changeHandler}
-              value={subjectValue.credits}
-            />
-            <Input
-              name='description'
-              placeholder='Description'
-              onChange={changeHandler}
-              value={subjectValue.description}
-            />
+	const handleCourseChange = (event) => {
+		setSelectedCourse(event.target.id);
+	};
 
-            <SelectV1
-              selecTitle='Semester'
-              parentfunc={semesterChange}
-            >
-              <MenuItem value='firstSemester'>First Semester</MenuItem>
-              <MenuItem value='seconSemester'>Second Semester</MenuItem>
-            </SelectV1>
-            <div className={styles.first_container_radio_group}>
-              <h4>Classroom</h4>
-              <div>
-                {radios.map((radio) => (
-                  <RadioV1
-                    radio={radio}
-                    key={radio.id}
-                    name='classroom'
-                    handleChange={changeHandler}
-                    value={subjectValue.classroom}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className={styles.second_container}></div>
-          <button className={styles.subject_form_btn}>add subject</button>
-        </form>
-      </ContentContainer>
-    </Container>
-  );
+	const resetHandler = (id) => {
+		const filteredValue = value.filter((item) => item._id !== id);
+		setValue(filteredValue);
+	};
+	return (
+		<ContentContainer style={{ marginBottom: '50px' }}>
+			<HeaderV1>Subject</HeaderV1>
+			<form
+				className={styles.form_container}
+				onSubmit={handleSubmit}
+			>
+				<ContainerWithShadow>
+					<div className={styles.container}>
+						{inputFields.map((fields) => (
+							<label
+								key={fields.id}
+								className={styles.form_label}
+							>
+								{fields.label}
+								<Input
+									name={fields.name}
+									placeholder={fields.label}
+									onChange={changeHandler}
+								/>
+							</label>
+						))}
+						<label className={styles.form_label}>
+							Semester
+							<SelectV1
+								options={semesters}
+								width='330px'
+							/>
+						</label>
+
+						<label className={styles.form_label}>
+							Classroom
+							<RadioGroupV2 options={classroom} />
+						</label>
+
+						<label className={styles.form_label}>
+							Course
+							<div className={styles.course_container}>
+								{courses.map((course) => (
+									<CourseSelect
+										id={course.id}
+										key={course.id}
+										width='80px'
+										title={course.title}
+										onChange={handleCourseChange}
+										selected={course.id === selectedCourse}
+									/>
+								))}
+							</div>
+						</label>
+					</div>
+				</ContainerWithShadow>
+				<ContainerWithShadow style={{ background: '#E5EFFE' }}>
+					<div className={styles.container}>
+						<MultiSelect
+							label='Choose Teacher'
+							value={value}
+							options={data || []}
+							setValue={setValue}
+						/>
+						<div className={styles.selected_container}>
+							{value.map((item) => (
+								<SelectedItem
+									key={item._id}
+									resetHandler={resetHandler}
+									{...item}
+								/>
+							))}
+						</div>
+					</div>
+				</ContainerWithShadow>
+			</form>
+		</ContentContainer>
+	);
 };

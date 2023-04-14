@@ -51,25 +51,7 @@ const StyledPaper = styled(Paper)(() => ({
   },
 }));
 
-function createData(id, name, email, degree) {
-  return { id, name, email, degree };
-}
-
-const rows = [
-  createData(1, 'Dastan Baiyzbekov', 'dastanbayizbekov@gmail.com', 'Professor'),
-  createData(2, 'Maria Antonova', 'mariaantonova@gmail.com', 'Professor'),
-  createData(3, 'Maria Antonova', 'mariaantonova@gmail.com', 'Professor'),
-  createData(4, 'Maria Antonova', 'mariaantonova@gmail.com', 'Professor'),
-  createData(5, 'Maria Antonova', 'mariaantonova@gmail.com', 'Professor'),
-  createData(6, 'Maria Antonova', 'mariaantonova@gmail.com', 'Professor'),
-  createData(7, 'Maria Antonova', 'mariaantonova@gmail.com', 'Professor'),
-  createData(8, 'Maria Antonova', 'mariaantonova@gmail.com', 'Professor'),
-  createData(9, 'Maria Antonova', 'mariaantonova@gmail.com', 'Professor'),
-  createData(10, 'Maria Antonova', 'mariaantonova@gmail.com', 'Professor'),
-  createData(11, 'Maria Antonova', 'mariaantonova@gmail.com', 'Professor'),
-];
-
-export const TeacherListTable = () => {
+export const TeacherListTable = ({ data = [] }) => {
   return (
     <StyledPaper>
       <TableContainer sx={{ height: 440 }}>
@@ -80,20 +62,20 @@ export const TeacherListTable = () => {
           <TableHead>
             <TableRow>
               <StyledTableCell align='center'>№</StyledTableCell>
-              <StyledTableCell align='center'>Name</StyledTableCell>
+              <StyledTableCell align='center'>FirstName</StyledTableCell>
+              <StyledTableCell align='center'>LastName</StyledTableCell>
               <StyledTableCell align='center'>Email</StyledTableCell>
-              <StyledTableCell align='center'>Degree</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
-              <StyledTableRow key={row.id}>
+            {data.map((row, index) => (
+              <StyledTableRow key={row._id}>
                 <StyledTableCell align='center'>
-                  {addPadBefore(row.id, 0, 2)}
+                  {addPadBefore(index + 1, 0, 2)}
                 </StyledTableCell>
-                <StyledTableCell align='center'>{row.name}</StyledTableCell>
-                <StyledTableCell align='center'>{row.email}</StyledTableCell>
-                <StyledTableCell align='center'>{row.degree}</StyledTableCell>
+                <StyledTableCell align='center'>{row.firstName || ''}</StyledTableCell>
+                <StyledTableCell align='center'>{row.lastName || ''}</StyledTableCell>
+                <StyledTableCell align='center'>{row.email || ''}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

@@ -6,7 +6,7 @@ import { Container } from '@mui/material';
 import { ScheduleBoard } from './schedule-board';
 
 // styles
-// import classes from './style.module.scss';
+// import classes from './style.scss';
 
 export const ScheduleTablePage = () => {
   return (

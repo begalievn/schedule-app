@@ -1,181 +1,170 @@
-import { MenuItem } from "@mui/material";
-import React from "react";
-import { SelectV1 } from "../../../../../../components/elements/select-v1";
+import React, {Fragment, useState} from "react";
+import {Input} from '../../../../../../components/elements/input/Input';
+import {HeaderV1} from '../../../../../../components/elements/header-v1';
+import {ContentContainer} from '../../../../../../components/containers/content';
+import {DatePickerV2} from '../../../../../../components/elements/date-picker-v2';
+import {ContainerWithShadow} from '../../../../../../components/containers/container-with-shadow';
+import {RadioGroupV2} from '../../../../../../components/elements/radio-group-v2/radio-group-v2.component';
+import {SelectV1} from '../../../../../../components/elements/select-v1';
+import {CheckBoxV2} from '../../../../../../components/elements/check-box-v2';
+import {ButtonV2} from '../../../../../../components/elements/button-v2';
+import { workDays, WorkingTimeGraphicEnum } from './constants';
 
-import styles from "./teacher_create.module.scss";
+// styles
+import classes from "./teacher_create.module.scss";
 
-const Input = ({ name, labelvalue, type }) => {
-  return (
-    <label htmlFor={name}>
-      <span> {labelvalue}</span>
-      <input
-        type={type}
-        name={name}
-      />
-    </label>
-  );
-};
+
+
+const inputFields = [
+  {
+    id: 1,
+    name: 'firstName',
+    label: 'First Name'
+  },
+  {
+    id: 2,
+    name: 'lastName',
+    label: 'Last Name'
+  },
+  {
+    id: 3,
+    name: 'email',
+    label: 'Email'
+  },
+  {
+    id: 4,
+    name: 'phoneNumber',
+    label: 'Phone number'
+  },
+  {
+    id: 5,
+    name: 'address',
+    label: 'Address'
+  },
+  {
+    id: 6,
+    name: 'workExperience',
+    label: 'Work experience'
+  }
+];
+
+const genderOptions = [
+  {
+    label: 'Male',
+    value: 'MALE',
+  },
+  {
+    label: 'Female',
+    value: 'FEMALE',
+  }
+];
+
+const workingHoursOptions = [
+  {
+    label: 'Before lunch',
+    value: 'BEFORE',
+  },
+  {
+    label: 'After lunch',
+    value: 'AFTER',
+  },
+  {
+    label: 'Full',
+    value: 'FULL',
+  }
+]
 
 export const TeacherCreate = () => {
+  const [teacherData, setTeacherData] = useState({
+    firstName: '',
+    lastName: '',
+    birthDate: '',
+    email: '',
+    address: '',
+    phoneNumber: '',
+    experience: '',
+    workingGraphic: WorkingTimeGraphicEnum.FULL,
+  });
+  const [birthDate, setBirthDate] = useState('');
+  const [selectedDays, setSelectedDays] = useState([]);
+  
+  console.log(teacherData);
+  
+  const handleBirthdayChange = (event) => {
+    console.log(event.$d.toLocaleString());
+  }
+  
+  console.log({ birthDate });
+  
+  const handleDaySelect = (value) => {
+    value = Number(value);
+    if (selectedDays.includes(value)) {
+      setSelectedDays(selectedDays.filter((day) => day !== value));
+    } else {
+      setSelectedDays([...selectedDays, value]);
+    }
+  }
+  
+  const handleInputsChange = (e) => {
+    setTeacherData({...teacherData, [e.target.name]: e.target.value});
+  }
+  
   return (
-    <div>
-      <h2 className={styles.title}>Teacher's personla information</h2>
-
-      <form className={styles.form}>
-        <div className={styles.form_photo}>Photo</div>
-        <div className={styles.form_first_container}>
-          <Input
-            labelvalue='First Name'
-            name='firstName'
-            type='text'
-          />
-          <Input
-            labelvalue='Last Name'
-            name='lastName'
-            type='text'
-          />
-          <Input
-            labelvalue='Middle Name'
-            name='middleName'
-            type='text'
-          />
-          <Input
-            labelvalue='Date of Birth'
-            name='dateOfBirth'
-            type='date'
-          />
-
-          <label htmlFor='gender'>
-            Gender
-            <div className={styles.form_first_container_radio_btn}>
-              <span>
-                <input
-                  type='radio'
-                  name='gender'
-                  value='male'
-                />
-                male
-              </span>
-              <span>
-                <input
-                  type='radio'
-                  name='gender'
-                  value='female'
-                />
-                female
-              </span>
+    <ContentContainer style={{marginBottom: '50px'}}>
+      <HeaderV1>Teacher's information</HeaderV1>
+      <form>
+        <div className={classes.form_container}>
+          <ContainerWithShadow>
+            <div className={classes.first_container}>
+              {
+                inputFields.map((field) => (
+                  <label key={field.id} className={classes.form_label}>
+                    {field.label}
+                    <Input name={field.name} onChange={handleInputsChange} placeholder={field.label}/>
+                  </label>
+                ))
+              }
+              <label className={classes.form_label}>
+                Birth date
+                <DatePickerV2 onChange={handleBirthdayChange} />
+              </label>
+              <label className={classes.form_label}>
+                Gender
+                <RadioGroupV2 onChange={handleInputsChange} name={'gender'} options={genderOptions} />
+              </label>
             </div>
-          </label>
-          <Input
-            labelvalue='Email'
-            name='email'
-            type='email'
-          />
-          <Input
-            labelvalue='Address'
-            name='address'
-            type='text'
-          />
-          <Input
-            labelvalue='Phone number'
-            name='phoneNumber'
-            type='number'
-          />
-          <Input
-            labelvalue='Work experience'
-            name='experiens'
-            type='text'
-          />
-        </div>
-        <div className={styles.form_second_container}>
-          <SelectV1 selecTitle='Degree'>
-            {degrees.map((degree) => (
-              <MenuItem
-                value={degree.title}
-                key={degree.id}
-              >
-                {degree.title}
-              </MenuItem>
-            ))}
-          </SelectV1>
-          <label htmlFor='workinghours'>
-            Working hours
-            <span>
-              <input
-                name='workinghours'
-                type='radio'
-                value='8to13'
-              />
-              from 8 to 13
-            </span>
-            <span>
-              <input
-                name='workinghours'
-                type='radio'
-                value='13to18'
-              />
-              from 13 to 18
-            </span>
-            <span>
-              <input
-                name='workinghours'
-                type='radio'
-                value='full'
-              />
-              full
-            </span>
-          </label>
+          </ContainerWithShadow>
+          <ContainerWithShadow style={{background: '#E5EFFE'}}>
+            <div className={classes.first_container}>
+              <label className={classes.form_label}>
+                Degree
+                <SelectV1 options={[]} value={''} />
+              </label>
+              <label className={classes.form_label}>
+                Working hours
+                <RadioGroupV2 onChange={handleInputsChange} name={'workingHours'} options={workingHoursOptions} />
+              </label>
+              <label className={classes.form_label}>
+                Working days
+                <div className={classes.check_box_container}>
+                  {
+                    workDays.map((day) => (
+                      <Fragment key={day.day}>
+                        <CheckBoxV2 label={day.day} checked={selectedDays.includes(day.value)} value={day.value} handleChange={handleDaySelect} />
 
-          <label>
-            Working days
-            <div className={styles.form_second_container_checkbox_container}>
-              <span>
-                Mn
-                <input type='checkbox' />
-              </span>
-              <span>
-                Tu
-                <input type='checkbox' />
-              </span>
-              <span>
-                We
-                <input type='checkbox' />
-              </span>
-              <span>
-                Th
-                <input type='checkbox' />
-              </span>
-              <span>
-                Fr
-                <input type='checkbox' />
-              </span>
-              <span>
-                Sa
-                <input type='checkbox' />
-              </span>
+                      </Fragment>
+                    ))
+                  }
+                </div>
+              </label>
+              <div className={classes.buttons}>
+                <ButtonV2>Save</ButtonV2>
+                <ButtonV2 style={{background: 'white', color: '#cc5092'}}>Delete</ButtonV2>
+              </div>
             </div>
-          </label>
+          </ContainerWithShadow>
         </div>
       </form>
-    </div>
+    </ContentContainer>
   );
 };
-
-const degrees = [
-  {
-    id: "1",
-    title: "associate degree",
-  },
-  {
-    id: "2",
-    title: "bachelor degree",
-  },
-  {
-    id: "3",
-    title: "graduate degree",
-  },
-  {
-    id: "4",
-    title: "doctorate degree",
-  },
-];

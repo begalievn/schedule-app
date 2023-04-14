@@ -4,32 +4,42 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { Select as MuiSelect } from '@mui/material';
 
-export const SelectV1 = ({ children, selecTitle, parentfunc, ...props }) => {
-  const [selectValue, setAge] = React.useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-    parentfunc(event.target.value);
-  };
-
-  return (
-    <FormControl
-      sx={{ minWidth: '300px' }}
-      size='small'
-      {...props}
-    >
-      <InputLabel>{selecTitle}</InputLabel>
-      <MuiSelect
-        sx={{ borderColor: '#9FB8F9' }}
-        value={selectValue}
-        label={selecTitle}
-        onChange={handleChange}
-      >
-        <MenuItem value=''>
-          <em>None</em>
-        </MenuItem>
-        {children}
-      </MuiSelect>
-    </FormControl>
-  );
+export const SelectV1 = ({
+	selectTitle,
+	options = [],
+	value,
+	onChange,
+	width,
+	...props
+}) => {
+	return (
+		<FormControl
+			sx={{ minWidth: '300px', width: width }}
+			size='small'
+			{...props}
+		>
+			<InputLabel>{selectTitle}</InputLabel>
+			<MuiSelect
+				sx={{ borderColor: '#9FB8F9' }}
+				value={value}
+				label={selectTitle}
+				onChange={onChange}
+			>
+				{options.map((item, index) =>
+					item.none ? (
+						<MenuItem value=''>
+							<em>None</em>
+						</MenuItem>
+					) : (
+						<MenuItem
+							key={index}
+							value={item.value}
+						>
+							{item.label}
+						</MenuItem>
+					),
+				)}
+			</MuiSelect>
+		</FormControl>
+	);
 };

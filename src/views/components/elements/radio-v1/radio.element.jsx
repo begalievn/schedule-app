@@ -1,16 +1,31 @@
 import React from 'react';
 
-export const RadioV1 = ({ radio, handleChange, value, name, ...props }) => {
+// styles
+import './style.scss';
+
+export const RadioV1 = ({
+  id,
+  name,
+  type,
+  value,
+  checked,
+  required,
+  radioValue,
+  handleChange,
+  ...props
+}) => {
   return (
     <label>
-      {radio.value}
+      {value}
       <input
+        id={id}
         {...props}
         name={name}
-        type='radio'
-        value={radio.value}
+        type={type}
+        value={value}
+        required={required}
         onChange={handleChange}
-        checked={value === radio.value}
+        checked={checked}
       />
     </label>
   );
