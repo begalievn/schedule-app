@@ -1,28 +1,23 @@
 import React from 'react';
 import {FormControl, FormControlLabel, Radio, RadioGroup} from '@mui/material';
 
-export const RadioGroupV2 = ({ options = []}) => {
-  const [value, setValue] = React.useState('female');
-  
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+export const RadioGroupV2 = ({ options = [], onChange, value, label, name }) => {
   
   return (
     <FormControl>
       <RadioGroup
         row={true}
         aria-labelledby="demo-controlled-radio-buttons-group"
-        name="controlled-radio-buttons-group"
+        name={name}
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
       >
         {
           options.map((option) => (
-            <FormControlLabel value={option.value} control={<Radio />} label="Female" />
+            <FormControlLabel value={option.value} control={<Radio />} label={option.label} />
           ))
         }
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
+        {/*<FormControlLabel value="male" control={<Radio />} label="Male" />*/}
       </RadioGroup>
     </FormControl>
   );

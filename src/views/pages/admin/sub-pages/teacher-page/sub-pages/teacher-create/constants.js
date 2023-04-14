@@ -20,3 +20,9 @@ export const workDays = [
     value: 5,
   }
 ];
+
+export const WorkingTimeGraphicEnum = {
+  FULL: 'FULL',
+  BEFORE: 'BEFORE',
+  AFTER: 'AFTER',
+};

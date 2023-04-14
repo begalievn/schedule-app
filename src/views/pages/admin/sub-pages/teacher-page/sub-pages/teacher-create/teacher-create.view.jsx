@@ -8,16 +8,12 @@ import {RadioGroupV2} from '../../../../../../components/elements/radio-group-v2
 import {SelectV1} from '../../../../../../components/elements/select-v1';
 import {CheckBoxV2} from '../../../../../../components/elements/check-box-v2';
 import {ButtonV2} from '../../../../../../components/elements/button-v2';
-import {workDays} from './constants';
+import { workDays, WorkingTimeGraphicEnum } from './constants';
 
 // styles
 import classes from "./teacher_create.module.scss";
 
-const WorkingTimeGraphicEnum = {
-  FULL: 'FULL',
-  BEFORE: 'BEFORE',
-  AFTER: 'AFTER',
-};
+
 
 const inputFields = [
   {
@@ -50,6 +46,32 @@ const inputFields = [
     name: 'workExperience',
     label: 'Work experience'
   }
+];
+
+const genderOptions = [
+  {
+    label: 'Male',
+    value: 'MALE',
+  },
+  {
+    label: 'Female',
+    value: 'FEMALE',
+  }
+];
+
+const workingHoursOptions = [
+  {
+    label: 'Before lunch',
+    value: 'BEFORE',
+  },
+  {
+    label: 'After lunch',
+    value: 'AFTER',
+  },
+  {
+    label: 'Full',
+    value: 'FULL',
+  }
 ]
 
 export const TeacherCreate = () => {
@@ -63,10 +85,16 @@ export const TeacherCreate = () => {
     experience: '',
     workingGraphic: WorkingTimeGraphicEnum.FULL,
   });
+  const [birthDate, setBirthDate] = useState('');
+  const [selectedDays, setSelectedDays] = useState([]);
   
   console.log(teacherData);
   
-  const [selectedDays, setSelectedDays] = useState([]);
+  const handleBirthdayChange = (event) => {
+    console.log(event.$d.toLocaleString());
+  }
+  
+  console.log({ birthDate });
   
   const handleDaySelect = (value) => {
     value = Number(value);
@@ -98,11 +126,11 @@ export const TeacherCreate = () => {
               }
               <label className={classes.form_label}>
                 Birth date
-                <DatePickerV2 />
+                <DatePickerV2 onChange={handleBirthdayChange} />
               </label>
               <label className={classes.form_label}>
                 Gender
-                <RadioGroupV2 />
+                <RadioGroupV2 onChange={handleInputsChange} name={'gender'} options={genderOptions} />
               </label>
             </div>
           </ContainerWithShadow>
@@ -114,7 +142,7 @@ export const TeacherCreate = () => {
               </label>
               <label className={classes.form_label}>
                 Working hours
-                <RadioGroupV2 />
+                <RadioGroupV2 onChange={handleInputsChange} name={'workingHours'} options={workingHoursOptions} />
               </label>
               <label className={classes.form_label}>
                 Working days
