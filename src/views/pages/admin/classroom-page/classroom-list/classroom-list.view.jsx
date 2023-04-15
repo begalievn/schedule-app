@@ -6,13 +6,20 @@ import {ClassroomListTable} from '../components/classroom-page-table';
 import {ContentContainer} from '../../../../components/containers/content';
 import {useNavigate} from 'react-router-dom';
 import {ButtonV2} from '../../../../components/elements/button-v2';
+import {useGetClassroomsQuery} from '../../../../../store/api/classroom-api';
+import {ContainerWithShadow} from '../../../../components/containers/container-with-shadow';
+import {CircularProgress} from '@mui/material';
+
+// styles
+import classes from './style.module.scss';
 
 export const ClassroomList = () => {
   const navigate = useNavigate();
-  
   const navigateToCreate = () => {
     navigate('create');
   }
+  
+  const { data, isLoading } = useGetClassroomsQuery();
   
   return (
     <ContentContainer>
@@ -34,7 +41,16 @@ export const ClassroomList = () => {
           Add classroom
         </ButtonV2>
       </div>
-      <ClassroomListTable />
+      <ContainerWithShadow>
+        {
+          isLoading ?
+            <div className={classes.loader_container}>
+              <CircularProgress />
+            </div>
+            :
+            <ClassroomListTable data={data} />
+        }
+      </ContainerWithShadow>
     </ContentContainer>
   );
 };
