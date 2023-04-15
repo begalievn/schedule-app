@@ -1,5 +1,4 @@
 import {commonApi} from './common-api';
-import {subjectApi} from './subject-api';
 
 export const scheduleApi = commonApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,4 +10,4 @@ export const scheduleApi = commonApi.injectEndpoints({
   })
 });
 
-export const { useGetSchedulesQuery } = subjectApi;
+export const { useGetSchedulesQuery } = scheduleApi;

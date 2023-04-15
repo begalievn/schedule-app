@@ -11,6 +11,7 @@ import {
   TableCell,
   TableContainer,
 } from '@mui/material';
+import {addPadBefore} from '../../../../../../utils/addPadBefore';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -50,25 +51,7 @@ const StyledPaper = styled(Paper)(() => ({
   },
 }));
 
-function createData(id, block, name, type) {
-  return { id, block, name, type };
-}
-
-const rows = [
-  createData(1, 'A Block', '202', 'Lecture'),
-  createData(2, 'A Block', '202', 'Lecture'),
-  createData(3, 'A Block', '202', 'Lecture'),
-  createData(4, 'A Block', '202', 'Lecture'),
-  createData(5, 'A Block', '202', 'Lecture'),
-  createData(6, 'A Block', '202', 'Lecture'),
-  createData(7, 'A Block', '202', 'Lecture'),
-  createData(8, 'A Block', '202', 'Lecture'),
-  createData(9, 'A Block', '202', 'Lecture'),
-  createData(10, 'A Block', '202', 'Lecture'),
-  createData(11, 'A Block', '202', 'Lecture'),
-];
-
-export const ClassroomListTable = () => {
+export const ClassroomListTable = ({ data = []}) => {
   return (
     <StyledPaper>
       <TableContainer sx={{ height: 440 }}>
@@ -78,17 +61,21 @@ export const ClassroomListTable = () => {
         >
           <TableHead>
             <TableRow>
+              <StyledTableCell>№</StyledTableCell>
+              <StyledTableCell>Title</StyledTableCell>
               <StyledTableCell align='center'>Block</StyledTableCell>
-              <StyledTableCell align='center'>Name</StyledTableCell>
               <StyledTableCell align='center'>Type</StyledTableCell>
+              <StyledTableCell align='center'>Capacity</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
-              <StyledTableRow key={row.id}>
+            {data.map((row, index) => (
+              <StyledTableRow key={row._id}>
+                <StyledTableCell>{addPadBefore(index + 1, 0, 2)}</StyledTableCell>
+                <StyledTableCell align='center'>{row.title}</StyledTableCell>
                 <StyledTableCell align='center'>{row.block}</StyledTableCell>
-                <StyledTableCell align='center'>{row.name}</StyledTableCell>
                 <StyledTableCell align='center'>{row.type}</StyledTableCell>
+                <StyledTableCell align='center'>{row.capacity}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
