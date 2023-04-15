@@ -8,7 +8,8 @@ import classes from './style.module.scss';
 export const AdminBackButton = () => {
   const navigate = useNavigate();
   
-  const goBack = () => {
+  const goBack = (e) => {
+    e.preventDefault();
     navigate(-1);
   }
   

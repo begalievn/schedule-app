@@ -13,7 +13,7 @@ export const BrowserRoute = {
     ADMIN_TEACHER_CREATE: 'create',
   ADMIN_SUBJECT: "subject",
     ADMIN_SUBJECT_LIST:'list',
-  ADMIN_SUBJECT_CREATE:'create',
+    ADMIN_SUBJECT_CREATE:'create',
   ADMIN_CLASSROOM: "classroom",
     ADMIN_CLASSROOM_LIST: 'list',
     ADMIN_CLASSROOM_CREATE: 'create',
