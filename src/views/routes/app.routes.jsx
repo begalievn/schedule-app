@@ -23,6 +23,8 @@ import { ScheduleTablePage } from '../pages/admin/sub-pages/schedule-page/schedu
 import { SubjectCreate } from '../pages/admin/sub-pages/subject-page/subject-sub-page/subject-create';
 import { SubjectList } from '../pages/admin/sub-pages/subject-page/subject-sub-page/subject-list';
 import { useSelector } from 'react-redux';
+import {ClassroomList} from '../pages/admin/sub-pages/classroom-page/classroom-list/classroom-list.view';
+import {ClassroomCreate} from '../pages/admin/sub-pages/classroom-page/classroom-create/classroom-create.view';
 
 export const AppRoutesDefinition = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -133,11 +135,24 @@ export const AppRoutesDefinition = () => {
               path: BrowserRoute.ADMIN_CLASSROOM,
               element: (
                 <PrivateAuthRoute
-                  Component={<ClassroomPage />}
+                  Component={
+                    <ClassroomPage>
+                      <Outlet />
+                    </ClassroomPage>}
                   fallbackPath={BrowserRoute.startPage}
                   isAllowed={isLoggedIn}
                 />
               ),
+              children: [
+                {
+                  index: true,
+                  element: <ClassroomList />
+                },
+                {
+                  path: BrowserRoute.ADMIN_CLASSROOM_CREATE,
+                  element: <ClassroomCreate />
+                }
+              ]
             },
             {
               path: BrowserRoute.ADMIN_GROUP,
