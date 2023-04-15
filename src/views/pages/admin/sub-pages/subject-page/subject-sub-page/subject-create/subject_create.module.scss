@@ -39,3 +39,12 @@
 		padding: 10px 8px;
 	}
 }
+
+
+@media screen and (max-width: 800px){
+	.form_container{
+		display: flex;
+		flex-direction: column;
+	}
+	
+}
