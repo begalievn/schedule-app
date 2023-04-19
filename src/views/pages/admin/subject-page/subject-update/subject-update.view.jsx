@@ -34,8 +34,6 @@ export const SubjectUpdate = () => {
 	const { data: teacherData } = useGetAllTeacherQuery();
 	const { data: singleSubject } = useGetSubjectByIdQuery(params._id);
 
-	console.log(singleSubject);
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 	};
@@ -64,7 +62,7 @@ export const SubjectUpdate = () => {
 				description: singleSubject.description,
 			});
 		}
-	}, [singleSubject]);
+	}, [singleSubject, subjectValue]);
 
 	console.log(subjectValue);
 	return (
