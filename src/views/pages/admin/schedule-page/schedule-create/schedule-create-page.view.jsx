@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {ContentContainer} from "../../../../components/containers/content";
 import {HeaderV1} from "../../../../components/elements/header-v1";
-
 import {CourseSelect} from "./components/course-select/course-select.component";
 import {SelectSubjectsTable} from "./components/select-subjects-table/select-subjects-table.component";
 import {useNavigate} from "react-router-dom";
@@ -9,12 +8,12 @@ import {SelectV1} from "../../../../components/elements/select-v1";
 import {Input} from "../../../../components/elements/input/Input";
 import {ContainerWithShadow} from '../../../../components/containers/container-with-shadow';
 import {ButtonV2} from '../../../../components/elements/button-v2';
-
-// styles
-import classes from './style.module.scss';
 import {useSelector} from 'react-redux';
 import {useGetSubjectsFilteredQuery} from '../../../../../store/api/subject-api';
 import {ContainerWithLoader} from '../../../../components/containers/container-with-loader';
+
+// styles
+import classes from './style.module.scss';
 
 const courseList = [
   {
@@ -99,7 +98,7 @@ export const ScheduleCreatePage = () => {
         <div className={classes.selected_subjects_container}>
           <div className={classes.selected_text}>
             <p>Selected subjects</p>
-            <p>Amount: 8</p>
+            <p>Amount: {selectedSubjects.length}</p>
           </div>
           <div className={classes.ready_button_container}>
             <ButtonV2 onClick={handleReadyClick}>Ready </ButtonV2>
