@@ -3,13 +3,22 @@ import React from 'react';
 // styles
 import classes from './style.module.scss';
 
+const Subject = {
+  title: 'Information Security',
+  teachers: ['Teacher'],
+  code: 'CS110',
+  numberOfHours: 1,
+}
+
+const testSubjects = [null, null, null, Subject, null, null, null, null, null, null, null];
+
 const scheduleDays = [
   {
     day: 'Monday',
     courses: [
       {
         course: 1,
-        subjects: new Array(11).fill(null)
+        subjects: testSubjects,
       }, {
         course: 2,
         subjects: new Array(11).fill(null)
@@ -215,7 +224,11 @@ export const ScheduleBoard = () => {
                       <div className={ classes.subjects }>
                         {
                           course.subjects.map((cell, index) => (
-                            <div className={ `${classes.subject_cell} ${ index === lunchHour ? classes.lunch_hour : '' }` }></div>
+                            <div className={ `${classes.subject_cell} ${ index === lunchHour ? classes.lunch_hour : '' }` }>
+                              {
+                                cell?.title && <div draggable={true} className={classes.cell_content} style={{ width: `${cell.numberOfHours * 100}%`}}>{cell?.title}</div>
+                              }
+                            </div>
                           ))
                         }
                       </div>

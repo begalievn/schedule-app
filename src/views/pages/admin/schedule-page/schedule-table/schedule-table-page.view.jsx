@@ -3,7 +3,7 @@ import React from 'react';
 // components
 import { HeaderV1 } from '../../../../components/elements/header-v1';
 import { Container } from '@mui/material';
-import { ScheduleBoard } from './schedule-board';
+import { ScheduleBoard } from '../../../../components/schedule-board';
 
 // styles
 // import classes from './style.scss';

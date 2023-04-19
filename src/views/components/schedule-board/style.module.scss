@@ -155,6 +155,16 @@
         border: .5px solid black;
         border-bottom: none;
         border-right: none;
+        position: relative;
+
+        .cell_content {
+          position: absolute;
+          z-index: 1;
+          height: 100%;
+          background: yellow;
+          overflow: hidden;
+          cursor: grab;
+        }
       }
     }
   }

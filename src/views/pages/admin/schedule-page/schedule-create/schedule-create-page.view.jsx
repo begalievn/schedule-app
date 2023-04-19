@@ -101,7 +101,7 @@ export const ScheduleCreatePage = () => {
             <p>Amount: {selectedSubjects.length}</p>
           </div>
           <div className={classes.ready_button_container}>
-            <ButtonV2 onClick={handleReadyClick}>Ready </ButtonV2>
+            <ButtonV2 onClick={handleReadyClick}>Ready</ButtonV2>
           </div>
         </div>
       </div>
