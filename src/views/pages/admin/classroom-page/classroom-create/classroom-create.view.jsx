@@ -65,7 +65,7 @@ export const ClassroomCreate = () => {
   const [classroomData, setClassroomData] = useState({});
   
   const handleBlockChange = (event) => {
-    event.preventDefault();
+   
     setSelectedBlock(event.target.id);
     setClassroomData({ ...classroomData, block: event.target.id })
     
@@ -85,7 +85,7 @@ export const ClassroomCreate = () => {
       <HeaderV1>
         Creating a new classroom
       </HeaderV1>
-      <form className={classes.form_container}>
+      <form className={classes.form_container} onSubmit={handleSave}>
         <ContainerWithShadow style={{width: '50%'}}>
           <div className={classes.container}>
             {
@@ -116,7 +116,7 @@ export const ClassroomCreate = () => {
               <RadioGroupV2 onChange={handleInputsChange} options={roomOptions} name={'type'} />
             </label>
             <div className={classes.buttons}>
-              <ButtonV2 onClick={handleSave}>Save</ButtonV2>
+              <ButtonV2 type='submit'>Save</ButtonV2>
               <ButtonV2 style={{background: 'white', color: '#cc5092'}}>Delete</ButtonV2>
             </div>
           </div>

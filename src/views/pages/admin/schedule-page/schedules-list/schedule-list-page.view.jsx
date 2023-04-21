@@ -8,10 +8,10 @@ import { SelectV1 } from "../../../../components/elements/select-v1";
 import { ButtonV2 } from "../../../../components/elements/button-v2";
 import { ContainerWithShadow } from '../../../../components/containers/container-with-shadow';
 import { useGetSchedulesQuery } from '../../../../../store/api/schedule-api';
+import {ContainerWithLoader} from '../../../../components/containers/container-with-loader';
 
 // styles
 import classes from './style.module.scss';
-import {ContainerWithLoader} from '../../../../components/containers/container-with-loader';
 
 const semesters = [
   {
