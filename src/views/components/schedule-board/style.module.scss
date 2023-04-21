@@ -1,0 +1,171 @@
+.board {
+  width: 100%;
+  border: 1px solid black;
+}
+
+.header {
+  width: 100%;
+  height: 90px;
+  background: #557CDE;
+  padding: 10px 0;
+
+
+  .header_h2 {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+  }
+}
+
+.lunch_hour {
+  background: rgba(253, 255, 158, 0.47);
+}
+
+.hours_container {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  border: 1px solid black;
+  border-left: none;
+  border-right: none;
+
+  .hours_left {
+    width: 141px;
+    height: 100%;
+    background: #557CDE;
+    border: .5px solid transparent;
+    border-right: 1px solid black;
+  }
+
+  .hours {
+    width: calc(100% - 140px);
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    background: #557CDE;
+
+    .hour {
+      width: 100%;
+      height: 100%;
+      border: 1px solid black;
+      border-bottom: none;
+      border-top: none;
+      border-left: none;
+      display: flex;
+      flex-direction: column;
+
+      font-family: 'Poppins', sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 18px;
+      color: #FFFFFF;
+
+      .hour_order {
+        width: 100%;
+        height: 20px;
+        border-bottom: 1px solid black;
+        text-align: center;
+      }
+
+      .hour_bottom {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .time {
+          width: 100%;
+          height: 40%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+
+    .hour:last-child {
+      border-right: none;
+    }
+  }
+}
+
+.days {
+  .day {
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    background: #8DB8F9;
+    position: relative;
+    padding-left: 40px;
+    border: solid 1px rgba(0, 0, 0, 0.76);
+    border-bottom: none;
+
+    .day_title {
+      width: 200px;
+      height: 40px;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: rotate(-90deg) translateY(-120px) translateX(-80px);
+      font-family: 'Poppins', sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 25px;
+      text-transform: uppercase;
+    }
+
+    .courses {
+      width: 100%;
+
+      .course {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        border: solid 1px black;
+        border-bottom: none;
+
+        .course_title {
+          width: 100px;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(51, 73, 112, 0.26);
+        }
+      }
+    }
+
+    .subjects {
+      width: calc(100% - 100px);
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      .subject_cell {
+        width: 100%;
+        height: 100%;
+        border: .5px solid black;
+        border-bottom: none;
+        border-right: none;
+        position: relative;
+
+        .cell_content {
+          position: absolute;
+          z-index: 1;
+          height: 100%;
+          background: yellow;
+          overflow: hidden;
+          cursor: grab;
+        }
+      }
+    }
+  }
+}
