@@ -3,6 +3,19 @@
   gap: 40px;
   flex-direction: column;
   width: 73.5%;
+  background: yellowgreen;
+
+  .form_label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
   &_btn {
     display: flex;
     align-items: center;
