@@ -57,7 +57,7 @@ const StyledInput = styled(TextField)(() => ({
     // border: '1px solid #919191',
     color: '#919191',
     '& .MuiInputLabel-root': {
-      color: '#919191',
+      color: '#FFF',
     },
   },
 
@@ -72,12 +72,10 @@ const StyledInput = styled(TextField)(() => ({
     left: '6px',
     fontSize: '14px',
     color: '#AFAFAF',
-    background: '#F5F5F5',
+    background: '#FFF',
   },
 
   '& .MuiOutlinedInput-notchedOutline': {
     border: 'none',
   },
 }));
-
-//

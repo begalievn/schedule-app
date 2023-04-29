@@ -7,7 +7,14 @@ export const scheduleApi = commonApi.injectEndpoints({
         url: `schedule?semester=${semester}`
       }),
     }),
+    createSchedule: builder.mutation({
+      query: (schedule) => ({
+        url: `schedule`,
+        method: 'POST',
+        body: schedule,
+      })
+    })
   })
 });
 
-export const { useGetSchedulesQuery } = scheduleApi;
+export const { useGetSchedulesQuery, useCreateScheduleMutation } = scheduleApi;
