@@ -1,3 +1,8 @@
+.board_container {
+  width: 100%;
+  position: relative;
+}
+
 .board {
   width: 100%;
   border: 1px solid black;
@@ -138,7 +143,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          background: rgba(51, 73, 112, 0.26);
+          background: rgba(154, 210, 128, 0.31);
         }
       }
     }
@@ -169,3 +174,82 @@
     }
   }
 }
+
+.basket {
+  width: 90%;
+  height: 40%;
+  background: #B4D2FF;
+  position: fixed;
+  z-index: 20;
+  left: 8%;
+  top: 99.7%;
+  border: solid 1px black;
+  padding: 15px 0 10px;
+  transition: ease-in-out .5s;
+
+  .basket_icon {
+    width: 85px;
+    height: 43px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #B4D2FF;
+    position: absolute;
+    top: -43px;
+    left: -1px;
+    border: solid 1px black;
+    border-bottom: none;
+    z-index: 19;
+    cursor: pointer;
+  }
+
+  .basket_subjects_container {
+    width: 95%;
+    height: 100%;
+    margin: 0 auto;
+    background: green;
+    display: flex;
+    border: solid 1px black;
+
+    .basket_course {
+      width: 100%;
+      height: 100%;
+      background: #DDEFFC;
+      border: solid 1px black;
+      overflow: auto;
+      position: relative;
+
+      .basket_course_title {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #5C9DFF;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.69);
+        position: absolute;
+        top: -1;
+      }
+
+      .basket_course_subjects {
+        width: 100%;
+        height: 100%;
+        padding-top: 40px;
+        overflow: auto;
+
+        .basket_course_subject {
+          width: 80%;
+          height: 50px;
+          margin: 8px auto;
+          background: yellowgreen;
+        }
+      }
+    }
+  }
+}
+
+.basket_open {
+  top: 60%;
+}
+
+
