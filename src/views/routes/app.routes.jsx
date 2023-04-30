@@ -28,6 +28,7 @@ import {
 	TeacherList,
 } from '../pages/admin/teacher-page';
 import { SubjectUpdate } from '../pages/admin/subject-page/subject-update/subject-update.view';
+import {ScheduleTableSelectedPage} from '../pages/admin/schedule-page/schedule-table-selected';
 
 export const AppRoutesDefinition = () => {
 	const { isLoggedIn } = useSelector((state) => state.auth);
@@ -90,6 +91,10 @@ export const AppRoutesDefinition = () => {
 									path: BrowserRoute.ADMIN_SCHEDULE_PAGE_TABLE,
 									element: <ScheduleTablePage />,
 								},
+								{
+									path: BrowserRoute.ADMIN_SCHEDULE_PAGE_TABLE_SELECTED,
+									element: <ScheduleTableSelectedPage />
+								}
 							],
 						},
 						{
