@@ -3,7 +3,6 @@ import {ContentContainer} from "../../../../components/containers/content";
 import { HeaderV1 } from "../../../../components/elements/header-v1";
 import { ElementsToOneLine } from "../../../../components/containers/elements-to-one-line";
 import { ScheduleListTable } from "./components/schedule-list-table";
-import { useNavigate } from "react-router-dom";
 import { SelectV1 } from "../../../../components/elements/select-v1";
 import { ButtonV2 } from "../../../../components/elements/button-v2";
 import { ContainerWithShadow } from '../../../../components/containers/container-with-shadow';
@@ -12,21 +11,12 @@ import {ContainerWithLoader} from '../../../../components/containers/container-w
 
 // styles
 import classes from './style.module.scss';
-
-const semesters = [
-  {
-    label: 'Fall Semester',
-    value: 1,
-  },
-  {
-    label: 'Spring Semester',
-    value: 2,
-  },
-]
+import {semesters} from './constants';
+import {useNavigate} from 'react-router-dom';
 
 export const ScheduleListPage = () => {
   const [semester, setSemester] = useState(1);
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   
   const { data, isLoading } = useGetSchedulesQuery({ semester });
   console.log(data);
