@@ -36,8 +36,8 @@ const basketSubjects = [
 ]
 
 
-export const ScheduleBoard = () => {
-  const [schedule, setSchedule] = useState(schedule1);
+export const ScheduleBoard = ({ data }) => {
+  const [schedule, setSchedule] = useState(data?.days || schedule1);
   const [basketOpen, setBasketOpen] = useState(false);
   const [subjectsInBasket, setSubjectsInBasket] = useState(basketSubjects);
   
@@ -159,15 +159,15 @@ export const ScheduleBoard = () => {
         </div>
         <div className={classes.basket_subjects_container}>
           {
-            subjectsInBasket.map((basketCourse) => (
-              <div className={classes.basket_course}>
+            subjectsInBasket.map((basketCourse, index) => (
+              <div key={index} className={classes.basket_course}>
                 <div className={classes.basket_course_title}>
                   <h5>{basketCourse.course}</h5>
                 </div>
                 <div className={classes.basket_course_subjects}>
                   {
-                    basketCourse.subjects.map((basketSubject) => (
-                      <div className={classes.basket_course_subject}>
+                    basketCourse.subjects.map((basketSubject, index) => (
+                      <div key={index} className={classes.basket_course_subject}>
                         <SubjectCell cell={basketSubject} />
                       </div>
                     ))

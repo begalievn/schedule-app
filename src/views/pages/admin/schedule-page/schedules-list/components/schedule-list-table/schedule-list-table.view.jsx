@@ -1,6 +1,7 @@
 import { styled } from '@mui/material/styles';
 
 import { tableCellClasses } from '@mui/material/TableCell';
+import {useNavigate} from 'react-router-dom';
 
 import {
   Paper,
@@ -13,6 +14,8 @@ import {
 } from '@mui/material';
 
 import { addPadBefore } from '../../../../../../../utils/addPadBefore';
+import {useDispatch} from 'react-redux';
+import {selectSchedule} from '../../../../../../../store/slice/schedule-slice';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -45,6 +48,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export const ScheduleListTable = ({ data = [] }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  
+  const handleScheduleClick = (schedule) => {
+    dispatch(selectSchedule(schedule));
+    navigate(`table/${schedule?._id}`);
+  }
+  
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ height: 440 }}>
@@ -61,7 +72,7 @@ export const ScheduleListTable = ({ data = [] }) => {
           </TableHead>
           <TableBody>
             {data?.map((schedule, index) => (
-              <StyledTableRow key={schedule._id}>
+              <StyledTableRow onClick={() => handleScheduleClick(schedule)} key={schedule._id}>
                 <StyledTableCell
                   component='th'
                   scope='row'

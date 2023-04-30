@@ -8,6 +8,7 @@ export const BrowserRoute = {
     ADMIN_SCHEDULE_PAGE_CREATE: "create",
     ADMIN_SCHEDULE_PAGE_SEND: "send",
     ADMIN_SCHEDULE_PAGE_TABLE: "table",
+    ADMIN_SCHEDULE_PAGE_TABLE_SELECTED: "table/:id",
   ADMIN_TEACHER: "teacher",
     ADMIN_TEACHER_LIST: 'list',
     ADMIN_TEACHER_CREATE: 'create',

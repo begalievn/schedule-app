@@ -12,8 +12,6 @@ const colorsList = [
   '#7DF9FF',
   '#FF69B4',
   '#40E0D0',
-  '#00FF00',
-  '#fa2929',
   '#FFFF00',
   '#FF1493',
   '#FF7F50',
@@ -63,7 +61,7 @@ export const getColorForSubject = (secretWord) => {
     lettersValue += char.charCodeAt();
   }
   
-  lettersValue += 996;
+  lettersValue += 996553404406;
   
   const index = lettersValue % colors.length;
   

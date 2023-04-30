@@ -1,8 +1,8 @@
 import React from 'react';
+import { Container } from '@mui/material';
 
 // components
 import { HeaderV1 } from '../../../../components/elements/header-v1';
-import { Container } from '@mui/material';
 import { ScheduleBoard } from '../../../../components/schedule-board';
 
 // styles
