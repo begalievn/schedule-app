@@ -29,6 +29,7 @@ import {
 } from '../pages/admin/teacher-page';
 import { SubjectUpdate } from '../pages/admin/subject-page/subject-update/subject-update.view';
 import {ScheduleTableSelectedPage} from '../pages/admin/schedule-page/schedule-table-selected';
+import {TeacherUpdate} from '../pages/admin/teacher-page/teacher-update';
 
 export const AppRoutesDefinition = () => {
 	const { isLoggedIn } = useSelector((state) => state.auth);
@@ -113,6 +114,10 @@ export const AppRoutesDefinition = () => {
 									path: BrowserRoute.ADMIN_TEACHER_CREATE,
 									element: <TeacherCreate />,
 								},
+                {
+                  path: BrowserRoute.ADMIN_TEACHER_UPDATE,
+									element: <TeacherUpdate />
+                },
 							],
 						},
 						{
