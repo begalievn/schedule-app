@@ -9,7 +9,7 @@ import {
 export const RadioGroupV2 = ({
 	options = [],
 	onChange,
-	value,
+	value = '',
 	label,
 	name,
 }) => {

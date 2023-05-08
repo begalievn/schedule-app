@@ -3,10 +3,8 @@ import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
 import {DatePicker, LocalizationProvider} from '@mui/x-date-pickers';
 import {styled, TextField } from '@mui/material';
-import * as dayjs from 'dayjs';
 
 export const DatePickerV2 = ({ onChange, value }) => {
-  
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer sx={{ padding: 0 }} components={['DatePicker']}>
