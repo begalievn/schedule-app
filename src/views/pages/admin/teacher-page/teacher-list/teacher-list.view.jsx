@@ -15,7 +15,10 @@ export const TeacherList = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   
-  const { data: teacherData, isLoading: teacherLoading } = useGetAllTeacherQuery(search);
+  const { data: teacherData, isLoading: teacherLoading } = useGetAllTeacherQuery(search, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+  });
   
   const handleSearchChange = (e) => {
     setSearch(e.target.value);

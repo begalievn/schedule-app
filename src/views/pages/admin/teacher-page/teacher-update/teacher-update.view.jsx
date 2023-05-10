@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import * as dayjs from 'dayjs';
 
@@ -18,13 +18,12 @@ import {
   useUpdateTeacherMutation,
   useDeleteTeacherByIdMutation,
 } from '../../../../../store/api/teacher-api';
-
+import {ContainerWithLoader} from '../../../../components/containers/container-with-loader';
 import {genderOptions, inputFields, workDays, workingHoursOptions} from '../constants';
 
 // styles
 import 'react-toastify/dist/ReactToastify.css';
 import classes from "./style.module.scss";
-import {ContainerWithLoader} from '../../../../components/containers/container-with-loader';
 
 export const TeacherUpdate = () => {
   const [teacherData, setTeacherData] = useState({
@@ -43,6 +42,7 @@ export const TeacherUpdate = () => {
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   
   const params = useParams();
+  const navigate = useNavigate();
   
   const { data: teacherById, isLoading } = useGetTeacherByIdQuery(params.id, {
     refetchOnMountOrArgChange: true,
@@ -51,7 +51,7 @@ export const TeacherUpdate = () => {
   });
   
   const [updateTeacher] = useUpdateTeacherMutation();
-  const [deleteTeacher, { isSuccess: isTeacherDeleteSuccess, isError: isTeacherDeleteError }] = useDeleteTeacherByIdMutation();
+  const [deleteTeacher] = useDeleteTeacherByIdMutation();
   
   const handleBirthdayChange = (event) => {
     const value = dayjs(event);
@@ -81,7 +81,21 @@ export const TeacherUpdate = () => {
         autoClose: 3000,
       })
     } else {
-    
+      toast('Wow, some action happened!')
+    }
+  }
+  
+  const handleDeleteToast = (result) => {
+    if (result.data) {
+      toast.success('Successfully deleted!', {
+        autoClose: 3000,
+      });
+    } else if (result.error) {
+      toast.error('Delete failed!', {
+        autoClose: 3000,
+      })
+    } else {
+      toast('Wow, some action happened!')
     }
   }
   
@@ -109,17 +123,13 @@ export const TeacherUpdate = () => {
   }
   
   const handleDeleteTeacher = async () => {
+    handelCloseConfirmModal();
     const result = await deleteTeacher(params.id);
-    if (isTeacherDeleteSuccess) {
-      toast.success('Successfully deleted!', {
-        autoClose: 3000,
-      })
-    } else if (isTeacherDeleteError) {
-      toast.error('Deleting failed!', {
-        autoClose: 3000,
-      })
-    }
+    handleDeleteToast(result);
     console.log('delete result', result);
+    setTimeout(() => {
+      navigate(-1);
+    }, 4000);
   }
   
   useEffect(() => {
@@ -191,6 +201,8 @@ export const TeacherUpdate = () => {
         open={openConfirmModal}
         handleAction={handleDeleteTeacher}
         handleClose={handelCloseConfirmModal}
+        title={'Are your sure, you want to delete a teacher?'}
+        content={'Teacher will be deleted permanently!'}
       />
       <ToastContainer />
     </ContentContainer>
