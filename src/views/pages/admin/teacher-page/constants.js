@@ -84,3 +84,15 @@ export const workDays = [
     value: 5,
   }
 ];
+
+export const teacherInitialState = {
+  firstName: '',
+  lastName: '',
+  birthDate: null,
+  email: '',
+  gender: '',
+  address: '',
+  phoneNumber: '',
+  experience: '',
+  workingGraphic: workingHoursOptions.FULL,
+};
