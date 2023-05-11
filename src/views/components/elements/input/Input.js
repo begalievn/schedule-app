@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, styled, InputAdornment } from '@mui/material';
+import { TextField, styled } from '@mui/material';
 
 export const Input = ({
   value,
@@ -28,7 +28,6 @@ export const Input = ({
       error={error}
       required={required}
       InputProps={{
-        endAdornment: <InputAdornment position='end'>{icon}</InputAdornment>,
         classes: { root: 'input' },
       }}
       {...props}
