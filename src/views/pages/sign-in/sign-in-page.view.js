@@ -24,7 +24,7 @@ export const SignIn = () => {
         autoClose: 2000,
       });
     } else if (result.error) {
-      toast.error('Login failed!', {
+      toast.warn('Login failed!', {
         autoClose: 3000,
       })
     } else {
