@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { BasketIcon } from '../../../assets/icons';
 import {courseColors, dayColors, hours, lunchHour, res4 } from './constants';
 import {SubjectCell} from '../elements';
@@ -41,7 +41,7 @@ export const ScheduleBoard = ({ data }) => {
   const [basketOpen, setBasketOpen] = useState(false);
   const [subjectsInBasket, setSubjectsInBasket] = useState(basketSubjects);
   
-  const [createSchedule, {} ] = useCreateScheduleMutation();
+  const [createSchedule] = useCreateScheduleMutation();
   
   const handleSaveSchedule = () => {
     const data = {
@@ -63,8 +63,48 @@ export const ScheduleBoard = ({ data }) => {
     event.dataTransfer.setData('oldPlace', JSON.stringify(data.oldPlace));
   }
   
+  const mergeSubjects = (arr) => {
+    let left = 0;
+    let right = 1;
+    
+    while(left < arr.length) {
+      if (
+        arr[left] &&
+        arr[left].classroom === arr[right]?.classroom &&
+        arr[left].code === arr[right]?.code
+      ) {
+        while (
+          arr[left].classroom === arr[right]?.classroom &&
+          arr[left].code === arr[right]?.code &&
+          right < arr.length ) {
+          arr[right] = null;
+          right++;
+        }
+        arr[left].numberOfHours = right - left;
+        left = right;
+        right = right + 1;
+      } else {
+        left++;
+        right++;
+      }
+    }
+  }
+  
+  const calculateDroppingSubject = () => {
+    const newState = JSON.parse(JSON.stringify(schedule));
+    for(let day of newState) {
+      for(let course of day.courses) {
+        const arr = course.subjects;
+        console.log(arr);
+        mergeSubjects(arr);
+      }
+    }
+    return newState;
+  }
+  
   const onDrop = (event, place) => {
     const { dayIndex, courseIndex, subjectIndex } = place;
+    event.dataTransfer.setData('newPlace', JSON.stringify({ dayIndex, courseIndex, subjectIndex }));
     const transferredSubject = JSON.parse(event.dataTransfer.getData('subject'));
     
     const oldPlace = JSON.parse(event.dataTransfer.getData('oldPlace'));
@@ -78,6 +118,11 @@ export const ScheduleBoard = ({ data }) => {
   const onDropToBasket = (event, place) => {
   
   }
+  
+  useEffect(() => {
+    const newState = calculateDroppingSubject();
+    setSchedule(newState);
+  }, []);
   
   return (
     <div className={classes.board_container}>
