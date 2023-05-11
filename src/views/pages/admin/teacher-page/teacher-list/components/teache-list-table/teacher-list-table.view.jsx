@@ -12,6 +12,7 @@ import {
   TableContainer,
 } from '@mui/material';
 import { addPadBefore } from '../../../../../../../utils/addPadBefore';
+import {useNavigate} from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -52,6 +53,12 @@ const StyledPaper = styled(Paper)(() => ({
 }));
 
 export const TeacherListTable = ({ data = [] }) => {
+  const navigate = useNavigate();
+  
+  const handleTeacherClick = (data) => {
+    navigate(`list/${data?._id}`);
+  }
+  
   return (
     <StyledPaper>
       <TableContainer sx={{ height: 440 }}>
@@ -69,7 +76,7 @@ export const TeacherListTable = ({ data = [] }) => {
           </TableHead>
           <TableBody>
             {data.map((row, index) => (
-              <StyledTableRow key={row._id}>
+              <StyledTableRow onClick={() => handleTeacherClick(row)} key={row._id}>
                 <StyledTableCell align='center'>
                   {addPadBefore(index + 1, 0, 2)}
                 </StyledTableCell>

@@ -9,10 +9,13 @@ import {
 export const RadioGroupV2 = ({
 	options = [],
 	onChange,
-	value,
+	value = '',
 	label,
 	name,
 }) => {
+	
+	console.log('value in RadioGroup', value);
+	
 	return (
 		<FormControl>
 			<RadioGroup

@@ -1,5 +1,5 @@
 import { Search } from '@mui/icons-material';
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Input } from '../../../../components/elements/input/Input';
 import { BrowserRoute } from '../../../../routes/browser.routes';
@@ -13,8 +13,16 @@ import {ContainerWithLoader} from '../../../../components/containers/container-w
 
 export const TeacherList = () => {
   const navigate = useNavigate();
+  const [search, setSearch] = useState('');
   
-  const { data: teacherData, isLoading: teacherLoading } = useGetAllTeacherQuery();
+  const { data: teacherData, isLoading: teacherLoading } = useGetAllTeacherQuery(search, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+  });
+  
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  }
   
   const navigateTo = () => {
     navigate(BrowserRoute.ADMIN_TEACHER_CREATE);
@@ -34,6 +42,7 @@ export const TeacherList = () => {
           type='text'
           icon={<Search />}
           style={{ width: '35%' }}
+          onChange={handleSearchChange}
         />
         <ButtonV2 onClick={navigateTo}>Add Teacher</ButtonV2>
       </div>

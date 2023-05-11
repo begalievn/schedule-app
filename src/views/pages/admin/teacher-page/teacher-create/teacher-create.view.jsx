@@ -1,100 +1,45 @@
 import React, {Fragment, useState} from "react";
+import { ToastContainer, toast } from 'react-toastify';
 import {Input} from '../../../../components/elements/input/Input';
 import {HeaderV1} from '../../../../components/elements/header-v1';
 import {ContentContainer} from '../../../../components/containers/content';
 import {DatePickerV2} from '../../../../components/elements/date-picker-v2';
 import {ContainerWithShadow} from '../../../../components/containers/container-with-shadow';
 import {RadioGroupV2} from '../../../../components/elements/radio-group-v2/radio-group-v2.component';
-import {SelectV1} from '../../../../components/elements/select-v1';
 import {CheckBoxV2} from '../../../../components/elements/check-box-v2';
 import {ButtonV2} from '../../../../components/elements/button-v2';
-import { workDays, WorkingTimeGraphicEnum } from './constants';
+import {useCreateTeacherMutation} from '../../../../../store/api/teacher-api';
+import {genderOptions, inputFields, teacherInitialState, workDays, workingHoursOptions} from '../constants';
+import {useNavigate} from 'react-router-dom';
+import * as dayjs from 'dayjs';
 
 // styles
 import classes from "./teacher_create.module.scss";
-
-
-
-const inputFields = [
-  {
-    id: 1,
-    name: 'firstName',
-    label: 'First Name'
-  },
-  {
-    id: 2,
-    name: 'lastName',
-    label: 'Last Name'
-  },
-  {
-    id: 3,
-    name: 'email',
-    label: 'Email'
-  },
-  {
-    id: 4,
-    name: 'phoneNumber',
-    label: 'Phone number'
-  },
-  {
-    id: 5,
-    name: 'address',
-    label: 'Address'
-  },
-  {
-    id: 6,
-    name: 'workExperience',
-    label: 'Work experience'
-  }
-];
-
-const genderOptions = [
-  {
-    label: 'Male',
-    value: 'MALE',
-  },
-  {
-    label: 'Female',
-    value: 'FEMALE',
-  }
-];
-
-const workingHoursOptions = [
-  {
-    label: 'Before lunch',
-    value: 'BEFORE',
-  },
-  {
-    label: 'After lunch',
-    value: 'AFTER',
-  },
-  {
-    label: 'Full',
-    value: 'FULL',
-  }
-]
 
 export const TeacherCreate = () => {
   const [teacherData, setTeacherData] = useState({
     firstName: '',
     lastName: '',
-    birthDate: '',
+    birthDate: null,
     email: '',
+    gender: '',
     address: '',
     phoneNumber: '',
     experience: '',
-    workingGraphic: WorkingTimeGraphicEnum.FULL,
+    workingGraphic: workingHoursOptions.FULL,
   });
-  const [birthDate, setBirthDate] = useState('');
   const [selectedDays, setSelectedDays] = useState([]);
+  
+  const [createTeacher] = useCreateTeacherMutation();
+  
+  const navigate = useNavigate();
   
   console.log(teacherData);
   
   const handleBirthdayChange = (event) => {
-    console.log(event.$d.toLocaleString());
+    const value = dayjs(event);
+    setTeacherData({...teacherData, birthday: value});
   }
-  
-  console.log({ birthDate });
   
   const handleDaySelect = (value) => {
     value = Number(value);
@@ -109,10 +54,46 @@ export const TeacherCreate = () => {
     setTeacherData({...teacherData, [e.target.name]: e.target.value});
   }
   
+  const handleToast = (result) => {
+    if (result.data) {
+      toast.success('Successfully created!', {
+        autoClose: 3000,
+      });
+    } else if (result.error) {
+      toast.error('Create failed!', {
+        autoClose: 3000,
+      })
+    } else {
+      toast('Wow, some action happened!')
+    }
+  }
+  
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setTeacherData(teacherInitialState);
+    navigate(-1);
+  }
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const data = JSON.parse(JSON.stringify({
+      ...teacherData,
+      workingDays: selectedDays,
+    }));
+    if (data.birthday) {
+      const birthdayValue = dayjs(teacherData?.birthday || null).toDate();
+      data.birthday = birthdayValue;
+    }
+    
+    const result = await createTeacher(data);
+    console.log('result', result);
+    handleToast(result);
+  }
+  
   return (
     <ContentContainer style={{marginBottom: '50px'}}>
       <HeaderV1>Teacher's information</HeaderV1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className={classes.form_container}>
           <ContainerWithShadow>
             <div className={classes.first_container}>
@@ -128,21 +109,17 @@ export const TeacherCreate = () => {
                 Birth date
                 <DatePickerV2 onChange={handleBirthdayChange} />
               </label>
-              <label className={classes.form_label}>
-                Gender
-                <RadioGroupV2 onChange={handleInputsChange} name={'gender'} options={genderOptions} />
-              </label>
             </div>
           </ContainerWithShadow>
           <ContainerWithShadow style={{background: '#E5EFFE'}}>
             <div className={classes.first_container}>
               <label className={classes.form_label}>
-                Degree
-                <SelectV1 options={[]} value={''} />
+                Gender
+                <RadioGroupV2 onChange={handleInputsChange} value={teacherData.gender} name={'gender'} options={genderOptions} />
               </label>
               <label className={classes.form_label}>
-                Working hours
-                <RadioGroupV2 onChange={handleInputsChange} name={'workingHours'} options={workingHoursOptions} />
+                Working graphic
+                <RadioGroupV2 onChange={handleInputsChange} value={teacherData.workingGraphic} name={'workingGraphic'} options={workingHoursOptions} />
               </label>
               <label className={classes.form_label}>
                 Working days
@@ -151,20 +128,20 @@ export const TeacherCreate = () => {
                     workDays.map((day) => (
                       <Fragment key={day.day}>
                         <CheckBoxV2 label={day.day} checked={selectedDays.includes(day.value)} value={day.value} handleChange={handleDaySelect} />
-
                       </Fragment>
                     ))
                   }
                 </div>
               </label>
               <div className={classes.buttons}>
-                <ButtonV2>Save</ButtonV2>
-                <ButtonV2 style={{background: 'white', color: '#cc5092'}}>Delete</ButtonV2>
+                <ButtonV2 type="submit">Save</ButtonV2>
+                <ButtonV2 onClick={handleCancel} style={{background: 'white', color: '#cc5092'}}>Cancel</ButtonV2>
               </div>
             </div>
           </ContainerWithShadow>
         </div>
       </form>
+      <ToastContainer />
     </ContentContainer>
   );
 };

@@ -4,21 +4,27 @@ import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
 import {DatePicker, LocalizationProvider} from '@mui/x-date-pickers';
 import {styled, TextField } from '@mui/material';
 
-
-export const DatePickerV2 = ({ onChange }) => {
+export const DatePickerV2 = ({ onChange, value }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer sx={{ padding: 0 }} components={['DatePicker']}>
         <StyledDatePicker
-          onChange={(event) => onChange(event)}
+          value={value}
+          defaultValue={value}
+          slotProps={{
+            textField: {
+              size: "small",
+              error: false,
+            },
+          }}
           format="DD/MM/YYYY"
-          renderInput={(params) => <TextField {...params} size='small' />}
+          onChange={(event) => onChange(event)}
+          renderInput={(params) => <TextField {...params} size='small' error={false} />}
         />
       </DemoContainer>
     </LocalizationProvider>
   );
 };
-
 
 const StyledDatePicker=styled(DatePicker)(() => ({
   marginTop: '0',

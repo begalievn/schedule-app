@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { styled } from '@mui/material';
-import alatoofoto from '../../../assets/images/alatoo.png';
+import alatoofoto from '../../../assets/images/alatoo3.jpeg';
 
 import { GoogleIcon } from '../../../assets/logos';
 
@@ -10,11 +10,6 @@ export const ApplicationLoginForm = ({ children }) => {
     <MainContainer>
       <SignInContainer>
         <StyledTitle>Sign In</StyledTitle>
-        <GoogleContainer>
-          <GoogleIcon />
-          Sign in with Google
-        </GoogleContainer>
-
         {children}
       </SignInContainer>
     </MainContainer>
@@ -24,15 +19,15 @@ export const ApplicationLoginForm = ({ children }) => {
 const MainContainer = styled('div')(() => ({
   height: '100vh',
   backgroundImage: `url(${alatoofoto})`,
-  backgroundRepeat: 'no-repeat',
+  backgroundRepeat: 'repeat',
   backgroundSize: 'cover',
   width: '100%',
 }));
 
 const SignInContainer = styled('div')(() => ({
-  width: '45%',
+  width: '50%',
   height: '100vh',
-  background: 'rgba(252, 245, 229, 0.2)',
+  background: 'rgba(244,249,255,0.6)',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -43,19 +38,4 @@ const StyledTitle = styled('h1')(() => ({
   fontWeight: '700',
   fontSize: '36px',
   marginBottom: '41px',
-}));
-
-const GoogleContainer = styled('div')(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-evenly',
-  backgroundColor: '#ffffff',
-  borderRadius: '5px',
-  gap: '28px',
-  padding: '12px 50px 12px 43px',
-  fontWeight: 600,
-  fontSize: '24px',
-  color: ' #555B53',
-  marginBottom: '45px',
-  width: '73.5%',
 }));
