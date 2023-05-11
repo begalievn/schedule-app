@@ -27,7 +27,7 @@ import {
 	TeacherCreate,
 	TeacherList,
 } from '../pages/admin/teacher-page';
-import { SubjectUpdate } from '../pages/admin/subject-page/subject-update/subject-update.view';
+import { SubjectUpdate } from '../pages/admin/subject-page/subject-update';
 import {ScheduleTableSelectedPage} from '../pages/admin/schedule-page/schedule-table-selected';
 import {TeacherUpdate} from '../pages/admin/teacher-page/teacher-update';
 
@@ -49,19 +49,21 @@ export const AppRoutesDefinition = () => {
 				{
 					path: BrowserRoute.startPage,
 					element: (
-						<PrivateAuthRoute
-							Component={<StartPage />}
-							fallbackPath={BrowserRoute.SIGN_IN}
-							isAllowed={isLoggedIn}
-						/>
+						<StartPage />
 					),
 				},
 				{
 					path: BrowserRoute.ADMIN,
 					element: (
-						<AdminPage>
-							<Outlet />
-						</AdminPage>
+						<PrivateAuthRoute
+							Component={
+								<AdminPage>
+									<Outlet />
+								</AdminPage>
+							}
+							fallbackPath={BrowserRoute.SIGN_IN}
+							isAllowed={isLoggedIn}
+						/>
 					),
 					children: [
 						{
@@ -189,11 +191,12 @@ export const AppRoutesDefinition = () => {
 		{
 			path: BrowserRoute.SIGN_IN,
 			element: (
-				<PrivateAuthRoute
-					Component={<SignIn />}
-					fallbackPath={BrowserRoute.startPage}
-					isAllowed={!isLoggedIn}
-				/>
+				// <PrivateAuthRoute
+				// 	Component={<SignIn />}
+				// 	fallbackPath={BrowserRoute.startPage}
+				// 	isAllowed={!isLoggedIn}
+				// />
+				<SignIn />
 			),
 		},
 		{
