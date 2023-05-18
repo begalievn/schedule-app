@@ -4,6 +4,7 @@ import {courseColors, dayColors, hours, lunchHour, res4 } from './constants';
 import {SubjectCell} from '../elements';
 import {useCreateScheduleMutation} from '../../../store/api/schedule-api';
 import { schedule1 } from './schedules';
+import { ToastContainer, toast } from 'react-toastify';
 
 // styles
 import classes from './style.module.scss';
@@ -16,10 +17,10 @@ const Subject = {
   classroom: 'B204'
 }
 
-const basketSubjects = [
+const basketSubjectsInitialState = [
   {
     course: '1 course',
-    subjects: [Subject],
+    subjects: [],
   },
   {
     course: '2 course',
@@ -39,7 +40,7 @@ const basketSubjects = [
 export const ScheduleBoard = ({ data }) => {
   const [schedule, setSchedule] = useState(data?.days || schedule1);
   const [basketOpen, setBasketOpen] = useState(false);
-  const [subjectsInBasket, setSubjectsInBasket] = useState(basketSubjects);
+  const [subjectsInBasket, setSubjectsInBasket] = useState(basketSubjectsInitialState);
   
   const [createSchedule] = useCreateScheduleMutation();
   
@@ -55,12 +56,6 @@ export const ScheduleBoard = ({ data }) => {
   
   const handleBasketOpen = () => {
     setBasketOpen((prev) => !prev);
-  }
-  
-  const onDragStart = (event, stringData) => {
-    const data = JSON.parse(stringData);
-    event.dataTransfer.setData('subject', JSON.stringify(data.subject));
-    event.dataTransfer.setData('oldPlace', JSON.stringify(data.oldPlace));
   }
   
   const mergeSubjects = (arr) => {
@@ -95,38 +90,155 @@ export const ScheduleBoard = ({ data }) => {
     for(let day of newState) {
       for(let course of day.courses) {
         const arr = course.subjects;
-        console.log(arr);
         mergeSubjects(arr);
       }
     }
     return newState;
   }
   
-  const onDrop = (event, place) => {
+  const onDragStart = (event, stringData) => {
+    event.dataTransfer.setData('fromBasket', 0);
+    const data = JSON.parse(stringData);
+    event.dataTransfer.setData('subject', JSON.stringify(data.subject));
+    event.dataTransfer.setData('oldPlace', JSON.stringify(data.oldPlace));
+  }
+  
+  const handleDragStartFromBasket = (event, subject, place) => {
+    event.dataTransfer.setData('fromBasket', 1);
+    event.dataTransfer.setData('subject', JSON.stringify(subject));
+    event.dataTransfer.setData('oldBasketPlace', JSON.stringify(place));
+  }
+  
+  const isDropAvailable = (subject, place, oldPlace) => {
     const { dayIndex, courseIndex, subjectIndex } = place;
-    event.dataTransfer.setData('newPlace', JSON.stringify({ dayIndex, courseIndex, subjectIndex }));
+    const subjects = schedule[dayIndex].courses[courseIndex].subjects;
+    const droppingPlace = subjects[subjectIndex];
+    const subjectLength = subject.numberOfHours;
+    
+    if (subjectIndex + subjectLength > subjects.length) {
+      return false;
+    }
+    
+    for(let i = subjectIndex; i < (subjectIndex + subjectLength); i++) {
+      if (
+        subjects[i] &&
+        subjects[i].title !== subject.title &&
+        subjects[i].classroom !== subject.classroom
+      ) {
+        toast.warn('Collusion with subject');
+        return false;
+      }
+      
+      for(let j = 0; j < 4; j++) {
+        if (oldPlace) {
+          const { oldDayIndex, oldCourseIndex, oldSubjectIndex } = oldPlace;
+          if (
+            oldDayIndex === dayIndex &&
+            oldCourseIndex === j &&
+            oldSubjectIndex === i
+          ) {
+            continue;
+          }
+        }
+        
+        if (schedule[dayIndex].courses[j].subjects[i]?.code === subject?.code) {
+          toast.warn('Collusion with subjects');
+          return false;
+        }
+        
+        if (schedule[dayIndex].courses[j].subjects[i]?.classroom === subject?.classroom) {
+          toast.warn('Collusion with classrooms');
+          return false;
+        }
+        
+        if (schedule[dayIndex].courses[j].subjects[i]?.teachers === subject?.teachers) {
+          toast.warn('Collusion with teachers');
+          return false;
+        }
+      }
+    }
+    
+    if (!!droppingPlace) {
+      return false;
+    }
+    
+    return true;
+  }
+  
+  console.log(schedule);
+  
+  const onDrop = (event, place) => {
+    const fromBasket = +event.dataTransfer.getData('fromBasket');
+    const newState = JSON.parse(JSON.stringify(schedule));
+    const { dayIndex, courseIndex, subjectIndex } = place;
     const transferredSubject = JSON.parse(event.dataTransfer.getData('subject'));
     
-    const oldPlace = JSON.parse(event.dataTransfer.getData('oldPlace'));
-    const { oldDayIndex, oldCourseIndex, oldSubjectIndex } = oldPlace;
-    const newState = JSON.parse(JSON.stringify(schedule));
-    newState[oldDayIndex].courses[oldCourseIndex].subjects[oldSubjectIndex] = null;
+    if (fromBasket) {
+      if (!isDropAvailable(transferredSubject, place)) {
+        return;
+      }
+      const { courseIndex, subjectIndex } = JSON.parse(event.dataTransfer.getData('oldBasketPlace'));
+      const newBasketState = JSON.parse(JSON.stringify(subjectsInBasket));
+      newBasketState[courseIndex].subjects = newBasketState[courseIndex].subjects.filter((el, index) => index !== subjectIndex);
+      setSubjectsInBasket(newBasketState);
+    } else {
+      const oldPlace = JSON.parse(event.dataTransfer.getData('oldPlace'));
+      if (!isDropAvailable(transferredSubject, place, oldPlace)) {
+        return;
+      }
+      const { oldDayIndex, oldCourseIndex, oldSubjectIndex } = oldPlace;
+      newState[oldDayIndex].courses[oldCourseIndex].subjects[oldSubjectIndex] = null;
+    }
+    
     newState[dayIndex].courses[courseIndex].subjects[subjectIndex] = transferredSubject;
     setSchedule(newState);
   }
   
-  const onDropToBasket = (event, place) => {
+  const handleDropToBasket = (event, place) => {
+    const fromBasket = +event.dataTransfer.getData('fromBasket');
+    const transferredSubject = JSON.parse(event.dataTransfer.getData('subject'));
+    const newBasketState = JSON.parse(JSON.stringify(subjectsInBasket));
+    
+    if (fromBasket) {
+      const { courseIndex, subjectIndex } = JSON.parse(event.dataTransfer.getData('oldBasketPlace'));
+      console.log({ courseIndex, subjectIndex });
+      newBasketState[courseIndex].subjects = newBasketState[courseIndex].subjects.filter((el, index) => index !== subjectIndex);
+    } else {
+      const oldPlace = JSON.parse(event.dataTransfer.getData('oldPlace'));
+      const { oldDayIndex, oldCourseIndex, oldSubjectIndex } = oldPlace;
+      const newState = JSON.parse(JSON.stringify(schedule));
+      newState[oldDayIndex].courses[oldCourseIndex].subjects[oldSubjectIndex] = null;
+      setSchedule(newState);
+    }
+    
+    const { courseIndex } = place;
+    let len = transferredSubject.numberOfHours;
+    transferredSubject.numberOfHours = 1;
+    for(let i = 0; i < len; i++) {
+      newBasketState[courseIndex]?.subjects?.unshift(transferredSubject);
+    }
+    setSubjectsInBasket(newBasketState);
+  }
   
+  console.log(subjectsInBasket);
+  
+  function updateBoard() {
+    const newState = calculateDroppingSubject();
+    setSchedule(newState);
   }
   
   useEffect(() => {
-    const newState = calculateDroppingSubject();
-    setSchedule(newState);
+    updateBoard();
   }, []);
+  
+  useEffect(() => {
+    updateBoard();
+  }, [subjectsInBasket]);
   
   return (
     <div className={classes.board_container}>
       {/*<button onClick={handleSaveSchedule}>Save</button>*/}
+      <ToastContainer />
       <div className={classes.board}>
         <div className={classes.header}>
           <h2 className={classes.header_h2}>COURSE SCHEDULE</h2>
@@ -204,15 +316,25 @@ export const ScheduleBoard = ({ data }) => {
         </div>
         <div className={classes.basket_subjects_container}>
           {
-            subjectsInBasket.map((basketCourse, index) => (
-              <div key={index} className={classes.basket_course}>
+            subjectsInBasket.map((basketCourse, courseIndex) => (
+              <div
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => handleDropToBasket(e, { courseIndex })}
+                key={courseIndex}
+                className={classes.basket_course}
+              >
                 <div className={classes.basket_course_title}>
                   <h5>{basketCourse.course}</h5>
                 </div>
                 <div className={classes.basket_course_subjects}>
                   {
-                    basketCourse.subjects.map((basketSubject, index) => (
-                      <div key={index} className={classes.basket_course_subject}>
+                    basketCourse.subjects.map((basketSubject, subjectIndex) => (
+                      <div
+                        draggable={true}
+                        key={basketSubject?._id || subjectIndex}
+                        className={classes.basket_course_subject}
+                        onDragStart={(e) => handleDragStartFromBasket(e, basketSubject, { courseIndex, subjectIndex })}
+                      >
                         <SubjectCell cell={basketSubject} />
                       </div>
                     ))

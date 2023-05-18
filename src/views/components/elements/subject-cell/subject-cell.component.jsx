@@ -1,7 +1,7 @@
 import React from 'react';
 
-import classes from './style.module.scss';
 import {getColorForSubject} from '../../../../utils/get-color-for-subject';
+import classes from './style.module.scss';
 
 export const SubjectCell = ({ cell }) => {
   

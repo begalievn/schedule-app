@@ -44,6 +44,6 @@ const StyledToolbar = styled(Toolbar)(() => ({
 }));
 
 const StyledAppBar = styled(AppBar)(() => ({
-  background: "rgba(114, 123, 212, 1)",
+  background: "#557CDE",
   boxShadow: "none",
 }));
