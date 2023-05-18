@@ -19,7 +19,7 @@ export const ScheduleTableSelectedPage = () => {
   return (
     <Container
       maxWidth='xl'
-      sx={{paddingBottom: '280px'}}
+      sx={{paddingBottom: '30%'}}
     >
       <HeaderV1>Schedule table selected</HeaderV1>
       {
