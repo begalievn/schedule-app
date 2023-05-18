@@ -12,7 +12,7 @@ export const ScheduleTablePage = () => {
   return (
     <Container
       maxWidth='xl'
-      sx={{ paddingBottom: '280px' }}
+      sx={{ paddingBottom: '30%' }}
     >
       <HeaderV1>Schedule table</HeaderV1>
       <ScheduleBoard />

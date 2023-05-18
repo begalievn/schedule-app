@@ -66,11 +66,11 @@ export const Sidebar = () => {
       <DrawerHeader>
         {open ? (
           <IconButton onClick={handleDrawerClose}>
-            <ChevronLeft />
+            <ChevronLeft sx={{ color: 'white'}} />
           </IconButton>
         ) : (
           <IconButton onClick={handleDrawerOpen}>
-            <ChevronRight />
+            <ChevronRight sx={{ color: 'white'}} />
           </IconButton>
         )}
       </DrawerHeader>
@@ -149,7 +149,7 @@ const Drawer = styled(MuiDrawer)(({ theme, open, positionFixed }) => ({
     '& .MuiDrawer-paper': closedMixin(theme),
   }),
   '& .MuiPaper-root': {
-    backgroundColor: '#9FB8F9',
+    backgroundColor: '#7b96e8',
     color: 'rgba(65, 90, 128, 1)',
     position: 'fixed',
     top: '64px',
