@@ -62,7 +62,7 @@ export const ClassroomListTable = ({ data = []}) => {
           <TableHead>
             <TableRow>
               <StyledTableCell>№</StyledTableCell>
-              <StyledTableCell>Title</StyledTableCell>
+              <StyledTableCell align='center'>Title</StyledTableCell>
               <StyledTableCell align='center'>Block</StyledTableCell>
               <StyledTableCell align='center'>Type</StyledTableCell>
               <StyledTableCell align='center'>Capacity</StyledTableCell>
