@@ -53,8 +53,6 @@ export const ScheduleCreatePage = () => {
   
   const { data: subjectsData, isLoading: subjectsLoading } = useGetSubjectsFilteredQuery({ semester, course: selectedCourse });
   
-  console.log(selectedSubjects);
-  
   const handleCourseChange = (event) => {
     setSelectedCourse(event.target.id);
   };
