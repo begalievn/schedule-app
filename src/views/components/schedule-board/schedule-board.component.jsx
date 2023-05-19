@@ -1,21 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import { BasketIcon } from '../../../assets/icons';
-import {courseColors, dayColors, hours, lunchHour, res4 } from './constants';
+import {courseColors, dayColors, hours, lunchHour } from './constants';
 import {SubjectCell} from '../elements';
 import {useCreateScheduleMutation} from '../../../store/api/schedule-api';
 import { schedule1 } from './schedules';
 import { ToastContainer, toast } from 'react-toastify';
+import {debounce} from '../../../utils/debounce';
 
 // styles
 import classes from './style.module.scss';
-
-const Subject = {
-  title: 'Information Security',
-  teachers: ['Teacher'],
-  code: 'CS110',
-  numberOfHours: 3,
-  classroom: 'B204'
-}
 
 const basketSubjectsInitialState = [
   {
@@ -41,6 +34,9 @@ export const ScheduleBoard = ({ data }) => {
   const [schedule, setSchedule] = useState(data?.days || schedule1);
   const [basketOpen, setBasketOpen] = useState(false);
   const [subjectsInBasket, setSubjectsInBasket] = useState(basketSubjectsInitialState);
+  const [selectedSubject, setSelectedSubject] = useState(null);
+  const [oldPlace, setOldPlace] = useState(null);
+  const [isPicked, setIsPicked] = useState(false);
   
   const [createSchedule] = useCreateScheduleMutation();
   
@@ -53,6 +49,8 @@ export const ScheduleBoard = ({ data }) => {
     }
     createSchedule(data);
   }
+  
+  const handleToast = debounce(toast.warn, 400);
   
   const handleBasketOpen = () => {
     setBasketOpen((prev) => !prev);
@@ -96,14 +94,32 @@ export const ScheduleBoard = ({ data }) => {
     return newState;
   }
   
+  const removeSelectingColors = (target) => {
+    target.classList.remove([classes.cell_available]);
+    target.classList.remove([classes.cell_unavailable]);
+    let hours = selectedSubject.numberOfHours - 1;
+    let sibling;
+    while (hours > 0) {
+      sibling = target.nextSibling;
+      sibling.classList.remove([classes.cell_available]);
+      sibling.classList.remove([classes.cell_unavailable]);
+      hours--;
+    }
+  }
+  
   const onDragStart = (event, stringData) => {
     event.dataTransfer.setData('fromBasket', 0);
     const data = JSON.parse(stringData);
     event.dataTransfer.setData('subject', JSON.stringify(data.subject));
     event.dataTransfer.setData('oldPlace', JSON.stringify(data.oldPlace));
+    setSelectedSubject(data.subject);
+    setOldPlace(data.oldPlace);
+    setIsPicked(true);
   }
   
   const handleDragStartFromBasket = (event, subject, place) => {
+    setIsPicked(true);
+    setOldPlace(null);
     event.dataTransfer.setData('fromBasket', 1);
     event.dataTransfer.setData('subject', JSON.stringify(subject));
     event.dataTransfer.setData('oldBasketPlace', JSON.stringify(place));
@@ -125,7 +141,6 @@ export const ScheduleBoard = ({ data }) => {
         subjects[i].title !== subject.title &&
         subjects[i].classroom !== subject.classroom
       ) {
-        toast.warn('Collusion with subject');
         return false;
       }
       
@@ -142,17 +157,17 @@ export const ScheduleBoard = ({ data }) => {
         }
         
         if (schedule[dayIndex].courses[j].subjects[i]?.code === subject?.code) {
-          toast.warn('Collusion with subjects');
+          handleToast('Collusion with subjects');
           return false;
         }
         
         if (schedule[dayIndex].courses[j].subjects[i]?.classroom === subject?.classroom) {
-          toast.warn('Collusion with classrooms');
+          handleToast('Collusion with classrooms');
           return false;
         }
         
         if (schedule[dayIndex].courses[j].subjects[i]?.teachers === subject?.teachers) {
-          toast.warn('Collusion with teachers');
+          handleToast('Collusion with teachers');
           return false;
         }
       }
@@ -165,9 +180,40 @@ export const ScheduleBoard = ({ data }) => {
     return true;
   }
   
-  console.log(schedule);
+  const handleDragOver = (e, place) => {
+    e.preventDefault();
+    let hours = selectedSubject.numberOfHours - 1;
+    let sibling;
+    if (!isDropAvailable(selectedSubject, place, oldPlace)) {
+      e.target.classList.add([classes.cell_unavailable]);
+      while(hours > 0) {
+        sibling = e.target.nextSibling;
+        sibling.classList.add([classes.cell_unavailable]);
+        hours--;
+      }
+    } else {
+      e.target.classList.add([classes.cell_available]);
+      while(hours > 0) {
+        sibling = e.target.nextSibling;
+        sibling.classList.add([classes.cell_available]);
+        hours--;
+      }
+    }
+  }
+  
+  const handleDragLeave = (e) => {
+    e.preventDefault()
+    removeSelectingColors(e.target);
+  }
+  
+  const handleDragEnd = () => {
+    setIsPicked((prev) => false);
+    console.log('dragend');
+  }
   
   const onDrop = (event, place) => {
+    setIsPicked(false);
+    removeSelectingColors(event.target);
     const fromBasket = +event.dataTransfer.getData('fromBasket');
     const newState = JSON.parse(JSON.stringify(schedule));
     const { dayIndex, courseIndex, subjectIndex } = place;
@@ -195,6 +241,7 @@ export const ScheduleBoard = ({ data }) => {
   }
   
   const handleDropToBasket = (event, place) => {
+    setIsPicked(false);
     const fromBasket = +event.dataTransfer.getData('fromBasket');
     const transferredSubject = JSON.parse(event.dataTransfer.getData('subject'));
     const newBasketState = JSON.parse(JSON.stringify(subjectsInBasket));
@@ -267,8 +314,8 @@ export const ScheduleBoard = ({ data }) => {
         <div className={classes.days}>
           {
             schedule.map((day, dayIndex) => (
-              <div className={classes.day} key={dayIndex} style={{background: `${dayColors[dayIndex]}`}}>
-                <div className={classes.day_title}>{day.day}</div>
+              <div className={classes.day} key={dayIndex}>
+                <div style={{background: `${dayColors[dayIndex]}`}} className={classes.day_title}>{day.day}</div>
                 <div className={classes.courses}>
                   {
                     day.courses.map((course, courseIndex) => (
@@ -282,7 +329,8 @@ export const ScheduleBoard = ({ data }) => {
                               <div
                                 key={subjectIndex}
                                 className={`${classes.subject_cell} ${subjectIndex === lunchHour ? classes.lunch_hour : ''}`}
-                                onDragOver={(e) => e.preventDefault()}
+                                onDragOver={(e) => handleDragOver(e, { dayIndex, courseIndex, subjectIndex })}
+                                onDragLeave={(e) => handleDragLeave(e)}
                                 onDrop={(e) => onDrop(e, { dayIndex, courseIndex, subjectIndex })}
                               >
                                 {
@@ -290,6 +338,7 @@ export const ScheduleBoard = ({ data }) => {
                                   &&
                                   <div
                                     draggable={true}
+                                    onDragEnd={() => handleDragEnd()}
                                     onDragStart={(e) => onDragStart(e, JSON.stringify({ subject: cell, oldPlace: { oldDayIndex: dayIndex, oldCourseIndex: courseIndex, oldSubjectIndex: subjectIndex } }) )}
                                     className={classes.cell_content}
                                     style={{width: `${cell.numberOfHours * 100}%`}}
