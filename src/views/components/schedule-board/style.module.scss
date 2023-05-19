@@ -30,6 +30,14 @@
   background: rgba(253, 255, 158, 0.47);
 }
 
+.cell_available {
+  background: rgb(89, 229, 118);
+}
+
+.cell_unavailable {
+  background: rgba(255, 0, 0, 0.5);
+}
+
 .hours_container {
   width: 100%;
   height: 70px;
@@ -102,7 +110,6 @@
     width: 100%;
     min-height: 200px;
     display: flex;
-    background: #8DB8F9;
     position: relative;
     padding-left: 40px;
     border: 1px none rgba(0, 0, 0, 0.76);

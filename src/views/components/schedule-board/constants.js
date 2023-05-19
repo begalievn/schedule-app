@@ -68,11 +68,25 @@ export const dayColors = [
 
 export const lunchHour = 5;
 
+// export const courseColors = [
+//   '#D2E1F7',
+//   '#ACCEE0',
+//   '#A7E0A2',
+//   '#8BCF9A',
+// ];
+
+// export const courseColors = [
+//   '#7ED9D4',
+//   '#96F0E2',
+//   '#7ED9C2',
+//   '#8FF7D3',
+// ];
+
 export const courseColors = [
-  '#D2E1F7',
-  '#ACCEE0',
-  '#A7E0A2',
-  '#8BCF9A',
+  'rgba(117,217,198,0.5)',
+  'rgba(141,240,207,0.5)',
+  'rgba(117,217,169,0.5)',
+  'rgba(150,250,188,0.5)',
 ];
 
 const Subject = {
