@@ -20,7 +20,11 @@ export const BrowserRoute = {
   ADMIN_CLASSROOM: "classroom",
     ADMIN_CLASSROOM_LIST: 'list',
     ADMIN_CLASSROOM_CREATE: 'create',
+    ADMIN_CLASSROOM_UPDATE: 'update/:id',
   ADMIN_GROUP: "group",
+    ADMIN_GROUP_LIST: 'list',
+    ADMIN_GROUP_CRATE: 'create',
+    ADMIN_GROUP_UPDATE: 'update/:id',
   SIGN_IN: "/sign-in",
   SIGN_UP: "/sign-up",
 };

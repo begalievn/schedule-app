@@ -16,6 +16,10 @@
   transition: all 200ms;
 }
 
+.button_v2:disabled {
+  background: rgba(172, 176, 185, 0.84);
+}
+
 .button_v2:active {
   filter: none;
 }

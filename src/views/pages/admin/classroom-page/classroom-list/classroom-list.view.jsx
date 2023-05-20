@@ -19,7 +19,10 @@ export const ClassroomList = () => {
     navigate('create');
   }
   
-  const { data, isLoading } = useGetClassroomsQuery();
+  const { data, isLoading } = useGetClassroomsQuery('', {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+  });
   
   return (
     <ContentContainer>

@@ -13,6 +13,7 @@ import {ContainerWithLoader} from '../../../../components/containers/container-w
 import classes from './style.module.scss';
 import {semesters} from './constants';
 import {useNavigate} from 'react-router-dom';
+import {ToastContainer} from 'react-toastify';
 
 export const ScheduleListPage = () => {
   const [semester, setSemester] = useState(1);
@@ -50,6 +51,7 @@ export const ScheduleListPage = () => {
             <ScheduleListTable data={data} />
         }
       </ContainerWithShadow>
+      <ToastContainer />
     </ContentContainer>
   );
 };
