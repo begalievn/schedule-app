@@ -11,8 +11,8 @@ import {
   TableCell,
   TableContainer,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import {addPadBefore} from '../../../../../../utils/addPadBefore';
-import {useNavigate} from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -25,6 +25,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: '16px',
     fontWeight: 500,
     fontFamily: 'Inter',
+    height: '40px',
   },
 }));
 
@@ -40,7 +41,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     cursor: 'pointer',
   },
   '&:last-child td, &:last-child th': {
-    border: 0,
+    borderBottom: '1px solid rgba(128, 128, 128, 0.2)',
   },
 }));
 
@@ -52,18 +53,15 @@ const StyledPaper = styled(Paper)(() => ({
   },
 }));
 
-export const ClassroomListTable = ({ data = []}) => {
-  
+export const GroupListTable = ({ groups = [] }) => {
   const navigate = useNavigate();
-  
-  const handleClassroomClick = (classroom) => {
-    console.log(classroom);
-    navigate(`update/${classroom._id}`);
-  }
+  const navigateToSubjectUpdate = (id) => {
+    navigate(`update/${id}`);
+  };
   
   return (
     <StyledPaper>
-      <TableContainer sx={{ height: 440 }}>
+      <TableContainer sx={{ height: 400 }}>
         <Table
           stickyHeader
           aria-label='sticky table'
@@ -71,20 +69,23 @@ export const ClassroomListTable = ({ data = []}) => {
           <TableHead>
             <TableRow>
               <StyledTableCell>№</StyledTableCell>
-              <StyledTableCell align='center'>Title</StyledTableCell>
-              <StyledTableCell align='center'>Block</StyledTableCell>
-              <StyledTableCell align='center'>Type</StyledTableCell>
-              <StyledTableCell align='center'>Capacity</StyledTableCell>
+              <StyledTableCell>Name</StyledTableCell>
+              <StyledTableCell align='center'>Students count</StyledTableCell>
+              <StyledTableCell align='center'>Year</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row, index) => (
-              <StyledTableRow onClick={() => handleClassroomClick(row)} key={row._id}>
-                <StyledTableCell>{addPadBefore(index + 1, 0, 2)}</StyledTableCell>
-                <StyledTableCell align='center'>{row.title}</StyledTableCell>
-                <StyledTableCell align='center'>{row.block}</StyledTableCell>
-                <StyledTableCell align='center'>{row.type}</StyledTableCell>
-                <StyledTableCell align='center'>{row.capacity}</StyledTableCell>
+            {groups.map((row, index) => (
+              <StyledTableRow
+                key={row._id}
+                onClick={() => navigateToSubjectUpdate(row._id)}
+              >
+                <StyledTableCell>
+                  {addPadBefore(index + 1, 0, 2)}
+                </StyledTableCell>
+                <StyledTableCell>{row.name}</StyledTableCell>
+                <StyledTableCell align='center'>{row?.studentsCount}</StyledTableCell>
+                <StyledTableCell align='center'>{row?.year}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
