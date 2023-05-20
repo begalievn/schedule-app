@@ -30,6 +30,10 @@ import {
 import { SubjectUpdate } from '../pages/admin/subject-page/subject-update';
 import {ScheduleTableSelectedPage} from '../pages/admin/schedule-page/schedule-table-selected';
 import {TeacherUpdate} from '../pages/admin/teacher-page/teacher-update';
+import {GroupList} from '../pages/admin/group-page/group-list/group-list.view';
+import {GroupCreate} from '../pages/admin/group-page/group-create/group-create.view';
+import {GroupUpdate} from '../pages/admin/group-page/group-update/group-update.view';
+import {ClassroomUpdate} from '../pages/admin/classroom-page/classroom-update/classroom-update.view';
 
 export const AppRoutesDefinition = () => {
 	const { isLoggedIn } = useSelector((state) => state.auth);
@@ -172,17 +176,38 @@ export const AppRoutesDefinition = () => {
 									path: BrowserRoute.ADMIN_CLASSROOM_CREATE,
 									element: <ClassroomCreate />,
 								},
+								{
+									path: BrowserRoute.ADMIN_CLASSROOM_UPDATE,
+									element: <ClassroomUpdate />,
+								}
 							],
 						},
 						{
 							path: BrowserRoute.ADMIN_GROUP,
 							element: (
 								<PrivateAuthRoute
-									Component={<GroupPage />}
+									Component={
+									<GroupPage>
+										<Outlet />
+									</GroupPage>}
 									fallbackPath={BrowserRoute.startPage}
 									isAllowed={isLoggedIn}
 								/>
 							),
+							children: [
+								{
+									index: true,
+									element: <GroupList />,
+								},
+								{
+									path: BrowserRoute.ADMIN_GROUP_CRATE,
+									element: <GroupCreate />
+								},
+								{
+									path: BrowserRoute.ADMIN_GROUP_UPDATE,
+									element: <GroupUpdate />
+								}
+							]
 						},
 					],
 				},
@@ -191,11 +216,6 @@ export const AppRoutesDefinition = () => {
 		{
 			path: BrowserRoute.SIGN_IN,
 			element: (
-				// <PrivateAuthRoute
-				// 	Component={<SignIn />}
-				// 	fallbackPath={BrowserRoute.startPage}
-				// 	isAllowed={!isLoggedIn}
-				// />
 				<SignIn />
 			),
 		},
