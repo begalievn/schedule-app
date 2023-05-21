@@ -1,26 +1,36 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-import { HeaderV1 } from "../../../../components/elements/header-v1";
-import { ButtonV2 } from "../../../../components/elements/button-v2";
 import {Container} from "@mui/material";
 import {useSelector} from 'react-redux';
+
+import { HeaderV1 } from "../../../../components/elements/header-v1";
+import { ButtonV2 } from "../../../../components/elements/button-v2";
+
 
 // styles
 import classes from './style.module.scss';
 import {useGetClassroomsQuery} from '../../../../../store/api/classroom-api';
+import axios from 'axios';
 
 export const ScheduleSendPage = () => {
-  const selectedSubjects = useSelector(state => state.schedule.selectedSubjects);
+  const schedule = useSelector(state => state.schedule);
+  const { selectedSubjects, scheduleName, selectedSemester } = schedule;
   
   const { data: classrooms, isLoading: classroomsLoading } = useGetClassroomsQuery();
   
   const navigate = useNavigate();
   
-  const handleSendToGenerator = () => {
+  const handleSendToGenerator = async () => {
     const data = {
       subjects: selectedSubjects,
       classrooms: classrooms,
+      name: scheduleName,
+      semester: selectedSemester,
     }
+    console.log({ scheduleName, selectedSemester });
+    console.log(data);
+    const result = await axios.post(`https://academicschedulegenerator.herokuapp.com/genetic_algorithm/generate_schedule/`, data, {});
+    console.log(`result`, result);
     console.log(data);
   }
   
