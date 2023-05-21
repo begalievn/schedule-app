@@ -3,6 +3,8 @@ import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
   selectedSubjects: [],
   selectedSchedule: {},
+  scheduleName: null,
+  selectedSemester: null,
 }
 
 export const scheduleSlice = createSlice({
@@ -17,10 +19,16 @@ export const scheduleSlice = createSlice({
     },
     selectSchedule(state, action) {
       state.selectedSchedule = action.payload;
+    },
+    handleScheduleNameChange(state, action) {
+      state.scheduleName = action.payload;
+    },
+    selectScheduleSemester(state, action) {
+      state.selectedSemester = action.payload;
     }
   }
 })
 
-export const { addSubject, removeSubject, selectSchedule } = scheduleSlice.actions;
+export const { addSubject, removeSubject, selectSchedule, handleScheduleNameChange, selectScheduleSemester } = scheduleSlice.actions;
 
 export default scheduleSlice;
