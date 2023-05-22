@@ -14,8 +14,6 @@ export const RadioGroupV2 = ({
 	name,
 }) => {
 	
-	console.log('value in RadioGroup', value);
-	
 	return (
 		<FormControl>
 			<RadioGroup

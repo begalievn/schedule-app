@@ -19,6 +19,19 @@ export const subjectApi = commonApi.injectEndpoints({
 				url: `subject/${_id}`,
 			}),
 		}),
+		updateSubject: builder.mutation({
+			query: ({ id, body }) => ({
+				url: `subject/${id}`,
+				method: 'PATCH',
+				body: body,
+			})
+		}),
+		deleteSubject: builder.mutation({
+			query: (id) => ({
+				url: `subject/${id}`,
+				method: 'DELETE',
+			})
+		})
 	}),
 });
 
@@ -27,4 +40,6 @@ export const {
 	useGetSubjectsFilteredQuery,
 	useLazyGetSubjectsFilteredQuery,
 	useGetSubjectByIdQuery,
+	useUpdateSubjectMutation,
+	useDeleteSubjectMutation,
 } = subjectApi;
