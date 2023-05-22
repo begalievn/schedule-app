@@ -12,6 +12,8 @@ import { RadioGroupV2 } from '../../../../components/elements/radio-group-v2/rad
 import { MultiSelect } from '../../../../components/elements/multi-select';
 import {ButtonV2} from '../../../../components/elements/button-v2';
 import {handleToast} from '../../../../../utils/handle-toast';
+import {ContainerWithLoader} from '../../../../components/containers/container-with-loader';
+import {AlertDialog} from '../../../../components/elements/alert-dialog';
 
 import {courses, initialState, inputFields, semesters} from '../subject-create/constants';
 import {roomOptions} from '../../classroom-page/constants';
@@ -26,8 +28,6 @@ import { useGetAllTeacherQuery } from '../../../../../store/api/teacher-api';
 
 // styles
 import styles from './subject_update.module.scss';
-import {ContainerWithLoader} from '../../../../components/containers/container-with-loader';
-import {AlertDialog} from '../../../../components/elements/alert-dialog';
 
 export const SubjectUpdate = () => {
 	const [subjectValue, setSubjectValue] = useState(initialState);
