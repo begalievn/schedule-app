@@ -6,7 +6,7 @@ import { Autocomplete, MenuItem, TextField } from '@mui/material';
 export const MultiSelect = ({ options, value, setValue, label }) => {
 	return (
 		<Autocomplete
-			sx={{ m: 1, width: '100%' }}
+			sx={{ m: 1, width: '330px', margin: 0 }}
 			multiple
 			options={options}
 			value={value}
@@ -19,7 +19,6 @@ export const MultiSelect = ({ options, value, setValue, label }) => {
 				<TextField
 					{...params}
 					variant='outlined'
-					label={label}
 				/>
 			)}
 			renderOption={(props, option, { selected }) => (

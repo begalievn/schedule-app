@@ -1,50 +1,82 @@
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
+import {ToastContainer} from 'react-toastify';
 
-import { useGetAllTeacherQuery } from '../../../../../store/api/teacher-api';
 import { ContainerWithShadow } from '../../../../components/containers/container-with-shadow';
 import { ContentContainer } from '../../../../components/containers/content';
 import { HeaderV1 } from '../../../../components/elements/header-v1';
 import { Input } from '../../../../components/elements/input/Input';
 import { SelectV1 } from '../../../../components/elements/select-v1';
-
-import styles from './subject_create.module.scss';
+import { CourseSelect } from '../../schedule-page/schedule-create/components/course-select/course-select.component';
+import { RadioGroupV2 } from '../../../../components/elements/radio-group-v2/radio-group-v2.component';
+import { MultiSelect } from '../../../../components/elements/multi-select';
+import {ButtonV2} from '../../../../components/elements/button-v2';
+import {handleToast} from '../../../../../utils/handle-toast';
 
 import {
 	courses,
 	semesters,
-	classroom,
 	inputFields,
 	initialState,
 } from './constants';
-import { CourseSelect } from '../../schedule-page/schedule-create/components/course-select/course-select.component';
-import { RadioGroupV2 } from '../../../../components/elements/radio-group-v2/radio-group-v2.component';
-import { MultiSelect } from '../../../../components/elements/multi-select';
-import { SelectedItem } from './components/selected-item';
+import {roomOptions} from '../../classroom-page/constants';
+
+// apis
+import { useGetAllTeacherQuery } from '../../../../../store/api/teacher-api';
+import {useCreateSubjectMutation} from '../../../../../store/api/subject-api';
+
+// styles
+import styles from './subject_create.module.scss';
 
 export const SubjectCreate = () => {
 	const [subjectValue, setSubjectValue] = useState(initialState);
-	const [selectedCourse, setSelectedCourse] = React.useState('1');
-	const { data } = useGetAllTeacherQuery();
-
-	const [value, setValue] = useState([]);
-	console.log(value);
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-	};
-
-	const changeHandler = (e) => {
-		setSubjectValue({ ...subjectValue, [e.target.name]: e.target.value });
-	};
+	const [selectedCourse, setSelectedCourse] = useState('1');
+	const [teachers, setTeachers] = useState([]);
+	
+	const navigate = useNavigate();
+	
+	const { data } = useGetAllTeacherQuery('');
+	const [createSubject] = useCreateSubjectMutation();
+	
+	const handleInputsChanges = (e) => {
+		let value = e.target.value;
+		if (e.target.type === 'number') {
+			value = Number(value);
+		}
+		setSubjectValue({ ...subjectValue, [e.target.name]: value });
+	}
+	
+	const handleSemesterChange = (e) => {
+		const semester = e.target.value;
+		setSubjectValue({ ...subjectValue, semester})
+	}
 
 	const handleCourseChange = (event) => {
 		setSelectedCourse(event.target.id);
 	};
-
-	const resetHandler = (id) => {
-		const filteredValue = value.filter((item) => item._id !== id);
-		setValue(filteredValue);
+	
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		const data = {
+			...subjectValue,
+			teachers: teachers.map((teacher) => teacher?._id),
+			courses: [ +selectedCourse],
+		}
+		console.log('subjectValue', data);
+		const result = await createSubject(data);
+		handleToast(
+			result,
+			'Successfully created!',
+			`${result?.error?.data?.message || 'Failed to create!'}`
+		)
+		console.log('result', result);
 	};
+	
+	const handleCancel = () => {
+		setSubjectValue(initialState);
+		navigate(-1);
+	}
+	
 	return (
 		<ContentContainer style={{ marginBottom: '50px' }}>
 			<HeaderV1>Subject</HeaderV1>
@@ -63,23 +95,16 @@ export const SubjectCreate = () => {
 								<Input
 									name={fields.name}
 									placeholder={fields.label}
-									onChange={changeHandler}
+									onChange={handleInputsChanges}
+									type={fields.type ? fields.type : ''}
 								/>
 							</label>
 						))}
-						<label className={styles.form_label}>
-							Semester
-							<SelectV1
-								options={semesters}
-								width='330px'
-							/>
-						</label>
-
-						<label className={styles.form_label}>
-							Classroom
-							<RadioGroupV2 options={classroom} />
-						</label>
-
+						
+					</div>
+				</ContainerWithShadow>
+				<ContainerWithShadow style={{ background: '#E5EFFE' }}>
+					<div className={styles.container}>
 						<label className={styles.form_label}>
 							Course
 							<div className={styles.course_container}>
@@ -95,28 +120,38 @@ export const SubjectCreate = () => {
 								))}
 							</div>
 						</label>
-					</div>
-				</ContainerWithShadow>
-				<ContainerWithShadow style={{ background: '#E5EFFE' }}>
-					<div className={styles.container}>
-						<MultiSelect
-							label='Choose Teacher'
-							value={value}
-							options={data || []}
-							setValue={setValue}
-						/>
-						<div className={styles.selected_container}>
-							{value.map((item) => (
-								<SelectedItem
-									key={item._id}
-									resetHandler={resetHandler}
-									{...item}
-								/>
-							))}
+						<label className={styles.form_label}>
+							Semester
+							<SelectV1
+								value={subjectValue.semester}
+								onChange={handleSemesterChange}
+								options={semesters}
+								width='330px'
+							/>
+						</label>
+						
+						<label className={styles.form_label}>
+							Classroom type
+							<RadioGroupV2 onChange={handleInputsChanges} value={subjectValue.classroomType} name={'classroomType'} options={roomOptions} />
+						</label>
+						
+						<label className={styles.form_label}>
+							Teachers
+							<MultiSelect
+								label='Choose Teacher'
+								value={teachers}
+								options={data || []}
+								setValue={setTeachers}
+							/>
+						</label>
+						<div className={styles.buttons}>
+							<ButtonV2 type="submit">Create</ButtonV2>
+							<ButtonV2 onClick={handleCancel} style={{background: 'white', color: '#cc5092'}}>Cancel</ButtonV2>
 						</div>
 					</div>
 				</ContainerWithShadow>
 			</form>
+			<ToastContainer />
 		</ContentContainer>
 	);
 };

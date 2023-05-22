@@ -65,7 +65,7 @@ export const ClassroomUpdate = () => {
     );
     setTimeout(() => {
       navigate(-1);
-    }, 3001);
+    }, 3000);
   }
   
   const handleSave = async (e) => {
@@ -78,7 +78,7 @@ export const ClassroomUpdate = () => {
     handleToast(
       result,
       'Successfully updated!',
-      `${result?.error?.data?.message} || Updated failed!`
+      `${result?.error?.data?.message || 'Update failed!'} `
     )
     console.log(result);
   }
