@@ -1,14 +1,16 @@
+import {roomOptions} from '../../classroom-page/constants';
+
 export const inputFields = [
 	{ id: 1, type: 'text', label: 'Name', name: 'name' },
 	{ id: 2, type: 'text', label: 'Code', name: 'code' },
-	{ id: 3, type: 'text', label: 'Duration', name: 'duration' },
 	{ id: 4, type: 'text', label: 'Description', name: 'description' },
+	{ id: 3, type: 'number', label: 'Number of hours', name: 'numberOfHours' },
 	{ id: 5, type: 'number', label: 'Credits', name: 'credits' },
 ];
 
 export const semesters = [
-	{ id: 1, value: '1', label: 'Spring' },
-	{ id: 2, value: '2', label: 'Autumn' },
+	{ id: 2, value: 1, label: 'Fall semester' },
+	{ id: 1, value: 2, label: 'Spring semester' },
 ];
 
 export const courses = [
@@ -30,23 +32,14 @@ export const courses = [
 	},
 ];
 
-export const classroom = [
-	{ id: '1', value: '2', label: 'Laboratory' },
-	{
-		id: '2',
-		value: '1',
-		label: 'Lecture ',
-	},
-];
-
 export const initialState = {
 	name: '',
 	code: '',
-	credits: '',
+	credits: null,
 	courses: null,
-	semester: '',
+	semester: 1,
 	teachers: null,
-	classroom: '',
+	classroomType: roomOptions[1].value,
 	description: '',
-	numberOfHours: '',
+	numberOfHours: null,
 };

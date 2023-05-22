@@ -26,6 +26,9 @@ export const SubjectList = () => {
 	const { data: filteredSubjects, isLoading } = useGetSubjectsFilteredQuery({
 		semester,
 		course: selectedCourse,
+	}, {
+		refetchOnMountOrArgChange: true,
+		refetchOnFocus: true,
 	});
 
 	const handleSemesterChange = (event) => {
