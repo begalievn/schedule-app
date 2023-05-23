@@ -1,0 +1,16 @@
+.button {
+  width: 45px;
+  height: 45px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #9BBEF1;
+  border: 1px solid #557CDE;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:active {
+  filter: none;
+}
