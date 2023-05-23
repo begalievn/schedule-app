@@ -20,7 +20,7 @@ import {roomOptions} from '../../classroom-page/constants';
 
 // apis
 import {
-	useCreateSubjectMutation, useDeleteSubjectMutation,
+	useDeleteSubjectMutation,
 	useGetSubjectByIdQuery,
 	useUpdateSubjectMutation
 } from '../../../../../store/api/subject-api';

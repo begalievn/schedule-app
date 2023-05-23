@@ -34,7 +34,7 @@ export function AlertDialog({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleAction} autoFocus>
+          <Button sx={{color: 'red'}} onClick={handleAction} autoFocus>
             Agree
           </Button>
         </DialogActions>
