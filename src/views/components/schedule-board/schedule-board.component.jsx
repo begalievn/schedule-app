@@ -1,14 +1,34 @@
 import React, {useEffect, useState} from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import {useNavigate, useSearchParams} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+
+import {SubjectCell} from '../elements';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
+import DeleteIcon from '@mui/icons-material/Delete';
+import StarIcon from '@mui/icons-material/Star';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import {AlertDialog} from '../elements/alert-dialog';
+import {handleToast} from '../../../utils/handle-toast';
+
 import { BasketIcon } from '../../../assets/icons';
 import {courseColors, dayColors, hours, lunchHour } from './constants';
-import {SubjectCell} from '../elements';
-import {useCreateScheduleMutation} from '../../../store/api/schedule-api';
 import { schedule1 } from './schedules';
-import { ToastContainer, toast } from 'react-toastify';
 import {debounce} from '../../../utils/debounce';
+import {ControlButton} from '../elements/control-button/control-button.component';
+
+// apis
+import {
+  useCreateScheduleMutation,
+  useDeleteScheduleMutation, useMakeScheduleActiveMutation,
+  useUpdateScheduleMutation,
+} from '../../../store/api/schedule-api';
 
 // styles
 import classes from './style.module.scss';
+
+
 
 const basketSubjectsInitialState = [
   {
@@ -30,15 +50,24 @@ const basketSubjectsInitialState = [
 ]
 
 
-export const ScheduleBoard = ({ data }) => {
+export const ScheduleBoard = ({ data, edit = false }) => {
   const [schedule, setSchedule] = useState(data?.days || schedule1);
   const [basketOpen, setBasketOpen] = useState(false);
   const [subjectsInBasket, setSubjectsInBasket] = useState(basketSubjectsInitialState);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [oldPlace, setOldPlace] = useState(null);
   const [isPicked, setIsPicked] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [editable, setEditable] = useState(searchParams.get('edit') || false);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   
   const [createSchedule] = useCreateScheduleMutation();
+  const [updateSchedule] = useUpdateScheduleMutation();
+  const [deleteSchedule] = useDeleteScheduleMutation();
+  const [makeScheduleActive] = useMakeScheduleActiveMutation();
+  
+  const navigate = useNavigate();
   
   const handleSaveSchedule = () => {
     const data = {
@@ -50,7 +79,59 @@ export const ScheduleBoard = ({ data }) => {
     createSchedule(data);
   }
   
-  const handleToast = debounce(toast.warn, 400);
+  const handleOpenConfirmModal = () => {
+    setOpenConfirmModal(true);
+  }
+  
+  const handleCloseConfirmModal = () => {
+    setOpenConfirmModal(false);
+  }
+  
+  const handleDelete = async () => {
+    handleCloseConfirmModal();
+    const result = await deleteSchedule(data._id);
+    handleToast(
+      result,
+      'Successfully deleted!',
+      `${result?.error?.data?.message || 'Update failed!'}`,
+      2000,
+    );
+    setTimeout(() => {
+      navigate(-1);
+    }, 3000);
+  }
+  
+  const handleEdit = () => {
+    searchParams.get('edit') ? navigate(``) : navigate(`?edit=true`)
+    setEditable((prev) => !prev);
+  }
+  
+  const handleUpdate = async () => {
+    const bodyToSend = {
+      id: data._id,
+      body: { days: schedule },
+    };
+    const result = await updateSchedule(bodyToSend);
+    handleToast(
+      result,
+      'Successfully updated!',
+      `${result?.error?.data?.message || 'Update failed!'}`
+    )
+  }
+  
+  const handleMakingScheduleActive = async () => {
+    console.log(data._id);
+    const result = await makeScheduleActive(data._id);
+    handleToast(
+      result,
+      'Successfully made schedule active!',
+      `${result?.error?.data?.message || 'Failed to make schedule active!'}`
+    )
+    setIsActive(true);
+    console.log('result', result);
+  }
+  
+  const handleLocalToast = debounce(toast.warn, 400);
   
   const handleBasketOpen = () => {
     setBasketOpen((prev) => !prev);
@@ -108,6 +189,7 @@ export const ScheduleBoard = ({ data }) => {
   }
   
   const onDragStart = (event, stringData) => {
+    if (!editable) return;
     event.dataTransfer.setData('fromBasket', 0);
     const data = JSON.parse(stringData);
     event.dataTransfer.setData('subject', JSON.stringify(data.subject));
@@ -118,6 +200,7 @@ export const ScheduleBoard = ({ data }) => {
   }
   
   const handleDragStartFromBasket = (event, subject, place) => {
+    if (!editable) return;
     setIsPicked(true);
     setOldPlace(null);
     event.dataTransfer.setData('fromBasket', 1);
@@ -157,17 +240,17 @@ export const ScheduleBoard = ({ data }) => {
         }
         
         if (schedule[dayIndex].courses[j].subjects[i]?.code === subject?.code) {
-          handleToast('Collusion with subjects');
+          handleLocalToast('Collusion with subjects');
           return false;
         }
         
         if (schedule[dayIndex].courses[j].subjects[i]?.classroom === subject?.classroom) {
-          handleToast('Collusion with classrooms');
+          handleLocalToast('Collusion with classrooms');
           return false;
         }
         
         if (schedule[dayIndex].courses[j].subjects[i]?.teachers === subject?.teachers) {
-          handleToast('Collusion with teachers');
+          handleLocalToast('Collusion with teachers');
           return false;
         }
       }
@@ -267,7 +350,6 @@ export const ScheduleBoard = ({ data }) => {
     setSubjectsInBasket(newBasketState);
   }
   
-  console.log(subjectsInBasket);
   
   function updateBoard() {
     const newState = calculateDroppingSubject();
@@ -276,16 +358,29 @@ export const ScheduleBoard = ({ data }) => {
   
   useEffect(() => {
     updateBoard();
-  }, []);
-  
-  useEffect(() => {
-    updateBoard();
   }, [subjectsInBasket]);
   
   return (
     <div className={classes.board_container}>
-      {/*<button onClick={handleSaveSchedule}>Save</button>*/}
       <ToastContainer />
+      {
+        edit &&
+        <div className={classes.control_container}>
+          <ControlButton onClick={handleMakingScheduleActive}>
+            {
+              data.active || isActive ? <StarIcon /> : <StarOutlineIcon />
+            }
+          </ControlButton>
+          <ControlButton
+            style={editable ? {background: 'rgba(150,250,188,0.5)'} : {}}
+            onClick={handleEdit}
+          >
+            <EditIcon />
+          </ControlButton>
+          <ControlButton onClick={handleUpdate}><SaveIcon /></ControlButton>
+          <ControlButton onClick={handleOpenConfirmModal}><DeleteIcon /></ControlButton>
+        </div>
+      }
       <div className={classes.board}>
         <div className={classes.header}>
           <h2 className={classes.header_h2}>COURSE SCHEDULE</h2>
@@ -337,11 +432,11 @@ export const ScheduleBoard = ({ data }) => {
                                   cell?.title
                                   &&
                                   <div
-                                    draggable={true}
+                                    draggable={editable}
                                     onDragEnd={() => handleDragEnd()}
                                     onDragStart={(e) => onDragStart(e, JSON.stringify({ subject: cell, oldPlace: { oldDayIndex: dayIndex, oldCourseIndex: courseIndex, oldSubjectIndex: subjectIndex } }) )}
                                     className={classes.cell_content}
-                                    style={{width: `${cell.numberOfHours * 100}%`}}
+                                    style={{width: `${cell.numberOfHours * 100}%`, cursor: editable ? 'grab' : 'default'}}
                                   >
                                     <SubjectCell cell={cell} />
                                   </div>
@@ -359,41 +454,51 @@ export const ScheduleBoard = ({ data }) => {
           }
         </div>
       </div>
-      <div className={`${classes.basket} ${basketOpen ? classes.basket_open : ''}`}>
-        <div onClick={handleBasketOpen} className={classes.basket_icon}>
-          {<BasketIcon />}
-        </div>
-        <div className={classes.basket_subjects_container}>
-          {
-            subjectsInBasket.map((basketCourse, courseIndex) => (
-              <div
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={(e) => handleDropToBasket(e, { courseIndex })}
-                key={courseIndex}
-                className={classes.basket_course}
-              >
-                <div className={classes.basket_course_title}>
-                  <h5>{basketCourse.course}</h5>
+      {
+        editable &&
+        <div className={`${classes.basket} ${basketOpen ? classes.basket_open : ''}`}>
+          <div onClick={handleBasketOpen} className={classes.basket_icon}>
+            {<BasketIcon />}
+          </div>
+          <div className={classes.basket_subjects_container}>
+            {
+              subjectsInBasket.map((basketCourse, courseIndex) => (
+                <div
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => handleDropToBasket(e, { courseIndex })}
+                  key={courseIndex}
+                  className={classes.basket_course}
+                >
+                  <div className={classes.basket_course_title}>
+                    <h5>{basketCourse.course}</h5>
+                  </div>
+                  <div className={classes.basket_course_subjects}>
+                    {
+                      basketCourse.subjects.map((basketSubject, subjectIndex) => (
+                        <div
+                          draggable={true}
+                          key={basketSubject?._id || subjectIndex}
+                          className={classes.basket_course_subject}
+                          onDragStart={(e) => handleDragStartFromBasket(e, basketSubject, { courseIndex, subjectIndex })}
+                        >
+                          <SubjectCell cell={basketSubject} />
+                        </div>
+                      ))
+                    }
+                  </div>
                 </div>
-                <div className={classes.basket_course_subjects}>
-                  {
-                    basketCourse.subjects.map((basketSubject, subjectIndex) => (
-                      <div
-                        draggable={true}
-                        key={basketSubject?._id || subjectIndex}
-                        className={classes.basket_course_subject}
-                        onDragStart={(e) => handleDragStartFromBasket(e, basketSubject, { courseIndex, subjectIndex })}
-                      >
-                        <SubjectCell cell={basketSubject} />
-                      </div>
-                    ))
-                  }
-                </div>
-              </div>
-            ))
-          }
+              ))
+            }
+          </div>
         </div>
-      </div>
+      }
+      <AlertDialog
+        open={openConfirmModal}
+        handleAction={handleDelete}
+        handleClose={handleCloseConfirmModal}
+        title={'Are your sure, you want to delete a schedule?'}
+        content={'Schedule will be deleted permanently!'}
+      />
     </div>
   );
 };
