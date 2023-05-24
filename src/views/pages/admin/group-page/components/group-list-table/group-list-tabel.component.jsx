@@ -24,7 +24,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
     fontSize: '16px',
     fontWeight: 500,
-    fontFamily: 'Inter',
+    fontFamily: 'Poppins',
     height: '40px',
   },
 }));
