@@ -12,6 +12,7 @@ import {
   TableCell,
   TableContainer,
 } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
 
 import { addPadBefore } from '../../../../../../../utils/addPadBefore';
 import {useDispatch} from 'react-redux';
@@ -67,6 +68,7 @@ export const ScheduleListTable = ({ data = [] }) => {
             <TableRow>
               <StyledTableCell sx={{ width: '100px' }}>№</StyledTableCell>
               <StyledTableCell align='left'>Name</StyledTableCell>
+              <StyledTableCell></StyledTableCell>
               <StyledTableCell align='center'>Year</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -80,6 +82,7 @@ export const ScheduleListTable = ({ data = [] }) => {
                   {addPadBefore(index + 1, 0, 2)}
                 </StyledTableCell>
                 <StyledTableCell align='left'>{schedule.name}</StyledTableCell>
+                <StyledTableCell>{ schedule.active && <StarIcon /> }</StyledTableCell>
                 <StyledTableCell align='center'>{schedule.year ? schedule.year.split('-')[0] : ''}</StyledTableCell>
               </StyledTableRow>
             ))}
