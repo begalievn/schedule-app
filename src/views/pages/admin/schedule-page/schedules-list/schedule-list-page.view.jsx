@@ -19,8 +19,7 @@ export const ScheduleListPage = () => {
   const [semester, setSemester] = useState(1);
   const navigate = useNavigate()
   
-  const { data, isLoading } = useGetSchedulesQuery({ semester });
-  console.log(data);
+  const { data, isLoading } = useGetSchedulesQuery({ semester }, { refetchOnMountOrArgChange: true });
   
   const handleSemesterChange = (e) => {
     setSemester(e.target.value);
