@@ -10,7 +10,7 @@
   font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
+  font-size: clamp(0.813rem, 0.744rem + 0.34vw, 1rem);
   line-height: 20px;
   color: #4E8BE6;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));

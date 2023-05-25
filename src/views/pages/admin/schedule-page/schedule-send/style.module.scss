@@ -33,7 +33,7 @@
   }
 
   .status {
-
+    min-width: 100px;
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
@@ -41,9 +41,6 @@
     line-height: 20px;
     color: #000000;
 
-    .status_span {
-
-    }
   }
 
   .send_to_sga {
@@ -51,6 +48,7 @@
   }
 
   .status_span {
+    min-width: 100px;
     padding: 5px 10px;
     background: white;
   }

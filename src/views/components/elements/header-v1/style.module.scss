@@ -3,6 +3,6 @@
   font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 35px;
+  font-size: clamp(1.25rem, 0.909rem + 1.7vw, 2.188rem);
   color: #4E8BE6;
 }
