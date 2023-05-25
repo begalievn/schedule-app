@@ -35,11 +35,11 @@ export const courses = [
 export const initialState = {
 	name: '',
 	code: '',
-	credits: null,
+	credits: 0,
 	courses: null,
 	semester: 1,
-	teachers: null,
+	teachers: [],
 	classroomType: roomOptions[1].value,
 	description: '',
-	numberOfHours: null,
+	numberOfHours: 0,
 };

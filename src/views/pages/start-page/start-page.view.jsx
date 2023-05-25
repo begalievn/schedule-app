@@ -6,6 +6,9 @@ import {useGetActiveScheduleQuery} from '../../../store/api/schedule-api';
 import {ContainerWithLoader} from '../../components/containers/container-with-loader';
 import {ContentContainer} from '../../components/containers/content';
 import {HeaderV1} from '../../components/elements/header-v1';
+import {MobileSchedule} from '../../components/mobile-schedule/mobile-schedule.component';
+
+import classes from './style.module.scss';
 
 const loggedOut = () => {
   persistor.purge();
@@ -20,8 +23,13 @@ export const StartPage = () => {
       {
         isLoading ? <ContainerWithLoader style={{ height: '500px'}} /> :
           <ContentContainer style={{ width: '90%' }}>
-            <HeaderV1 style={{ paddingTop: '20px' }}>Welcome to the COM department's schedule</HeaderV1>
-            <ScheduleBoard data={data} />
+            <HeaderV1 style={{ paddingTop: '15px' }}>Welcome to the COM department's schedule</HeaderV1>
+            <div className={classes.desktop}>
+              <ScheduleBoard data={data} />
+            </div>
+            <div className={classes.mobile}>
+              <MobileSchedule data={data} />
+            </div>
             <button onClick={loggedOut} style={{ marginBottom: '30px' }} >log out</button>
           </ContentContainer>
       }
