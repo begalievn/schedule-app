@@ -8,6 +8,7 @@ import {
   CourseSelect
 } from '../../pages/admin/schedule-page/schedule-create/components/course-select/course-select.component';
 import {dayColors, hours} from '../schedule-board/constants';
+import {textCutter} from '../../../utils/text-cutter';
 
 export const MobileSchedule = ({ data }) => {
   const { days } = data;
@@ -69,7 +70,7 @@ export const MobileSchedule = ({ data }) => {
                         <div className={classes.day_subject_data_left}>
                           <div className={classes.subject_top}>
                             <p>
-                              { subject?.title }
+                              { textCutter(subject?.title, 30)  }
                             </p>
                           </div>
                           <div className={classes.subject_bottom}>
