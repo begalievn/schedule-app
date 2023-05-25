@@ -86,6 +86,7 @@ export const ClassroomCreate = () => {
               <div className={classes.block_container}>
                 {blocks.map((block) => (
                   <CourseSelect
+                    type='button'
                     id={block.id}
                     key={block.id}
                     title={block.title}

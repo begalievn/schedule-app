@@ -1,0 +1,140 @@
+.header {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #557CDE;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 0 10px;
+  color: white;
+  margin-bottom: 10px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+
+  .title {
+    font-family: Poppins, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .year {
+    font-weight: 600;
+    font-size: 16px;
+  }
+}
+
+.courses {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  column-gap: 10px;
+}
+
+.day {
+  margin-bottom: 13px;
+
+  &_title {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 16px;
+    background: #FB8F4E;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  &_subject {
+    width: 100%;
+    height: 75px;
+    display: flex;
+    column-gap: 5px;
+    font-family: Poppins;
+    margin-bottom: 10px;
+
+    &_hours {
+      width: 15%;
+      height: 100%;
+      background: #557CDE;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+      p {
+        font-size: 13px;
+        font-weight: 600;
+        color: #FFF;
+      }
+    }
+
+    &_data {
+      width: 85%;
+      height: 100%;
+      background: linear-gradient(0deg, #E8F1FF, #E8F1FF), linear-gradient(0deg, #D2E1F7, #D2E1F7), #D2E1F7;
+      border-radius: 5px;
+      display: flex;
+      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+      &_left {
+        width: 75%;
+        height: 100%;
+        padding: 5px 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .subject_top {
+          font-size: 14px;
+          font-weight: 500;
+          color: #000;
+        }
+
+        .subject_bottom {
+          font-size: 13px;
+          font-weight: 500;
+          display: flex;
+          justify-content: space-between;
+
+          &_name {
+            color: #636363;
+          }
+
+          &_lab {
+            color: #557CDE;
+          }
+        }
+      }
+
+      &_right {
+        width: 25%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        .subject_classroom {
+          padding: 1px 5px;
+          height: 30px;
+          background: #FFFFFF;
+          border-radius: 5px;
+          font-size: 13px;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

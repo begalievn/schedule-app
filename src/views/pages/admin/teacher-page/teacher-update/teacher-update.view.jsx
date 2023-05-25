@@ -29,7 +29,7 @@ export const TeacherUpdate = () => {
   const [teacherData, setTeacherData] = useState({
     firstName: '',
     lastName: '',
-    birthday: null,
+    birthday: '',
     email: '',
     address: '',
     gender: genderOptions[0].value,
