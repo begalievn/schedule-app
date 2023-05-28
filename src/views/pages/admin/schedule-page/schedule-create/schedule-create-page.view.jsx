@@ -15,6 +15,7 @@ import {ContainerWithLoader} from '../../../../components/containers/container-w
 // styles
 import classes from './style.module.scss';
 import {handleScheduleNameChange, selectScheduleSemester} from '../../../../../store/slice/schedule-slice';
+import {useGetDepartmentsQuery} from '../../../../../store/api/department-api';
 
 const courseList = [
   {
@@ -52,8 +53,11 @@ export const ScheduleCreatePage = () => {
   const [selectedCourse, setSelectedCourse] = React.useState("1");
   const selectedSubjects = useSelector((state) => state.schedule.selectedSubjects);
   const [scheduleName, setScheduleName] = useState('');
+  const [department, setDepartment] = useState(null);
+  const [departmentsOption, setDepartmentsOption] = useState([{ label: 'None', value: null }]);
   
-  const { data: subjectsData, isLoading: subjectsLoading } = useGetSubjectsFilteredQuery({ semester, course: selectedCourse });
+  const { data: subjectsData, isLoading: subjectsLoading } = useGetSubjectsFilteredQuery({ semester, course: selectedCourse, department });
+  const { data: departments, isLoading: isDepartmentLoading } = useGetDepartmentsQuery();
   
   const dispatch = useDispatch();
   
@@ -64,6 +68,10 @@ export const ScheduleCreatePage = () => {
   const handleSemesterChange = (e) => {
     setSemester(e.target.value);
     console.log(e.target.value);
+  }
+  
+  const handleDepartmentChange = (event) => {
+    setDepartment(event.target.value);
   }
   
   const handleNameChange = (e) => {
@@ -80,13 +88,40 @@ export const ScheduleCreatePage = () => {
     dispatch(selectScheduleSemester(semester));
   }, [semester, scheduleName])
   
+  useEffect(() => {
+    if (departments) {
+      const deps = departments.map((dep) => ({
+        label: dep.name,
+        value: dep.code,
+      }))
+      if (departmentsOption.length > 1) {
+        return;
+      }
+      setDepartmentsOption([...departmentsOption, ...deps]);
+    }
+  }, [departments]);
+  
   return (
     <ContentContainer style={{paddingBottom: '50px'}}>
       <HeaderV1>
         Create a new Schedule
       </HeaderV1>
       <div className={classes.semester_container}>
-        <div><SelectV1 selectTitle={'Semester'} options={semesters} value={semester} onChange={handleSemesterChange} /></div>
+        <div>
+          <SelectV1
+            selectTitle={'Semester'}
+            options={semesters}
+            value={semester}
+            onChange={handleSemesterChange}
+          />
+        </div>
+        <SelectV1
+          selectTitle={'Department'}
+          options={departmentsOption}
+          value={department}
+          onChange={handleDepartmentChange}
+        />
+  
         <Input value={scheduleName} onChange={handleNameChange} label={'Name'} style={{width: '300px'}} placeholder={'Name of a schedule'}/>
       </div>
       <div className={classes.courses_container}>

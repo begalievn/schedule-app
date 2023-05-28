@@ -58,6 +58,9 @@ export const SubjectListTable = ({ subjects = [] }) => {
 	const navigateToSubjectUpdate = (id) => {
 		navigate(`update/${id}`);
 	};
+	
+	console.log('subjects', subjects);
+	
 	return (
 		<StyledPaper>
 			<TableContainer sx={{ height: 500 }}>
@@ -69,6 +72,7 @@ export const SubjectListTable = ({ subjects = [] }) => {
 						<TableRow>
 							<StyledTableCell>№</StyledTableCell>
 							<StyledTableCell>Name</StyledTableCell>
+							<StyledTableCell align='center'>Department</StyledTableCell>
 							<StyledTableCell align='center'>Code</StyledTableCell>
 						</TableRow>
 					</TableHead>
@@ -82,6 +86,7 @@ export const SubjectListTable = ({ subjects = [] }) => {
 									{addPadBefore(index + 1, 0, 2)}
 								</StyledTableCell>
 								<StyledTableCell>{row.name}</StyledTableCell>
+								<StyledTableCell align='center'>{row?.department[0]?.code || ''}</StyledTableCell>
 								<StyledTableCell align='center'>{row.code}</StyledTableCell>
 							</StyledTableRow>
 						))}

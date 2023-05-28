@@ -25,6 +25,7 @@ import {
 	useUpdateSubjectMutation
 } from '../../../../../store/api/subject-api';
 import { useGetAllTeacherQuery } from '../../../../../store/api/teacher-api';
+import {useGetDepartmentsQuery} from '../../../../../store/api/department-api';
 
 // styles
 import styles from './subject_update.module.scss';
@@ -34,15 +35,17 @@ export const SubjectUpdate = () => {
 	const [selectedCourse, setSelectedCourse] = useState('1');
 	const [teachers, setTeachers] = useState([]);
 	const [openConfirmModal, setOpenConfirmModal] = useState(false);
+	const [departmentsOption, setDepartmentsOption] = useState([{ label: 'None', value: null }]);
 	
 	const navigate = useNavigate();
 	const params = useParams();
 	const id = params.id;
 	
-	console.log('id', id);
-	
 	const { data } = useGetAllTeacherQuery('');
-	const { data: subjectById, isLoading } = useGetSubjectByIdQuery(id);
+	const { data: subjectById, isLoading } = useGetSubjectByIdQuery(id, {
+		refetchOnMountOrArgChange: true,
+	});
+	const { data: departments, isLoading: isDepartmentsLoading } = useGetDepartmentsQuery();
 	const [updateSubject] = useUpdateSubjectMutation();
 	const [deleteSubject] = useDeleteSubjectMutation();
 	
@@ -59,8 +62,6 @@ export const SubjectUpdate = () => {
 			'Successfully updated!',
 			`${result?.error?.data?.message || 'Update failed!'}`
 		)
-		console.log('result', result);
-		console.log('subjectValue', data);
 	};
 	
 	const handleInputsChanges = (e) => {
@@ -73,7 +74,12 @@ export const SubjectUpdate = () => {
 	
 	const handleSemesterChange = (e) => {
 		const semester = e.target.value;
-		setSubjectValue({ ...subjectValue, semester})
+		setSubjectValue({ ...subjectValue, semester});
+	}
+	
+	const handleDepartmentChange = (e) => {
+		const department = e.target.value;
+		setSubjectValue({ ...subjectValue, department});
 	}
 	
 	const handleCourseChange = (event) => {
@@ -106,20 +112,34 @@ export const SubjectUpdate = () => {
 		if (subjectById) {
 			setSubjectValue({
 				...subjectById,
+				department:
+					subjectById.department ?
+						subjectById.department._id
+ 						: null
 			});
 			setSelectedCourse(String(subjectById?.courses[0]) || '1')
 			setTeachers(subjectById.teachers || []);
 		}
 	}, [subjectById])
 	
-	console.log({ subjectById });
-	console.log({selectedCourse});
+	useEffect(() => {
+		if (departments) {
+			const deps = departments.map((dep) => ({
+				label: dep.name,
+				value: dep._id,
+			}))
+			if (departmentsOption.length > 1) {
+				return;
+			}
+			setDepartmentsOption([...departmentsOption, ...deps]);
+		}
+	}, [departments]);
 	
 	return (
 		<ContentContainer style={{ marginBottom: '50px' }}>
 			<HeaderV1>Update a subject</HeaderV1>
 			{
-				isLoading ? <ContainerWithLoader style={{ height: '500px' }} /> :
+				isLoading || isDepartmentsLoading ? <ContainerWithLoader style={{ height: '500px' }} /> :
 					<form
 						className={styles.form_container}
 						onSubmit={handleSubmit}
@@ -167,6 +187,16 @@ export const SubjectUpdate = () => {
 										value={subjectValue.semester}
 										onChange={handleSemesterChange}
 										options={semesters}
+										width='330px'
+									/>
+								</label>
+								
+								<label className={styles.form_label}>
+									Department
+									<SelectV1
+										value={subjectValue.department}
+										onChange={handleDepartmentChange}
+										options={departmentsOption}
 										width='330px'
 									/>
 								</label>

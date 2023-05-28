@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {ContentContainer} from '../containers/content';
 
 import classes from './style.module.scss';
 import {BlockContainer} from '../containers/block';
@@ -14,6 +13,8 @@ export const MobileSchedule = ({ data }) => {
   const { days } = data;
   const [selectedCourse, setSelectedCourse] = useState('1');
   const [schedule, setSchedule]  = useState(days || []);
+  
+  
   
   console.log(data);
   
