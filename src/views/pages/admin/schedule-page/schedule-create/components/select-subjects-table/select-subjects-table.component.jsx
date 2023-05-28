@@ -12,6 +12,8 @@ import { SubjectChooseCheckBox } from '../subject-choose-check-box';
 import {useDispatch, useSelector} from 'react-redux';
 import { addSubject, removeSubject } from '../../../../../../../store/slice/schedule-slice';
 
+import classes from './style.module.scss';
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#4E8BE6',
@@ -54,6 +56,15 @@ export const SelectSubjectsTable = ({ data = [], }) => {
     }
   }
   
+  const handleSelectAll = () => {
+    data.map((subject) => {
+      const isSubjectSelected = selectedSubjects.find((sub) => sub._id === subject._id);
+      if (!isSubjectSelected) {
+        dispatch(addSubject(subject));
+      }
+    })
+  }
+  
   return (
     <Paper sx={{ width: '100%', height: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ height: 500 }}>
@@ -71,7 +82,11 @@ export const SelectSubjectsTable = ({ data = [], }) => {
                 Subject name
               </StyledTableCell>
               <StyledTableCell align='left'>Code</StyledTableCell>
-              <StyledTableCell align='center'>Choose</StyledTableCell>
+              <StyledTableCell align='center'>
+                <div onClick={handleSelectAll} className={classes.choose_all}>
+                  Choose
+                </div>
+              </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>

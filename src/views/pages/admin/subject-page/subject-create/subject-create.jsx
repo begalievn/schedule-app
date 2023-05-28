@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
 
@@ -27,15 +27,18 @@ import {useCreateSubjectMutation} from '../../../../../store/api/subject-api';
 
 // styles
 import styles from './subject_create.module.scss';
+import {useGetDepartmentsQuery} from '../../../../../store/api/department-api';
 
 export const SubjectCreate = () => {
 	const [subjectValue, setSubjectValue] = useState(initialState);
 	const [selectedCourse, setSelectedCourse] = useState('1');
 	const [teachers, setTeachers] = useState([]);
+	const [departmentsOption, setDepartmentsOption] = useState([{ label: 'None', value: null }]);
 	
 	const navigate = useNavigate();
 	
 	const { data } = useGetAllTeacherQuery('');
+	const { data: departments, isLoading: isDepartmentsLoading } = useGetDepartmentsQuery();
 	const [createSubject] = useCreateSubjectMutation();
 	
 	const handleInputsChanges = (e) => {
@@ -54,6 +57,11 @@ export const SubjectCreate = () => {
 	const handleCourseChange = (event) => {
 		setSelectedCourse(event.target.id);
 	};
+	
+	const handleDepartmentChange = (e) => {
+		const department = e.target.value;
+		setSubjectValue({ ...subjectValue, department});
+	}
 	
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -76,6 +84,19 @@ export const SubjectCreate = () => {
 		setSubjectValue(initialState);
 		navigate(-1);
 	}
+	
+	useEffect(() => {
+		if (departments) {
+			const deps = departments.map((dep) => ({
+				label: dep.name,
+				value: dep._id,
+			}))
+			if (departmentsOption.length > 1) {
+				return;
+			}
+			setDepartmentsOption([...departmentsOption, ...deps]);
+		}
+	}, [departments]);
 	
 	return (
 		<ContentContainer style={{ marginBottom: '50px' }}>
@@ -114,6 +135,7 @@ export const SubjectCreate = () => {
 										key={course.id}
 										style={{ width: '85px' }}
 										title={course.title}
+										type='button'
 										onChange={handleCourseChange}
 										selected={course.id === selectedCourse}
 									/>
@@ -126,6 +148,16 @@ export const SubjectCreate = () => {
 								value={subjectValue.semester}
 								onChange={handleSemesterChange}
 								options={semesters}
+								width='330px'
+							/>
+						</label>
+						
+						<label className={styles.form_label}>
+							Department
+							<SelectV1
+								value={subjectValue.department}
+								onChange={handleDepartmentChange}
+								options={departmentsOption}
 								width='330px'
 							/>
 						</label>

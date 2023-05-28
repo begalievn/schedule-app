@@ -45,8 +45,18 @@
   display: none;
 }
 
+.admin_logo {
+  display: block;
+}
+
 @media (min-width: 800px) {
   .mobile_menu {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .admin_logo {
     display: none;
   }
 }
