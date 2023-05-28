@@ -10,8 +10,8 @@ export const subjectApi = commonApi.injectEndpoints({
 			}),
 		}),
 		getSubjectsFiltered: builder.query({
-			query: ({ semester, course }) => ({
-				url: `subject/filtered?semester=${semester}&course=${course}`,
+			query: ({ semester, course, department }) => ({
+				url: `subject/filtered?semester=${semester}&course=${course}&department=${department ? department : ''}`,
 			}),
 		}),
 		getSubjectById: builder.query({

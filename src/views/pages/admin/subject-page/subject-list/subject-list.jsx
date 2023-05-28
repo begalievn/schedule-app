@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ButtonV2 } from '../../../../components/elements/button-v2';
 import { HeaderV1 } from '../../../../components/elements/header-v1';
@@ -17,23 +17,34 @@ import { useGetSubjectsFilteredQuery } from '../../../../../store/api/subject-ap
 
 // styles
 import classes from './style.module.scss';
+import {useGetDepartmentsQuery} from '../../../../../store/api/department-api';
 
 export const SubjectList = () => {
-	const [selectedCourse, setSelectedCourse] = React.useState('1');
-	const [semester, setSemester] = React.useState(1);
+	const [selectedCourse, setSelectedCourse] = useState('1');
+	const [semester, setSemester] = useState(1);
+	const [department, setDepartment] = useState(null);
+	const [departmentsOption, setDepartmentsOption] = useState([{ label: 'None', value: null }]);
+	
 	const navigate = useNavigate();
 
 	const { data: filteredSubjects, isLoading } = useGetSubjectsFilteredQuery({
 		semester,
 		course: selectedCourse,
+		department,
 	}, {
 		refetchOnMountOrArgChange: true,
-		refetchOnFocus: true,
 	});
+	const { data: departments, isLoading: isDepartmentLoading } = useGetDepartmentsQuery();
+	
+	console.log('departments', departments);
 
 	const handleSemesterChange = (event) => {
 		setSemester(event.target.value);
 	};
+	
+	const handleDepartmentChange = (event) => {
+		setDepartment(event.target.value);
+	}
 
 	const handleCourseChange = (event) => {
 		setSelectedCourse(event.target.id);
@@ -42,17 +53,40 @@ export const SubjectList = () => {
 	const navigateToCreate = () => {
 		navigate(BrowserRoute.ADMIN_SUBJECT_CREATE);
 	};
+	
+	useEffect(() => {
+		if (departments) {
+			const deps = departments.map((dep) => ({
+				label: dep.name,
+				value: dep.code,
+			}))
+			if (departmentsOption.length > 1) {
+				return;
+			}
+			setDepartmentsOption([...departmentsOption, ...deps]);
+		}
+	}, [departments]);
 
+	console.log('departmentsOption', departmentsOption);
+	
 	return (
 		<ContentContainer style={{ marginBottom: '50px' }}>
 			<HeaderV1>List of subject</HeaderV1>
 			<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-				<SelectV1
-					selectTitle='Semester'
-					options={semesters}
-					value={semester}
-					onChange={handleSemesterChange}
-				/>
+				<div className={classes.selectors}>
+					<SelectV1
+						selectTitle='Semester'
+						options={semesters}
+						value={semester}
+						onChange={handleSemesterChange}
+					/>
+					<SelectV1
+						selectTitle='Department'
+						options={departmentsOption}
+						value={department}
+						onChange={handleDepartmentChange}
+					/>
+				</div>
 				<ButtonV2 onClick={navigateToCreate}>Add subject</ButtonV2>
 			</div>
 			<div style={{ display: 'flex', gap: '20px', margin: '24px 0' }}>
@@ -67,7 +101,7 @@ export const SubjectList = () => {
 				))}
 			</div>
 			<ContainerWithShadow>
-				{isLoading ? (
+				{isLoading || isDepartmentLoading ? (
 					<div className={classes.loader_container}>
 						<CircularProgress />
 					</div>

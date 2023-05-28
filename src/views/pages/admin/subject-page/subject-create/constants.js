@@ -5,6 +5,8 @@ export const inputFields = [
 	{ id: 2, type: 'text', label: 'Code', name: 'code' },
 	{ id: 4, type: 'text', label: 'Description', name: 'description' },
 	{ id: 3, type: 'number', label: 'Number of hours', name: 'numberOfHours' },
+	{ id: 3, type: 'number', label: 'Number of lecture hours', name: 'lectureHours' },
+	{ id: 3, type: 'number', label: 'Number of lab hours', name: 'labHours' },
 	{ id: 5, type: 'number', label: 'Credits', name: 'credits' },
 ];
 
@@ -38,8 +40,11 @@ export const initialState = {
 	credits: 0,
 	courses: null,
 	semester: 1,
+	department: null,
 	teachers: [],
 	classroomType: roomOptions[1].value,
 	description: '',
 	numberOfHours: 0,
+	lectureHours: 0,
+	labHours: 0,
 };

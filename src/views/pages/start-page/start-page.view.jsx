@@ -5,7 +5,6 @@ import {ScheduleBoard} from '../../components/schedule-board';
 import {useGetActiveScheduleQuery} from '../../../store/api/schedule-api';
 import {ContainerWithLoader} from '../../components/containers/container-with-loader';
 import {ContentContainer} from '../../components/containers/content';
-import {HeaderV1} from '../../components/elements/header-v1';
 import {MobileSchedule} from '../../components/mobile-schedule/mobile-schedule.component';
 
 import classes from './style.module.scss';
@@ -22,8 +21,7 @@ export const StartPage = () => {
     <Container maxWidth='xl' sx={{ marginBottom: '50px' }}>
       {
         isLoading ? <ContainerWithLoader style={{ height: '500px'}} /> :
-          <ContentContainer style={{ width: '90%' }}>
-            <HeaderV1 style={{ paddingTop: '15px' }}>Welcome to the COM department's schedule</HeaderV1>
+          <ContentContainer style={{ width: '90%', paddingTop: '20px' }}>
             <div className={classes.desktop}>
               <ScheduleBoard data={data} />
             </div>
